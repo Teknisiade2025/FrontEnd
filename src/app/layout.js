@@ -1,7 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavbarDesktop from '@/app/component/navbar/navbarDesktop'
+import NavbarMobileDeskto from '@/app/component/navbar/navbarMobileDesktop'
 import FooterDesktop from '@/app/component/footer/footerDesktop'
+import FooterMobileDesktop from '@/app/component/footer/footerMobileDesktop'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,11 +24,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen `}
       >
-        <NavbarDesktop />
-        {children}
-        <FooterDesktop />
+        {/*<NavbarDesktop />  */}
+        <NavbarMobileDeskto />
+        <main className="flex-grow">{children}</main>
+        {/*<FooterDesktop />*/}
+        <FooterMobileDesktop/>
       </body>
     </html>
   );
