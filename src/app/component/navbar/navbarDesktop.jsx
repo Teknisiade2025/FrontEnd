@@ -5,7 +5,7 @@ import { IoChevronDownSharp, IoLogInOutline } from 'react-icons/io5'
 const NavbarDesktop = () => {
   return (
 
-    <div className='fixed top-0 left-0 w-full z-50 bg-transparent '>
+    <div className='fixed top-0 left-0 w-full z-50 bg-transparent'>
       <div className=' grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-0 gap-16 sm:p-20'>
 
           <div className="w-full px-8 py-4 bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] rounded-[40px] shadow-md flex justify-between items-center  ">
