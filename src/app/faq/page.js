@@ -3,24 +3,23 @@ import { FaqSection } from "../component/FaqSection/faqDesktop";
 
 const FaqPage = () => {
   return (
-     <div
-      className="w-full max-w-[1920px] mx-auto relative overflow-hidden"
-      style={{ height: "2504px" }}
-    >
+    <div className="w-full max-w-[1920px] mx-auto relative overflow-hidden min-h-screen">
       {/* Background */}
       <div
-        className="absolute top-0 left-0 w-full h-full bg-no-repeat bg-cover bg-top z-0"
+        className={`
+          absolute top-0 left-0 w-full h-full bg-no-repeat bg-cover z-0
+          bg-[url('/faqmobilebg.svg')] 
+          sm:bg-[url('/faqBG.svg')]
+        `}
         style={{
-          backgroundImage: "url('/faqBG.svg')",
-          backgroundSize: "1920px 3646px",
+          backgroundSize: "cover",
+          backgroundPosition: "top",
         }}
       />
 
       {/* Konten FAQ */}
-      <main className="relative z-10 flex justify-center pt-[180px]">
-        <div
-          className="w-[1167px] max-h-[1460px] overflow-visible"
-        >
+      <main className="relative z-10 flex justify-center pt-32 px-4 sm:px-0">
+        <div className="w-full max-w-6xl">
           <FaqSection />
         </div>
       </main>
