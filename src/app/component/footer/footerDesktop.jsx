@@ -5,7 +5,7 @@ import { FaInstagram, FaYoutube, FaTwitter } from 'react-icons/fa'
 
 const FooterTeknisiade = () => {
   return (
-    <div className="relative w-full -top-55">
+    <div className="relative w-full -top-38">
         {/* Background awan atas */}
         <Image
             src="/Footer/footerdesktopBG.png"

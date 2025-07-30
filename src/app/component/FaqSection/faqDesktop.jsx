@@ -26,38 +26,37 @@ export const FaqSection = () => {
   ];
 
   return (
-    <section className="flex flex-col items-center gap-10 px-4 py-10 pb-32 w-full max-w-screen-xl mx-auto">
-      {/* Header */}
-      <header className="text-center">
-        <h1 className="text-[#1d2225] text-[60px] sm:text-[80px] md:text-[115px] font-bold [text-shadow:4px_4px_0px_#00000040]">
-          FAQ
-        </h1>
-        <p className="text-[#1d2225] text-[16px] sm:text-[18px] font-medium">Frequently Asked Questions</p>
-      </header>
+    <section className="relative w-full max-w-[1759px] mx-auto px-6 py-16 font-['Sofia_Sans_Condensed'] text-[#1D2225]">
+      {/* Judul FAQ */}
+      <h1 className="text-[103px] font-[Snowstorm] text-center leading-tight drop-shadow-[0_6px_6px_rgba(0,0,0,0.25)] mb-6">
+        FAQ
+      </h1>
+      <p className="text-center text-[20px] font-semibold mb-12">
+        Frequently Asked Questions
+      </p>
 
-      {/* FAQ List */}
-      <div className="w-full flex flex-col gap-6 max-w-4xl">
+      {/* List FAQ */}
+      <div className="flex flex-col gap-8 max-w-4xl mx-auto">
         {allFaqs.map((faq) => (
-          <div key={faq.id}>
-            <div className="flex justify-between items-start gap-2">
+          <div key={faq.id} className="bg-[rgba(240,238,215,0.8)] p-6 rounded-xl shadow-md">
+            <div className="flex justify-between items-start gap-4">
               <button
-                className="text-left font-black text-lg sm:text-xl text-primary-600 flex-1"
+                className="text-left text-[20px] font-bold text-[#3C3022] flex-1"
                 onClick={() => toggleFaq(faq.id)}
               >
                 {faq.question}
               </button>
-              <button onClick={() => toggleFaq(faq.id)}>
+              <button onClick={() => toggleFaq(faq.id)} className="text-[#3C3022]">
                 <IoChevronDownSharp
-                  className={`w-6 h-6 transition-transform ${openFaq === faq.id ? "rotate-180" : ""}`}
+                  className={`w-6 h-6 transition-transform duration-300 ${openFaq === faq.id ? "rotate-180" : ""}`}
                 />
               </button>
             </div>
             {openFaq === faq.id && (
-              <p className="text-base sm:text-lg font-medium mt-2 text-primary-600">
+              <p className="mt-4 text-[18px] text-[#3C3022] font-medium">
                 {faq.answer}
               </p>
             )}
-            <hr className="border-t border-black mt-4" />
           </div>
         ))}
       </div>
