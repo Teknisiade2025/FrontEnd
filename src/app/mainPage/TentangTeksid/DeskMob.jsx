@@ -57,7 +57,7 @@ const page = () => {
       <div className="max-w-xl md:w-2/5 hidden md:block">
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-black text-6xl md:text-[6vw] font-bold font-sans drop-shadow-md">
+            <h2 className="text-black text-6xl md:text-[6vw] font-medium font-snowstorm drop-shadow-md">
               TENTANG
             </h2>
             <Image
@@ -78,13 +78,13 @@ const page = () => {
         </div>
 
         {/* Desktop Paragraph */}
-        <p className="text-justify text-gray-800 text-sm md:text-lg mt-5 font-semibold font-['Sofia_Sans_Condensed'] leading-5">
+        <p className="text-justify text-gray-800 text-sm md:text-lg mt-5 font-semibold font-sofia leading-5">
           {descriptionText}
         </p>
       </div>
 
       {/* Mobile: Description (Bottom) */}
-      <p className="md:hidden w-full text-center text-gray-800 text-[4.3vw] sm:text-[3.5vw] font-semibold font-['Sofia_Sans_Condensed'] leading-5 mt-4 order-3">
+      <p className="md:hidden w-full text-center text-gray-800 text-[4.5vw] sm:text-[3.5vw] font-semibold font-sofia leading-5 mt-4 order-3">
         {descriptionText}
       </p>
     </section>

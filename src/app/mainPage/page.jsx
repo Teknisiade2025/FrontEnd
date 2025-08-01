@@ -6,9 +6,9 @@ import KalerderEvent from '@/app/mainPage/KalenderEvent/DeskMob'
 import TentangTeksid from '@/app/mainPage/TentangTeksid/DeskMob'
 import TemuTeki from '@/app/mainPage/TemuTeki/DeskMob'
 import Chant from '@/app/mainPage/Chant/DeskMob'
-import Olahraga from '@/app/mainPage/CabangOlahraga/page'
-import Seni from '@/app/mainPage/CabangSeni/page'
-import Sponsorship from '@/app/mainPage/Sponsorsip/page'
+import Olahraga from '@/app/mainPage/CabangOlahraga/DeskMob'
+import Seni from '@/app/mainPage/CabangSeni/DeskMob'
+import Sponsorship from '@/app/mainPage/Sponsorsip/DeskMob'
 
 const Page = () => {
   const [bgHeight, setBgHeight] = useState('80vh')

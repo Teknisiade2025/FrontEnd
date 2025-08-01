@@ -3,12 +3,18 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 const SeniList = [
-  { src: '/OlahragaLP/ateltik.png', alt: 'Atletik' },
-  { src: '/OlahragaLP/basket.png', alt: 'Basket' },
-  { src: '/OlahragaLP/badminton.png', alt: 'Badminton' },
-  { src: '/OlahragaLP/futsal.png', alt: 'Futsal' },
-  { src: '/OlahragaLP/futsal.png', alt: 'Futsal' },
-  { src: '/OlahragaLP/futsal.png', alt: 'Futsal' },
+  {  src: '/SeniLP/Band.png', alt: 'Band' },
+  { src: '/SeniLP/cipta puisi.png', alt: 'Cipta Puisi' },
+  { src: '/SeniLP/dance.png', alt: 'Dance' },
+  { src: '/SeniLP/Fotografi.png', alt: 'Fotografi' },
+  { src: '/SeniLP/Monologi.png', alt: 'Monolog' },
+  { src: '/SeniLP/Poster.png', alt: 'Poster' },
+  { src: '/SeniLP/seni lukis.png', alt: 'Seni Lukis' },
+  { src: '/SeniLP/solo vokal.png', alt: 'Solo Vokal' },
+  { src: '/SeniLP/tari tradisional.png', alt: 'Tari Tradisional' },
+  { src: '/SeniLP/vokal grup.png', alt: 'Vokal Grup' }
+
+  
   // Tambahkan cabang lainnya jika ada
 ]
 

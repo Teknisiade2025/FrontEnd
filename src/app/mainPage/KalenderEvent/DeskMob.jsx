@@ -64,11 +64,11 @@ const CalendarCarousel = () => {
       <div className={`absolute w-full max-w-[1500px] ${isMobile ? 'h-[80vh]' : 'h-[55vh]'} mb-0 flex items-center justify-center relative`}>
         
         {/* Konten kalender - struktur berbeda untuk mobile dan desktop */}
-        <div className={`${isMobile ? 'w-[55vw] h-[81vh] sm:w-[30vw] sm:pt-15 pt-24 top-2 flex-col gap-[5vh] ' : 'md:w-[80vw]  md:h-[25vh] lg:h-[30vh] lg:w-[75vw] md:-mt-[10vh] lg:-mt-24 flex-row justify-betwen'} flex items-center  px-6 py-8 bg-[radial-gradient(ellipse_64.47%_64.47%_at_53.91%_50.00%,_#FBEBD2_0%,_#C6A97D_100%)] relative z-10`}>
+        <div className={`${isMobile ? 'w-[55vw] h-[81vh] sm:w-[30vw] sm:pt-15 pt-24 top-2 flex-col gap-[5vh] ' : 'md:w-[80vw]  md:h-[25vh] lg:h-[35vh] lg:w-[75vw] md:-mt-[10vh] lg:-mt-24 flex-row justify-betwen'} flex items-center  px-6 py-8 bg-[radial-gradient(ellipse_64.47%_64.47%_at_53.91%_50.00%,_#FBEBD2_0%,_#C6A97D_100%)] relative z-10`}>
           
           {/* Title Section - selalu di atas baik mobile maupun desktop */}
           <div className="w-full flex justify-center md:justify-start  md:mb-0">
-            <div className="text-center text-black text-4xl md:text-[4vw] lg:text-5xl px-8 font-normal font-['Snowstorm'] leading-[50px] md:leading-[7vh] lg:leading-[60.5px] [text-shadow:_0px_5px_11px_rgb(0_0_0_/_0.25)]">
+            <div className="text-center text-black text-4xl md:text-[4vw] lg:text-5xl px-8 font-semibold font-snowstorm leading-[50px] md:leading-[7vh] lg:leading-[60.5px] [text-shadow:_0px_5px_11px_rgb(0_0_0_/_0.25)]">
               Calendar <br /> Events
             </div>
           </div>
