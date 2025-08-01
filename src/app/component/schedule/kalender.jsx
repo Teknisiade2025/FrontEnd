@@ -125,7 +125,7 @@ const Kalender = () => {
     const daysInMonth = getDaysInMonth(currentDate);
     const firstDay = getFirstDayOfMonth(currentDate);
 
-    for (let i = 0; i < firstDay; i++) days.push(<div key={`empty-${i}`} className="h-24 md:h-32 aspect-square"></div>);
+    for (let i = 0; i < firstDay; i++) days.push(<div key={`empty-${i}`} className="aspect-square p-2 border border-[#FBEBD2]"></div>);
 
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
@@ -203,7 +203,7 @@ const Kalender = () => {
     <div className="w-full px-4 py-6 flex flex-col items-center">
       <div className="max-w-screen-2xl w-full">
         <div className="mb-6 flex justify-center">
-          <p className="text-2xl sm:text-12xl lg:text-4xl text-[#1D2225] font-snowstorm font-bold text-center">
+          <p className="text-6xl sm:text-7xl lg:text-8xl text-[#1D2225] font-snowstorm font-bold text-center">
             KALENDER
           </p>
         </div>
@@ -244,7 +244,7 @@ const Kalender = () => {
             <h3 className="text-xl font-bold font-snowstorm text-[#1D2225] mb-4 text-center">
               Jadwal Pertandingan Bulan Ini
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-4 overflow-y-auto max-h-[400px] pr-2">
               {monthMatches
                 .sort((a, b) => new Date(a.date) - new Date(b.date))
                 .map(match => (
@@ -303,7 +303,7 @@ const Kalender = () => {
           style={{ left: `${hoverPosition.x}px`, top: `${hoverPosition.y}px` }}
         >
           <div className="bg-[#1D2225] text-[#FBEBD2] p-4 rounded-[20px] shadow-lg max-w-sm">
-            <div className="font-bold font-snowstorm text-[14px] mb-2 text-center">
+            <div className="font-bold font-snowstorm text-[14px] mb-2 text-center text-white ">
               {hoveredDate.date.toLocaleDateString('id-ID', { 
                 weekday: 'long', 
                 day: 'numeric', 

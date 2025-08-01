@@ -54,10 +54,10 @@ const FooterTeknisiade = () => {
           </p>
 
           <div className="flex gap-4 md:-mt-2 lg:mt-2 text-black text-xl md:text-2xl">
-            <a href="https://www.instagram.com/nama_akun_ig" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/teknisiade?igsh=MWNpNmswbG5pNjE0OA==" target="_blank" rel="noopener noreferrer">
               <FaInstagram className="hover:text-gray-700 w-6 h-6 md:w-[2.2vw] md:h-[2.2vw]" />
             </a>
-            <a href="https://twitter.com/nama_akun_twitter" target="_blank" rel="noopener noreferrer">
+            <a href="https://youtube.com/@teknisiadeugm?si=OTakLii6k8IdSqua" target="_blank" rel="noopener noreferrer">
               <Image
                 src="/Footer/logoX.svg"
                 alt="Logo X"

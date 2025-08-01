@@ -7,6 +7,13 @@ const olahragaList = [
   { src: '/OlahragaLP/basket.png', alt: 'Basket' },
   { src: '/OlahragaLP/badminton.png', alt: 'Badminton' },
   { src: '/OlahragaLP/futsal.png', alt: 'Futsal' },
+  { src: '/OlahragaLP/catur.png', alt: 'catur' },
+  { src: '/OlahragaLP/fifa.png', alt: 'fifa' },
+  { src: '/OlahragaLP/ml.png', alt: 'ml' },
+  { src: '/OlahragaLP/pubg.png', alt: 'pubg' },
+  { src: '/OlahragaLP/tenismeja.png', alt: 'tenisMeja' },
+  { src: '/OlahragaLP/valorant.png', alt: 'valo' },
+  { src: '/OlahragaLP/voli.png', alt: 'voli' },
   // Tambahkan cabang lainnya jika ada
 ]
 
@@ -31,7 +38,7 @@ export default function CabangOlahragaSection() {
   }
 
   return (
-    <section className="w-full flex justify-center mt-40">
+    <section className="w-full flex justify-center mt-[35vh] lg:mt-[90vh]">
             <div className="w-[70%] flex flex-col lg:flex-row items-center justify-between gap-10">
                 {/* Kiri: Judul + Carousel */}
                 <div className="w-full lg:w-3/5 flex flex-col items-center gap-6">
@@ -40,7 +47,7 @@ export default function CabangOlahragaSection() {
                     alt="Cabang Olahraga"
                     width={522}
                     height={190}
-                    className="w-[75%] max-w-md h-auto"
+                    className="w-[100%] md:w-[75%] max-w-md h-auto"
                 />
     
                 {/* Carousel Desktop */}

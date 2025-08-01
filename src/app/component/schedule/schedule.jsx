@@ -67,8 +67,8 @@ const Jadwal = () => {
   }, []);
 
   return (
-    <div className="w-full flex justify-center px-4 sm:px-6 py-8">
-  <div className="w-full max-w-3xl flex flex-col items-center">
+    <div className="w-full px-3 py-8 overflow-x-hidden">
+  <div className="w-full  mx-auto flex flex-col items-center">
       {/* Schedule Image - Positioned at Top */}
       <div className="mb-8">
         <img
@@ -109,7 +109,7 @@ const Jadwal = () => {
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full flex items-center justify-between gap-3 bg-[#806037] text-[#FBEBD2] px-6 py-3 rounded-full shadow-md font-sofia font-extrabold text-base"
+              className="w-full flex items-center justify-between gap-3 bg-[#806037] text-[#FBEBD2] px-6 sm:py-3 py:6 rounded-full shadow-md font-sofia font-extrabold text-base"
             >
               {selectedDropdown}
               <IoChevronDownSharp size={16} />
@@ -117,7 +117,7 @@ const Jadwal = () => {
 
             <div
               className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-10 ${
-                isDropdownOpen ? "max-h-[300px] overflow-y-auto opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
+                isDropdownOpen ? "max-h-[200px] sm:max-h-[300px] overflow-y-auto opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
               }`}
             >
               <div className="grid grid-cols-2 gap-6 p-6 text-[#1D2225]">
