@@ -7,7 +7,7 @@ import Atlet from "../component/subcabang/atlet";
 
 const Schedule = () => {
   return (
-    <div className="relative w-full max-w-[1920px] mx-auto overflow-hidden">
+    <div className="relative w-full max-w-[1920px] mx-auto overflow-hidden pb-[20vh]">
       
       {/* Background Layer */}
       <div
@@ -20,17 +20,17 @@ const Schedule = () => {
       />
 
       {/* Konten di atas background */}
-      <main className="relative z-10 flex flex-col items-center gap-[550px]">
+      <main className="relative z-10 flex flex-col items-center gap-[280px] md:gap-[550px] ">
         
         {/* Pertandingan Section */}
-        <section className="w-full flex justify-center md:justify-end px-4 md:px-[100px] pt-[100px] md:pt-[200px]">
+        <section className="w-full flex justify-center md:justify-end px-1 md:px-4 md:px-[100px] pt-[100px] md:pt-[200px]">
           <div className="max-w-full">
             <Pertandingan />
           </div>
         </section>
 
         {/* Jadwal & Atlet Section */}
-        <section className="w-full flex flex-col items-center gap-[300px]">
+        <section className="w-full flex flex-col items-center gap-[100px] md:gap-[280px]">
           <Jadwal />
           <Atlet />
         </section>

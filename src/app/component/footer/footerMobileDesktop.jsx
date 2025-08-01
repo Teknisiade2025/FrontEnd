@@ -4,7 +4,11 @@ import { FaInstagram, FaYoutube } from 'react-icons/fa';
 
 const FooterTeknisiade = () => {
   return (
+<<<<<<< HEAD
     <footer className="relative w-full -top-38">
+=======
+    <footer className="relative w-full -mt-55 md:-mt-35 ">
+>>>>>>> 414eabadd657a0633f8eea501412cf3f7062d8d5
       {/* Background */}
       <div className="absolute inset-0 z-0">
         {/* Desktop Background */}
