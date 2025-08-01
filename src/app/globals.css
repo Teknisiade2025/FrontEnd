@@ -112,6 +112,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+<<<<<<< HEAD
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -152,5 +153,11 @@
   }
   body {
     @apply bg-background text-foreground;
+=======
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #E1C791;
+    --foreground: #ededed;
+>>>>>>> de46fe7dfb959ac734a1d1089930a7ad8b3bff4c
   }
 }

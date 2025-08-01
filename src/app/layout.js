@@ -1,5 +1,9 @@
 import { Geist, Geist_Mono, Sofia_Sans_Condensed } from "next/font/google";
 import "./globals.css";
+import NavbarDesktop from '@/app/component/navbar/navbarDesktop'
+import NavbarMobileDeskto from '@/app/component/navbar/navbarMobileDesktop'
+import FooterDesktop from '@/app/component/footer/footerDesktop'
+import FooterMobileDesktop from '@/app/component/footer/footerMobileDesktop'
 
 const sofia = Sofia_Sans_Condensed({
   variable: "--font-sofia",
@@ -26,9 +30,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
+<<<<<<< HEAD
         className={`${geistSans.variable} ${geistMono.variable} ${sofia.variable} antialiased`}
+=======
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen `}
+>>>>>>> de46fe7dfb959ac734a1d1089930a7ad8b3bff4c
       >
-        {children}
+        {/*<NavbarDesktop />  */}
+        <NavbarMobileDeskto />
+        <main className="flex-grow">{children}</main>
+        {/*<FooterDesktop />*/}
+        <FooterMobileDesktop/>
       </body>
     </html>
   );
