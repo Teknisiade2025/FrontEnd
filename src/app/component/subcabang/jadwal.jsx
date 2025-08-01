@@ -139,12 +139,12 @@ const Jadwal = () => {
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-1 px-1 py-1 rounded-full bg-[#1D2225] shadow-md w-full sm:w-auto">
+            <div className="flex justify-around md:gap-1 px-1 py-1 rounded-full bg-[#1D2225] item-center shadow-md w-full sm:w-auto">
               {["Mendatang", "Selesai"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setSelectedTab(tab)}
-                  className={`px-6 py-2.5 font-sofia font-extrabold text-sm rounded-full transition-all duration-200 ${
+                  className={`w-[150px] py-2.5 font-sofia font-extrabold text-sm rounded-full transition-all duration-200 ${
                     selectedTab === tab ? "bg-[#806037] text-[#FBEBD2]" : "bg-[#1D2225] text-[#FBEBD2] hover:bg-[#2a2f33]"
                   }`}
                 >
@@ -195,7 +195,7 @@ const MatchCard = ({ match }) => {
           {new Date(match.date).toLocaleString("id-ID", {
             weekday: "short",
             day: "numeric",
-            month: "long",
+            month: "short",
             hour: "2-digit",
             minute: "2-digit",
           })}{" "}
