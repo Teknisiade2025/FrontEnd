@@ -202,12 +202,12 @@ const Kalender = () => {
   return (
     <div className="w-full px-4 py-6 flex flex-col items-center">
       <div className="max-w-screen-2xl w-full">
+        <div className="mb-6 flex justify-center">
+          <p className="text-2xl sm:text-12xl lg:text-4xl text-[#1D2225] font-snowstorm font-bold text-center">
+            KALENDER
+          </p>
+        </div>
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full">
-          <div className="flex justify-center w-full md:w-auto">
-            <div className="w-[100px] h-[100px] rounded-full bg-[#806037] flex items-center justify-center">
-              <IoCalendarOutline className="w-12 h-12 text-[#FBEBD2]" />
-            </div>
-          </div>
 
           <div className="flex-1 w-full bg-[#FAEDDABD] rounded-[40px] p-6 shadow-md">
             <div className="flex items-center justify-between mb-4">

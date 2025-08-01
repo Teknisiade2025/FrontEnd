@@ -10,8 +10,12 @@ const Jadwal = () => {
   const dropdownRef = useRef(null);
 
   const dropdownOptions = {
-    Olahraga: ["Semua", "KMHM", "KMFT"],
-    Seni: ["KMTETI", "KMKMTG"],
+  Olahraga: ["Sepak Bola", "Futsal", "Mobile Legends", "valorant",
+              "Voli", "Tenis Meja", "FIFA", "Atletik",
+              "Badminton", "Basket", "catur", "PUBG"],
+  Seni: ["Band", "Tari Tradisional", "Cipta Puisi", "Fotografi",
+          "Vokal Grup", "Dance", "Poster", "Seni Lukis", 
+          "Solo Vokal", "Monolog" ],
   };
 
   const scheduleData = [
@@ -63,7 +67,8 @@ const Jadwal = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center px-4 sm:px-6 py-8">
+    <div className="w-full flex justify-center px-4 sm:px-6 py-8">
+  <div className="w-full max-w-3xl flex flex-col items-center">
       {/* Schedule Image - Positioned at Top */}
       <div className="mb-8">
         <img
@@ -74,7 +79,7 @@ const Jadwal = () => {
       </div>
 
       {/* Main Container - Centered and Wider */}
-      <div className="w-full max-w-5xl h-auto md:h-[520px] p-6 md:p-8 bg-[#FAEDDABD] shadow-lg rounded-[30px] flex flex-col gap-6">
+      <div className="w-full  h-auto md:h-[520px] p-6 md:p-8 bg-[#FAEDDABD] shadow-lg rounded-[30px] flex flex-col gap-6">
         <style jsx>{`
           .matches-scrollbar::-webkit-scrollbar {
             width: 8px;
@@ -112,7 +117,7 @@ const Jadwal = () => {
 
             <div
               className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-10 ${
-                isDropdownOpen ? "max-h-[400px] opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
+                isDropdownOpen ? "max-h-[300px] overflow-y-auto opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
               }`}
             >
               <div className="grid grid-cols-2 gap-6 p-6 text-[#1D2225]">
@@ -149,7 +154,7 @@ const Jadwal = () => {
                         }}
                       >
                         {option}
-                      </li>
+                      </li> 
                     ))}
                   </ul>
                 </div>
@@ -173,56 +178,71 @@ const Jadwal = () => {
         </div>
       </div>
     </div>
+    </div>
   );
 };
 
 const MatchCard = ({ match }) => {
   return (
-    <div className="w-full p-5 md:p-6 bg-[#5F56487F] shadow-md rounded-[20px] flex flex-row items-center justify-between gap-3 md:gap-6">
-      {/* Team A */}
-      <div className="flex flex-col items-center gap-2 min-w-[80px] flex-1">
-        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
-          {/* <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" /> */}
-        </div>
-        <span className="text-[#1D2225] font-bold font-snowstorm text-sm md:text-base text-center">
-          {match.teamA.name}
-        </span>
-      </div>
+    <div className="w-full px-3 py-4 sm:px-6 sm:py-6 bg-[#5F56487F] shadow-md rounded-[20px] flex flex-col gap-4">
+      {/* Judul Pertandingan */}
+  <div className="text-center">
+    <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-lg font-bold">
+      SEPAK BOLA - PUTRI
+    </div>
+    <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-lg font-bold">
+      BABAK PENYISIHAN
+    </div>
+  </div>
 
-      {/* Match Info */}
-      <div className="flex flex-col items-center text-center gap-2 flex-2 px-4">
-        <p className="text-[#1D2225] text-sm md:text-base font-[Snowstorm] font-bold leading-[135%]">
-          SEPAK BOLA - PENYISIHAN
-        </p>
-        <p className="text-[#1D2225] font-sofia text-xs md:text-sm font-normal">
-          {new Date(match.date).toLocaleString("id-ID", {
-            weekday: "short",
-            day: "numeric",
-            month: "long",
-            hour: "2-digit",
-            minute: "2-digit",
-          })}{" "}
-          WIB
-        </p>
-        <p className="text-[#1D2225] font-sofia text-xs md:text-sm font-normal">{match.venue}</p>
-        <div className="text-[#1D2225] text-2xl md:text-3xl font-snowstorm font-extrabold my-1">V/S</div>
-        <div className="flex items-center gap-1 cursor-pointer hover:underline">
-          <span className="text-[#1D2225] text-xs md:text-sm font-sofia font-bold">Tonton Live</span>
-          <HiArrowRight className="text-[#1D2225] text-xs md:text-sm" />
-        </div>
-      </div>
 
-      {/* Team B */}
-      <div className="flex flex-col items-center gap-2 min-w-[80px] flex-1">
-        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
-          {/* <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" /> */}
+      {/* Baris 2: Logo A | Info Tengah | Logo B */}
+      <div className="flex flex-row items-center justify-between gap-2 sm:gap-4">
+        {/* Team A */}
+        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
+            <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" />
+          </div>
+          <span className="text-[#1D2225] font-bold font-snowstorm text-xs sm:text-sm lg:text-base text-center">
+            {match.teamA.name}
+          </span>
         </div>
-        <span className="text-[#1D2225] font-bold font-snowstorm text-sm md:text-base text-center">
-          {match.teamB.name}
-        </span>
+
+        {/* Info Tengah */}
+        <div className="flex flex-col items-center text-center gap-3 sm:gap-6 mx-auto flex-1 min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
+          <div  className="flex flex-col items-center text-center ">
+          <p className="text-[#1D2225] font-sofia text-xs sm:text-sm font-normal">
+            {new Date(match.date).toLocaleString("id-ID", {
+              weekday: "short",
+              day: "numeric",
+              month: "short",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}{" "}
+            WIB
+          </p>
+          <p className="text-[#1D2225] font-sofia text-xs sm:text-sm">{match.venue}</p>
+          </div>
+          <div className="text-[#1D2225] font-extrabold text-lg sm:text-2xl lg:text-3xl font-snowstorm">V/S</div>
+          <div className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:underline">
+            <span className="text-[#1D2225] text-xs sm:text-sm font-sofia font-bold">Tonton Live</span>
+            <HiArrowRight className="text-[#1D2225] text-xs sm:text-sm" />
+          </div>
+        </div>
+
+        {/* Team B */}
+        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
+            <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" />
+          </div>
+          <span className="text-[#1D2225] font-bold font-snowstorm text-xs sm:text-sm lg:text-base text-center">
+            {match.teamB.name}
+          </span>
+        </div>
       </div>
     </div>
   );
 };
+
 
 export default Jadwal;

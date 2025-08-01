@@ -4,6 +4,7 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { IoChevronDownSharp, IoLogInOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,14 +13,18 @@ const Navbar = () => {
 
   const dropdownRef = useRef();
   const mobileMenuRef = useRef();
+  const router = useRouter() 
 
-  const olahragaList = [
-    { name: 'Badminton', link: '/cabang/badminton' },
-    { name: 'Futsal', link: '/cabang/futsal' },
-    { name: 'Voli', link: '/cabang/voli' },
-    { name: 'Basket', link: '/cabang/basket' },
-    { name: 'Lainnya', link: '/cabang/lainnya' },
-  ];
+  const dropdownOptions = {
+  Olahraga: ["Sepak Bola", "Futsal", "Mobile Legends", "valorant",
+              "Voli", "Tenis Meja", "FIFA", "Atletik",
+              "Badminton", "Basket", "catur", "PUBG"],
+  Seni: ["Band", "Tari Tradisional", "Cipta Puisi", "Fotografi",
+          "Vokal Grup", "Dance", "Poster", "Seni Lukis", 
+          "Solo Vokal", "Monolog" ],
+  };
+
+
 
   // Close dropdown or mobile menu if clicked outside
   useEffect(() => {
@@ -49,34 +54,62 @@ const Navbar = () => {
             width={56}
             height={56}
             className="w-12 h-12 object-contain"
+            onClick={() => router.push("/mainPage")}
           />
 
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-6 lg:gap-12 items-center text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] flex-wrap max-w-[70%]">
-            <a href="#schedule" className="hover:underline whitespace-nowrap">Schedule</a>
-            <a href="#klasemen" className="hover:underline whitespace-nowrap">Klasemen</a>
+            <a href="/schedule" className="hover:underline whitespace-nowrap">Schedule</a>
+            <a href="/klasemen" className="hover:underline whitespace-nowrap">Klasemen</a>
             <div className="relative flex flex-col justify-center" ref={dropdownRef}>
-              <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="flex items-center justify-center gap-1 hover:underline whitespace-nowrap">
-                Cabang <IoChevronDownSharp className="text-lg" />
+              <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} 
+                      className="flex items-center justify-center gap-1 hover:underline whitespace-nowrap">
+                      Cabang <IoChevronDownSharp className="text-lg" />
               </button>
-              <div className={`absolute top-full -left-15 bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] rounded-xl shadow-md z-30 overflow-hidden transition-all duration-1000 ease-in-out transform ${isDropdownOpen ? 'max-h-96 py-4 opacity-100 translate-y-2' : 'max-h-0 opacity-0 -translate-y-4'} origin-top mt-2`}>
-                <ul className="flex flex-col gap-2 text-base text-center min-w-[200px] px-6">
-                  {olahragaList.map((item, index) => (
-                    <li key={index}>
-                      <Link href={item.link} className="block py-1 hover:underline">
-                        {item.name}
-                      </Link>
+              <div className={`absolute top-full -left-1000 min-w-[320px]  grid grid-cols-2 gap-6 p-6 bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] rounded-xl shadow-md z-30 overflow-hidden transition-all duration-1000 ease-in-out transform ${isDropdownOpen ? 'max-h-[500px] opacity-100 translate-y-1' : 'max-h-0 opacity-0 -translate-y-2'} origin-top mt-6`}>
+                {/* Olahraga Column */}
+                <div>
+                <h3 className="font-bold text-center font-sofia text-base mb-3 max-w-[150px] px-3 text-[#806037]">Olahraga</h3>
+                <ul className="flex flex-col gap-2 text-medium font-sofia text-center max-w-[150px]  px-3">
+                  {dropdownOptions.Olahraga.map((option, idx) => (
+                    <li key={`olahraga-${idx}`}
+                    className="cursor-pointer hover:underline text-sm py-1 hover:text-[#806037] transition-colors"
+                    onClick={() => {
+                    router.push(`/subcabang?nama=${option.toUpperCase()}`);
+                    setSelectedDropdown(option);
+                    setIsDropdownOpen(false);}}>
+                      {option}
+                    
                     </li>
                   ))}
                 </ul>
+                </div>
+                {/* Seni Column */}
+                <div>
+                  <h3 className="font-bold text-base text-center mb-3 max-w-[150px] px-3 text-[#806037]">Seni</h3>
+                  <ul className="flex flex-col gap-2 text-base text-center max-w-[150px]  px-3">
+                    {dropdownOptions.Seni.map((option, idx) => (
+                      <li key={`seni-${idx}`}
+                      className="cursor-pointer hover:underline text-sm py-1 hover:text-[#806037] transition-colors"
+                      onClick={() => {
+                        router.push(`/subcabang?nama=${option.toUpperCase()}`);
+                        setSelectedDropdown(option);
+                        setIsDropdownOpen(false);}}>
+                        {option}
+                        
+                      </li>
+                    ))}
+                  </ul>
+              </div>
               </div>
             </div>
-            <a href="#supporter" className="hover:underline whitespace-nowrap">Supporter</a>
-            <a href="#faq" className="hover:underline whitespace-nowrap">FAQ</a>
+            <a href="/supporter" className="hover:underline whitespace-nowrap">Supporter</a>
+            <a href="/faq" className="hover:underline whitespace-nowrap">FAQ</a>
           </div>
 
           {/* Login (Desktop) */}
-          <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer">
+          <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer"
+              onClick={() => router.push("/login")}>
             <span>Login</span>
             <IoLogInOutline size={24} />
           </div>
@@ -97,31 +130,69 @@ const Navbar = () => {
 
         {/* Mobile Menu Items */}
         <nav className="mt-13 flex flex-col gap-13 text-neutral-800 text-xl font-black font-['Sofia_Sans_Condensed'] items-center">
-          <a href="#schedule" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Schedule</a>
-          <a href="#klasemen" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Klasemen</a>
+          <Link href="/schedule" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Schedule</Link>
+          <a href="/klasemen" className="hover:underline" onClick={() => router.push("/klasemen")}>Klasemen</a>
 
           {/* Dropdown Mobile */}
           <div className="w-full">
             <button onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)} className="flex justify-center items-center gap-1 hover:underline w-full">
               Cabang <IoChevronDownSharp className="text-lg" />
             </button>
-            <div className={`overflow-hidden transition-all duration-1000 ease-in-out ${isMobileDropdownOpen ? 'max-h-60 mt-2' : 'max-h-0'}`}>
-              <ul className="flex flex-col gap-2  text-black text-lg bg-gray-100 rounded-lg p-4">
-                {olahragaList.map((item, index) => (
-                  <li key={index}>
-                    <Link href={item.link} onClick={() => setIsMenuOpen(false)} className="block hover:underline text-center">
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isMobileDropdownOpen ? 'max-h-[400px] mt-2' : 'max-h-0'}`}>  
+              <div className="bg-[#FBEBD2] rounded-xl p-4 space-y-6 max-h-[400px] overflow-y-auto">
+              {/* Olahraga */}
+              {/* Olahraga */}
+      <div>
+        <h3 className="font-bold text-base mb-3 text-[#806037] text-center">Olahraga</h3>
+        <ul className="flex flex-col gap-2 text-black text-lg">
+          {dropdownOptions.Olahraga.map((item, index) => (
+            <li key={`mobile-olahraga-${index}`}>
+              <Link
+                href={`/subcabang?nama=${item.toUpperCase()}`}
+                onClick={() => {
+                  setIsMobileDropdownOpen(false);
+                  setIsMenuOpen(false);
+                }}
+                className="block hover:underline text-center"
+              >
+                {item}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Seni */}
+      <div>
+        <h3 className="font-bold text-base mb-3 text-[#806037] text-center">Seni</h3>
+        <ul className="flex flex-col gap-2 text-black text-lg">
+          {dropdownOptions.Seni.map((item, index) => (
+            <li key={`mobile-seni-${index}`}>
+              <Link
+                href={`/subcabang?nama=${item.toUpperCase()}`}
+                onClick={() => {
+                  setIsMobileDropdownOpen(false);
+                  setIsMenuOpen(false);
+                }}
+                className="block hover:underline text-center"
+              >
+                {item}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+       </div>
             </div>
           </div>
 
-          <a href="#supporter" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Supporter</a>
-          <a href="#faq" className="hover:underline" onClick={() => setIsMenuOpen(false)}>FAQ</a>
 
-          <div className="flex items-center gap-2 cursor-pointer self-start">
+
+          <a href="/supporter" className="hover:underline" onClick={() => router.push("/supporterPage")}>Supporter</a>
+          <a href="/faq" className="hover:underline" onClick={() => router.push("/faq")}>FAQ</a>
+
+          <div className="flex items-center gap-2 cursor-pointer self-start"
+          onClick={() => router.push("/login")}>
             <span>Login</span>
             <IoLogInOutline size={24} />
           </div>
