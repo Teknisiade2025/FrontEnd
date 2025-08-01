@@ -4,7 +4,7 @@ import Kalender from "../component/schedule/kalender";
 
 const schedulePage = () => {
   return (
-    <div className="w-full max-w-[1920px] h-auto mx-auto relative overflow-hidden">
+    <div className="w-full max-w-[1920px] h-auto mx-auto relative overflow-hidden pb-[100px]">
       {/* Background */}
       <div
         className="absolute inset-0 bg-no-repeat bg-cover z-0

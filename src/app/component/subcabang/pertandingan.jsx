@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { HiArrowRight } from "react-icons/hi";
 
@@ -17,82 +18,84 @@ const Pertandingan = () => {
     venue: "Gor Kridosono",
     teamA: {
       name: "KMHM",
-      logo: "/supreme-planner-logo.png", // ganti sesuai path logo sebenarnya
+      logo: "/supreme-planner-logo.png",
     },
     teamB: {
       name: "KMHM",
-      logo: "/supermesin-logo.png", // ganti sesuai path logo sebenarnya
+      logo: "/supermesin-logo.png",
     },
     scoreA: 0,
     scoreB: 0,
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full">
+    <div className="flex flex-col items-center gap-4 w-full px-3 sm:px-6 py-8">
       {/* Judul */}
-      <h1 className="text-center text-[#1D2225] font-[Snowstorm_Bold] text-[85px] font-normal leading-none w-full">
+      <h1 className="text-center text-[#1D2225] font-[Snowstorm_Bold] text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-none w-full">
         SEPAK BOLA
       </h1>
 
       {/* Live Indicator */}
-      <div className="flex flex-row items-center gap-1">
+      <div className="flex flex-row items-center gap-2">
         <div
-          className={`w-[38px] h-[38px] rounded-full bg-[#FF0000] ${
+          className={`w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-[#FF0000] ${
             pulse ? "animate-pulse" : ""
           }`}
         />
-        <div className="text-[#1D2225] text-[30px] font-[Sofia_Sans] font-normal leading-none drop-shadow-md">
+        <div className="text-[#1D2225] text-base sm:text-lg md:text-xl font-[Sofia_Sans] drop-shadow-md">
           Next Match
         </div>
       </div>
 
       {/* Kartu Pertandingan */}
-      <div className="w-full max-w-5xl rounded-[43.582px] bg-[#F1E0C4] shadow-[0_6.102px_13.946px_3.487px_rgba(0,0,0,0.25)] px-[55px] py-[20px] flex justify-between items-center">
+      <div className="w-full max-w-4xl rounded-[20px] sm:rounded-[30px] bg-[#F1E0C4] shadow-md px-3 py-4 sm:px-6 sm:py-6 flex flex-row justify-between items-center gap-2 sm:gap-4">
         {/* Tim A */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-[100px] h-[100px] rounded-full overflow-hidden bg-[#1D2225] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 max-w-[100px] sm:max-w-none">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[100px] lg:h-[100px] rounded-full overflow-hidden bg-[#1D2225] flex items-center justify-center">
             {/* <img src={matchData.teamA.logo} alt="Team A Logo" className="object-contain w-[90%]" /> */}
           </div>
-          <div className="text-[#1D2225] text-center font-[Snowstorm] text-[25.465px]">
+          <div className="text-[#1D2225] text-center font-[Snowstorm] text-xs sm:text-sm md:text-base lg:text-lg leading-tight">
             {matchData.teamA.name}
           </div>
         </div>
 
         {/* Info Pertandingan */}
-        <div className="flex flex-col items-center gap-1 text-center">
-          <div className="text-[#1D2225] font-[Snowstorm] text-[22.173px] font-bold leading-[135%]">
+        <div className="flex flex-col items-center gap-1 text-center flex-1 px-2">
+          <div className="text-[#1D2225] font-[Snowstorm] text-xs sm:text-sm md:text-base font-bold">
             SEPAK BOLA
           </div>
-          <div className="text-[#1D2225] font-[Snowstorm] text-[22.173px] font-bold leading-[135%]">
+          <div className="text-[#1D2225] font-[Snowstorm] text-xs sm:text-sm md:text-base font-bold">
             BABAK PENYISIHAN
           </div>
-          <div className="text-[#1D2225] font-[Sofia_Sans] text-[17.047px] font-normal leading-[135%]">
+          <div className="text-[#1D2225] font-[Sofia_Sans] text-xs sm:text-sm">
             {matchData.date}
           </div>
-          <div className="text-[#1D2225] font-[Sofia_Sans] text-[17.047px] font-normal leading-[135%]">
+          <div className="text-[#1D2225] font-[Sofia_Sans] text-xs sm:text-sm">
             {matchData.venue}
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-[#1D2225] text-[74.09px] font-[Snowstorm_Bold]">
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-3 my-1 sm:my-2">
+            <span className="text-[#1D2225] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-[Snowstorm_Bold]">
               {matchData.scoreA}
             </span>
-            <span className="text-[#1D2225] text-[74.09px] font-[Snowstorm_Bold]">:</span>
-            <span className="text-[#1D2225] text-[74.09px] font-[Snowstorm_Bold]">
+            <span className="text-[#1D2225] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-[Snowstorm_Bold]">
+              :
+            </span>
+            <span className="text-[#1D2225] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-[Snowstorm_Bold]">
               {matchData.scoreB}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-[#1D2225] font-[Sofia_Sans] font-bold text-[24.76px] cursor-pointer hover:underline">
+          <div className="flex items-center gap-1 text-[#1D2225] font-[Sofia_Sans] font-bold text-xs sm:text-sm md:text-base cursor-pointer hover:underline">
             Tonton Live
-            <HiArrowRight className="w-[20.745px] h-[20.745px]" />
+            <HiArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
           </div>
         </div>
 
         {/* Tim B */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-[100px] h-[100px] rounded-full overflow-hidden bg-[#1D2225] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 max-w-[100px] sm:max-w-none">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[100px] lg:h-[100px] rounded-full overflow-hidden bg-[#1D2225] flex items-center justify-center">
             {/* <img src={matchData.teamB.logo} alt="Team B Logo" className="object-contain w-[90%]" /> */}
           </div>
-          <div className="text-[#1D2225] text-center font-[Snowstorm] text-[25.465px]">
+          <div className="text-[#1D2225] text-center font-[Snowstorm] text-xs sm:text-sm md:text-base lg:text-lg leading-tight">
             {matchData.teamB.name}
           </div>
         </div>

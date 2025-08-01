@@ -101,7 +101,7 @@ const Atlet = () => {
       </h1>
 
       {/* Tab Navigasi */}
-      <div className="relative flex flex-col sm:flex-row w-full sm:w-[565px] h-auto sm:h-[66px] px-4 py-2 gap-4 sm:gap-[6.031px] rounded-[53.415px] bg-[#1D2225] z-30">
+      <div className="relative flex flex-row flex-wrap w-full sm:w-[565px] h-auto sm:h-[66px] px-4 py-2 gap-4 sm:gap-[6.031px] rounded-[53.415px] bg-[#1D2225] z-30">
         {/* Tab Semua */}
         <div
           className={`flex-1 flex items-center justify-center px-4 py-2 rounded-[45.66px] cursor-pointer transition-all duration-200

@@ -4,13 +4,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { HiArrowRight } from "react-icons/hi";
 import { IoChevronDownSharp } from "react-icons/io5";
 
-const Schedule = () => {
+const Jadwal = () => {
   const [selectedDropdown, setSelectedDropdown] = useState("Semua");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("Mendatang");
   const dropdownRef = useRef(null);
 
-  const dropdownOptions = ["Semua", "KMHM", "KMFT", "KMTETI", "KMKMTG"];
+  const dropdownOptions = {
+    Olahraga: ["Semua", "KMHM", "KMFT"],
+    Seni: ["KMTETI", "KMKMTG"],
+  };
 
   const scheduleData = [
     {
@@ -48,12 +50,7 @@ const Schedule = () => {
     return match.teamA.name === selectedDropdown || match.teamB.name === selectedDropdown;
   });
 
-  const now = new Date();
-  const isUpcoming = (date) => new Date(date) > now;
-
-  const displayedMatches = filteredSchedule.filter((match) =>
-    selectedTab === "Mendatang" ? isUpcoming(match.date) : !isUpcoming(match.date)
-  );
+  const displayedMatches = filteredSchedule;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -66,69 +63,86 @@ const Schedule = () => {
   }, []);
 
   return (
-    <div className="w-full px-4 py-6 flex flex-col items-center">
-      <div className="w-full max-w-screen-xl mx-auto">
-        <div className="flex flex-col items-center w-full gap-6">
-          {/* Gambar Jadwal */}
-          <div className="flex justify-center items-center w-full">
-            <img
-              src="/subcabang/schedule.svg"
-              alt="Schedule"
-              className="w-[300px] h-auto object-contain"
-            />
-          </div>
+    <div className="w-full flex flex-col items-center px-4 sm:px-6 py-8">
+      {/* Schedule Image - Positioned at Top */}
+      <div className="mb-8">
+        <img
+          src="/subcabang/schedule.svg"
+          alt="Schedule"
+          className="w-[200px] sm:w-[280px] md:w-[350px] h-auto object-contain"
+        />
+      </div>
 
-          {/* Main Container: DITENGAH */}
-          <div className="w-full max-w-[800px] mx-auto h-[440px] p-[30px] bg-[#FAEDDABD] shadow-md rounded-[40px] flex flex-col gap-6">
-            <style jsx>{`
-              .matches-scrollbar::-webkit-scrollbar {
-                width: 12px;
-              }
+      {/* Main Container - Centered and Wider */}
+      <div className="w-full max-w-5xl h-auto md:h-[520px] p-6 md:p-8 bg-[#FAEDDABD] shadow-lg rounded-[30px] flex flex-col gap-6">
+        <style jsx>{`
+          .matches-scrollbar::-webkit-scrollbar {
+            width: 8px;
+          }
+          .matches-scrollbar::-webkit-scrollbar-track {
+            background: rgba(251, 235, 210, 0.3);
+            border-radius: 8px;
+            margin: 8px 0;
+          }
+          .matches-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #806037;
+            border-radius: 8px;
+            border: 1px solid rgba(250, 237, 218, 0.7);
+            min-height: 30px;
+          }
+          .matches-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #6b4e2a;
+          }
+          .matches-scrollbar {
+            scrollbar-color: #806037 rgba(251, 235, 210, 0.3);
+            scrollbar-width: thin;
+          }
+        `}</style>
 
-              .matches-scrollbar::-webkit-scrollbar-track {
-                background: rgba(251, 235, 210, 0.3);
-                border-radius: 10px;
-              }
+        {/* Dropdown Filter - Full Width */}
+        <div className="w-full" ref={dropdownRef}>
+          <div className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="w-full flex items-center justify-between gap-3 bg-[#806037] text-[#FBEBD2] px-6 py-3 rounded-full shadow-md font-sofia font-extrabold text-base"
+            >
+              {selectedDropdown}
+              <IoChevronDownSharp size={16} />
+            </button>
 
-              .matches-scrollbar::-webkit-scrollbar-thumb {
-                background-color: #806037;
-                border-radius: 10px;
-                border: 2px solid rgba(250, 237, 218, 0.7);
-              }
-
-              .matches-scrollbar::-webkit-scrollbar-thumb:hover {
-                background-color: #6B4E2A;
-              }
-
-              .matches-scrollbar {
-                scrollbar-color: #806037 rgba(251, 235, 210, 0.3);
-                scrollbar-width: thin;
-              }
-            `}</style>
-
-            {/* Header Filter */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              {/* Dropdown */}
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center justify-between gap-2 bg-[#806037] text-[#FBEBD2] px-6 py-2 rounded-full shadow-md font-sofia font-extrabold text-[18px] min-w-[140px]"
-                >
-                  {selectedDropdown}
-                  <IoChevronDownSharp size={18} />
-                </button>
-                <div
-                  className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out z-10 ${
-                    isDropdownOpen
-                      ? "max-h-[500px] opacity-100 translate-y-1"
-                      : "max-h-0 opacity-0 -translate-y-2"
-                  }`}
-                >
-                  <ul className="flex flex-col px-4 py-2 text-[#1D2225]">
-                    {dropdownOptions.map((option, idx) => (
+            <div
+              className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-10 ${
+                isDropdownOpen ? "max-h-[400px] opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
+              }`}
+            >
+              <div className="grid grid-cols-2 gap-6 p-6 text-[#1D2225]">
+                {/* Olahraga Column */}
+                <div>
+                  <h3 className="font-bold text-base mb-3 text-[#806037]">Olahraga</h3>
+                  <ul className="flex flex-col gap-2">
+                    {dropdownOptions.Olahraga.map((option, idx) => (
                       <li
-                        key={idx}
-                        className="cursor-pointer py-1 hover:underline"
+                        key={`olahraga-${idx}`}
+                        className="cursor-pointer hover:underline text-sm py-1 hover:text-[#806037] transition-colors"
+                        onClick={() => {
+                          setSelectedDropdown(option);
+                          setIsDropdownOpen(false);
+                        }}
+                      >
+                        {option}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Seni Column */}
+                <div>
+                  <h3 className="font-bold text-base mb-3 text-[#806037]">Seni</h3>
+                  <ul className="flex flex-col gap-2">
+                    {dropdownOptions.Seni.map((option, idx) => (
+                      <li
+                        key={`seni-${idx}`}
+                        className="cursor-pointer hover:underline text-sm py-1 hover:text-[#806037] transition-colors"
                         onClick={() => {
                           setSelectedDropdown(option);
                           setIsDropdownOpen(false);
@@ -140,41 +154,22 @@ const Schedule = () => {
                   </ul>
                 </div>
               </div>
-
-              {/* Tabs */}
-              <div className="flex flex-wrap justify-center gap-2 px-4 py-2 rounded-full bg-[#1D2225] shadow-md w-full md:w-auto">
-                {["Mendatang", "Selesai"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setSelectedTab(tab)}
-                    className={`px-6 py-2 font-sofia font-extrabold text-sm md:text-[16px] rounded-full ${
-                      selectedTab === tab
-                        ? "bg-[#806037] text-[#FBEBD2]"
-                        : "bg-[#1D2225] text-[#FBEBD2]"
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Match Cards */}
-            <div
-              className="flex flex-col gap-4 overflow-y-auto matches-scrollbar pr-2"
-              style={{ maxHeight: "240px" }}
-            >
-              {displayedMatches.length > 0 ? (
-                displayedMatches.map((match) => (
-                  <MatchCard key={match.id} match={match} />
-                ))
-              ) : (
-                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-4">
-                  Tidak ada jadwal untuk tim ini.
-                </div>
-              )}
             </div>
           </div>
+        </div>
+
+        {/* Matches */}
+        <div
+          className="flex flex-col gap-4 overflow-y-auto matches-scrollbar pr-2"
+          style={{ maxHeight: "420px" }}
+        >
+          {displayedMatches.length > 0 ? (
+            displayedMatches.map((match) => <MatchCard key={match.id} match={match} />)
+          ) : (
+            <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
+              Tidak ada jadwal untuk tim ini.
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -183,50 +178,51 @@ const Schedule = () => {
 
 const MatchCard = ({ match }) => {
   return (
-    <div className="w-full p-4 bg-[#5F56487F] shadow-md rounded-[30px] flex flex-col md:flex-row items-center justify-between gap-4">
+    <div className="w-full p-5 md:p-6 bg-[#5F56487F] shadow-md rounded-[20px] flex flex-row items-center justify-between gap-3 md:gap-6">
       {/* Team A */}
-      <div className="flex flex-col items-center gap-2">
-        <div className="w-[70px] h-[70px] rounded-full bg-white flex items-center justify-center overflow-hidden">
-          {/* <img src={match.teamA.logo} alt={match.teamA.name} /> */}
+      <div className="flex flex-col items-center gap-2 min-w-[80px] flex-1">
+        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
+          {/* <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" /> */}
         </div>
-        <span className="text-[#1D2225] font-bold font-snowstorm text-[20px]">{match.teamA.name}</span>
+        <span className="text-[#1D2225] font-bold font-snowstorm text-sm md:text-base text-center">
+          {match.teamA.name}
+        </span>
       </div>
 
-      {/* Info */}
-      <div className="flex flex-col items-center text-center gap-2">
-        <p className="text-[#1D2225] text-[18px] font-[Snowstorm] font-bold leading-[135%]">
+      {/* Match Info */}
+      <div className="flex flex-col items-center text-center gap-2 flex-2 px-4">
+        <p className="text-[#1D2225] text-sm md:text-base font-[Snowstorm] font-bold leading-[135%]">
           SEPAK BOLA - PENYISIHAN
         </p>
-        <p className="text-[#1D2225] font-sofia text-[14px] font-normal">
+        <p className="text-[#1D2225] font-sofia text-xs md:text-sm font-normal">
           {new Date(match.date).toLocaleString("id-ID", {
             weekday: "short",
             day: "numeric",
             month: "long",
             hour: "2-digit",
             minute: "2-digit",
-          })} WIB
+          })}{" "}
+          WIB
         </p>
-        <p className="text-[#1D2225] font-sofia text-[14px] font-normal">{match.venue}</p>
-        <div className="flex items-center gap-3 text-[#1D2225] text-[32px] font-snowstorm">
-          <span>0</span>
-          <span>:</span>
-          <span>0</span>
-        </div>
-        <div className="flex items-center gap-1 cursor-pointer">
-          <span className="text-[#1D2225] text-[14px] font-sofia font-bold">Tonton Live</span>
-          <HiArrowRight className="text-[#1D2225] text-[16px]" />
+        <p className="text-[#1D2225] font-sofia text-xs md:text-sm font-normal">{match.venue}</p>
+        <div className="text-[#1D2225] text-2xl md:text-3xl font-snowstorm font-extrabold my-1">V/S</div>
+        <div className="flex items-center gap-1 cursor-pointer hover:underline">
+          <span className="text-[#1D2225] text-xs md:text-sm font-sofia font-bold">Tonton Live</span>
+          <HiArrowRight className="text-[#1D2225] text-xs md:text-sm" />
         </div>
       </div>
 
       {/* Team B */}
-      <div className="flex flex-col items-center gap-2">
-        <div className="w-[70px] h-[70px] rounded-full bg-white flex items-center justify-center overflow-hidden">
-          {/* <img src={match.teamB.logo} alt={match.teamB.name} /> */}
+      <div className="flex flex-col items-center gap-2 min-w-[80px] flex-1">
+        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
+          {/* <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" /> */}
         </div>
-        <span className="text-[#1D2225] font-bold font-snowstorm text-[20px]">{match.teamB.name}</span>
+        <span className="text-[#1D2225] font-bold font-snowstorm text-sm md:text-base text-center">
+          {match.teamB.name}
+        </span>
       </div>
     </div>
   );
 };
 
-export default Schedule;
+export default Jadwal;
