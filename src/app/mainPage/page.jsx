@@ -23,7 +23,7 @@ const Page = () => {
       img.onload = () => {
         const screenWidth = window.innerWidth
         const ratio = img.height / img.width
-        const adjustedMultiplier = isMobile ? 0.907 : 0.94 
+        const adjustedMultiplier = isMobile ? 0.907 : 0.94
         const calculatedHeight = screenWidth * ratio * adjustedMultiplier
         setBgHeight(`${calculatedHeight}px`)
         setBgImage(imagePath)
