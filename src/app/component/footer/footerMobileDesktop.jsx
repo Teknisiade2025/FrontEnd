@@ -32,9 +32,9 @@ const FooterTeknisiade = () => {
 
 
       {/* Konten */}
-      <div className="relative z-10 max-w-screen-xl mx-auto px-6 py-12 md:py-16  flex flex-col md:flex-row justify-center items-center md:items-start gap-10 md:gap-10 lg:gap-20 mt-70 md:mt-15 lg:mt-48">
+      <div className="relative z-10 max-w-screen-xl mx-auto px-6 py-12 md:py-16  flex flex-col md:flex-row justify-center items-center md:items-start gap-10 md:gap-10 lg:gap-20 -mt-[2vh] sm:-mt-[5vh] md:mt-15 lg:mt-45">
         {/* Kolom Kiri */}
-        <div className="flex flex-col gap-4 text-neutral-800 items-center md:items-start text-center md:text-left ">
+        <div className="flex flex-col gap-4 text-neutral-800 items-center md:items-start text-center md:text-left md:pt-0 -mb-[2vh] mt-[30vh] sm:mt-[25vh] md:mt-[15vh] lg:mt-[34vh] ">
           <Image
             src="/TeksTeknisiade2025.png"
             alt="Logo Teknisade"
@@ -73,7 +73,7 @@ const FooterTeknisiade = () => {
         </div>
 
         {/* Kolom Kanan */}
-        <div className="flex flex-col items-center text-neutral-800 text-center mt-10 md:mt-20">
+        <div className="flex flex-col items-center text-neutral-800 text-center -mb-[20vh] mt-10 md:mt-20 lg:mt-[50vh]">
           <div className="font-bold text-base md:text-sm lg:text-2xl font-['Sofia_Sans_Condensed']">
             Diselenggarakan oleh
           </div>
