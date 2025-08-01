@@ -15,28 +15,31 @@ export default function Supporter({ items }) {
 
   return (
     <div 
-      className="min-h-screen w-full flex flex-col justify-center items-center bg-no-repeat bg-cover"
-      style={{ backgroundImage: "url('/supporter/Background Supporter.svg')" }}
+      className="min-h-screen w-full flex flex-col justify-center items-center bg-no-repeat bg-cover bg-[url('/supporter/bg-sp-mb.svg')] sm:bg-[url('/supporter/bg-sp-dt.svg')]"
     >
       {/* ===== TEXT CONTENT SECTION ===== */}
-      <div className="flex w-full justify-end pr-15 pt-55 pb-75">
+      <div className="flex w-full justify-center sm:justify-end px-2 sm:px-4 lg:pr-15 pt-110 sm:pt-0 lg:pt-55 pb-15 sm:pb-5 lg:pb-75">
 
 
-        <div className="bg-[#FBEBD2] flex items-start shadow-lg shadow-[#000000]/40 overflow-hidden max-w-[650px] pr-12 py-8 w-full rounded-[50px]">
+        <div className="bg-[#FBEBD2] flex items-center sm:items-start shadow-lg shadow-black/40 overflow-hidden sm:max-w-[430px] sm:max-h-250px lg:max-w-[650px] pr-12 py-8 w-full rounded-[50px]">
 
             
-            <div className="w-1/3 flex justify-center top-[20px]">
-                <img src="/supporter/logo_supersonik.svg" alt="Logo" className="w-25 h-25 object-contain"/>
+            <div className="w-1/3 flex justify-center top-[20px] ml-2">
+                <img src="/supporter/logo_supersonik.svg" alt="Logo" className="w-15 h-15 lg:w-27 lg:h-27 object-contain"/>
             </div>
 
-            <div className="w-2/3 ">
-                <h1 className="font-snowstorm font-light  text-[#1D2225] text-[60px] leading-none">SUPERSONIK</h1>
-                <h2 className="font-sofia font-medium text-[30px] text-[#1D2225] -mt-2">Supporter Solid Teknik UGM</h2>
-                <p className="text-[22px] font-sofia font-light text-[#1D2225]/80 text-justify leading-8 mt-2">
+            <div className="w-2/3">
+            <h1 className="font-snowstorm font-light text-[#1D2225] text-[36px] sm:text-[40px] lg:text-[60px] leading-none text-center sm:text-left">
+                SUPERSONIK
+            </h1>
+            <h2 className="font-sofia font-medium sm:text-[18px] lg:text-[30px] text-[#1D2225] -mt-1 sm:-mt-2 text-center sm:text-left">
+                Supporter Solid Teknik UGM
+            </h2>
+            <p className="text-[15px] sm:text-[15px] lg:text-[22px] font-sofia font-light text-[#1D2225]/80 text-justify leading-relative mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
             </div>
         </div>
             
@@ -44,8 +47,8 @@ export default function Supporter({ items }) {
      
 
       {/* ===== CAROUSEL SECTION ===== */}
-      <div className="w-full px-15 pb-20">
-        <h2 className="font-snowstorm font-light text-[#1D2225] text-[60px] text-center mb-20">SUPPORTER</h2>
+      <div className="w-full sm:px-15 pb-20">
+        <h2 className="font-snowstorm font-light text-[#1D2225] text-[35px] sm:text-[50px] lg:text-[60px] text-center -mb-2 sm:mb-0 lg:mb-20">SUPPORTER</h2>
 
         <div className="mx-auto">
         <Carousel 
@@ -57,40 +60,27 @@ export default function Supporter({ items }) {
               return (
                 <CarouselItem
                   key={idx}
-                  className="basis-1/3"
+                  className="basis-full sm:basis-1/2 lg:basis-1/3"
                 >
                   <div className="p-2">
                     <div
                       className={`h-full flex flex-col transition-all overflow-hidden`}
                            >
                       {/* === ROW 1: BG + Logo + Nama === */}
-                      <div
-                        className="flex flex-col w-[300x] h-[450px] shadow-lg items-center py-10 bg-no-repeat bg-cover rounded-[20px]"
-                        style={{
-                          backgroundImage: "url('/supporter/card1.svg')",
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                        }}
-                      >
-                        <div className="flex flex-col items-center gap-6">
+                      <div className="relative w-[300px] lg:w-[400px] h-[400px] lg:h-[450px] shadow-lg rounded-[20px] overflow-hidden mx-auto items-center justify-center">
                         <img
-                          src={item.logo}
-                          alt={item.name}
-                          className="w-55 h-55 object-contain mt-10"
-                        />
-                        <h3 className="font-snowstorm text-[60px] text-[#AF862D]/90 pt-4">
-                          {item.name}
-                        </h3>
-                        </div>
-                        
+                          src={item.card}
+                          className="absolute inset-0 w-full h-full object-cover" 
+                          alt="Card content" />
+        
                       </div>
 
                       {/* === ROW 2: Text Only === */}
-                      <div className="flex flex-col items-center text-center p-6">
-                        <h4 className="font-snowstorm font-light text-[60px] text-[#1D2225]/80">
+                      <div className="flex flex-col items-center text-center px-4 -pt-20 lg:p-6">
+                        <h4 className="font-snowstorm font-light text-[35px] lg:text-[60px] text-[#1D2225]/80">
                           {item.spt_name}
                         </h4>
-                        <p className="font-sofia font-medium text-[30px] text-[#1D2225]/80 leading-tight -mt-4">
+                        <p className="font-sofia font-medium text-[20px] lg:text-[30px] text-[#1D2225]/80 leading-tight -mt-4">
                           {item.spt_dec}
                         </p>
                       </div>
@@ -102,12 +92,12 @@ export default function Supporter({ items }) {
           </CarouselContent>
 
           <CarouselPrevious 
-            className="absolute left-8 top-[80%] transform -translate-y-1/2 bg-transparent shadow-none border-none p-0 hover:bg-transparent focus:ring-0"></CarouselPrevious>
+            className="absolute left-8 top-[90%] lg:top-[80%] transform -translate-y-1/2 bg-transparent shadow-none border-none p-0 hover:bg-transparent focus:ring-0"></CarouselPrevious>
 
             <CarouselNext 
-            className="absolute right-8 top-[80%] transform -translate-y-1/2 bg-transparent shadow-none border-none p-0 hover:bg-transparent focus:ring-0"></CarouselNext>
+            className="absolute right-8 top-[90%] lg:top-[80%] transform -translate-y-1/2 bg-transparent shadow-none border-none p-0 hover:bg-transparent focus:ring-0"></CarouselNext>
         </Carousel>
-     a
+     
         </div>
       
       </div>

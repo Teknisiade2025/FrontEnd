@@ -3,62 +3,52 @@ import Supporter from "./supporter";
 export default function SupporterPage() {
 const items = [
         { 
-        logo: "/logoKMHM/HMTPWK.svg", 
-        name: "HMTPWK", 
+        card: "/card kmhm/Card HMTPWK.svg", 
         spt_name: "SUPARMAN" ,
         spt_dec: "Supporter Extreme Planology Engineering UGM"
       },
       { 
-        logo: "/logoKMHM/KMTA.svg", 
-        name: "KMTA", 
+        card: "/card kmhm/Card HMTI.svg",  
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet"
       },
       { 
-        logo: "/logoKMHM/KMTG.svg", 
-        name: "KMTG", 
+        card: "/card kmhm/Card HMTG.svg",  
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet" 
       },
       { 
-        logo: "/logoKMHM/KMTSL.svg", 
-        name: "KMTSL", 
+        card: "/card kmhm/Card KMTA.svg", 
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet"
       },
       { 
-        logo: "/logoKMHM/HMTG.svg", 
-        name: "HMTG", 
+        card: "/card kmhm/Card KMTETI.svg", 
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet" 
       },
       { 
-        logo: "/logoKMHM/HMTI.svg", 
-        name: "HMTI", 
+        card: "/card kmhm/Card KMTG.svg", 
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet" 
       },
       { 
-        logo: "/logoKMHM/KMTETI.svg", 
-        name: "KMTETI", 
+        card: "/card kmhm/Card KMTK.svg",  
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet"
       },
       { 
-        logo: "/logoKMHM/KMTNTF.svg", 
-        name: "KMTNTF", 
+        card: "/card kmhm/Card KMTM.svg",  
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet"
       },
       { 
-        logo: "/logoKMHM/KMTM.svg", 
-        name: "KMTM", 
+        card: "/card kmhm/Card KMTNTF.svg",  
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet"
       },
       { 
-        logo: "/logoKMHM/KMTK.svg", 
-        name: "KMTK", 
+        card: "/card kmhm/Card KMTSL.svg",  
         spt_name: "xxx" ,
         spt_dec: "Lorem ipsum dolor sit amet" 
       },
