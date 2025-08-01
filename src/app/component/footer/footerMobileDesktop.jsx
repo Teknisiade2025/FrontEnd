@@ -4,7 +4,7 @@ import { FaInstagram, FaYoutube } from 'react-icons/fa';
 
 const FooterTeknisiade = () => {
   return (
-    <footer className="relative w-full">
+    <footer className="relative w-full -top-38">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         {/* Desktop Background */}
@@ -32,7 +32,7 @@ const FooterTeknisiade = () => {
 
 
       {/* Konten */}
-      <div className="relative z-10 max-w-screen-xl mx-auto px-6 py-12 md:py-24  flex flex-col md:flex-row justify-center items-center md:items-start gap-10 md:gap-10 lg:gap-20 mt-70 md:mt-15 lg:mt-45">
+      <div className="relative z-10 max-w-screen-xl mx-auto px-6 py-12 md:py-16  flex flex-col md:flex-row justify-center items-center md:items-start gap-10 md:gap-10 lg:gap-20 mt-70 md:mt-15 lg:mt-48">
         {/* Kolom Kiri */}
         <div className="flex flex-col gap-4 text-neutral-800 items-center md:items-start text-center md:text-left ">
           <Image

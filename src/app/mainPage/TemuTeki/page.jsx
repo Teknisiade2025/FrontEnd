@@ -12,28 +12,28 @@ const page = () => {
           alt="Judul Temu Teki"
           width={1564}
           height={416}
-          className="w-full h-auto object-contain"
+          className=" w-[120vw] h-[99vh] object-contain"
         />
 
         {/* Teks deskripsi */}
-        <div className="w-full flex flex-col md:flex-row justify-between gap-12 md:gap-[160px] z-10">
-          <p className="w-full md:w-[502px] text-justify text-neutral-900 text-lg md:text-3xl font-bold font-['Sofia_Sans_Condensed'] leading-relaxed">
+        <div className="w-full flex flex-col md:flex-row justify-between gap-12 md:gap-[160px] -top-[100vh] z-10 ">
+          <p className="w-full md:w-[20vw] text-justify text-neutral-900 text-lg md:text-3xl lg:text-[1.5vw] font-bold font-['Sofia_Sans_Condensed'] leading-relaxed">
             Teki, sang badak bercula satu, kembali hadir membawa semangat juang yang tak tergoyahkan. Tahun ini, ia tampil gagah dengan kostum bertema kesatria yang melambangkan kekuatan, keberanian, dan ketangguhan.
           </p>
-          <p className="w-full md:w-[502px] text-justify text-neutral-900 text-lg md:text-3xl font-bold font-['Sofia_Sans_Condensed'] leading-relaxed">
+          <p className="w-full md:w-[20vw] text-justify text-neutral-900 text-lg md:text-3xl font-bold lg:text-[1.5vw] font-['Sofia_Sans_Condensed'] leading-relaxed">
             Sosok Teki merepresentasikan semangat para atlet, seniman, KM/HM, dan panitia Teknisiade yang siap berjuang dengan tekad baja, solidaritas tinggi, dan jiwa pantang menyerah layaknya seorang kesatria sejati.
           </p>
         </div>
       </div>
 
       {/* Gambar Badak (posisi tengah, absolute) */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 z-50">
+      <div className="absolute left-1/2 -translate-x-1/2 top-[47vh] z-50">
         <Image
           src="/TemuTekiLP/Badak.png"
           alt="Maskot Badak"
           width={743}
           height={1069}
-          className="w-[400px] md:w-[500px] lg:w-[30vw] h-auto"
+          className="w-[400px] md:w-[500px] lg:w-[40vw] h-auto"
         />
       </div>
     </section>

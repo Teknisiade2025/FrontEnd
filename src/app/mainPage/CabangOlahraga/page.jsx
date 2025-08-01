@@ -7,8 +7,6 @@ const olahragaList = [
   { src: '/OlahragaLP/basket.png', alt: 'Basket' },
   { src: '/OlahragaLP/badminton.png', alt: 'Badminton' },
   { src: '/OlahragaLP/futsal.png', alt: 'Futsal' },
-  { src: '/OlahragaLP/futsal.png', alt: 'Futsal' },
-  { src: '/OlahragaLP/futsal.png', alt: 'Futsal' },
   // Tambahkan cabang lainnya jika ada
 ]
 

@@ -15,7 +15,7 @@ const SponsorSection = () => {
   const visibleSponsors = isMobile ? sponsors.slice(0, 5) : sponsors;
 
   return (
-    <section className="w-[80%] flex justify-center items-center min-h-screen bg-transparent px-4 md:px-8 py-16 mt-130 m-30 ">
+    <section className="w-[80%] flex justify-center items-center min-h-screen bg-transparent px-4 md:px-8 py-16 mt-30 m-30 ">
       <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center md:items-center gap-10">
         
         {/* Kiri: Deskripsi (1/6) */}
