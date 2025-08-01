@@ -2,10 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { HiArrowRight } from "react-icons/hi";
+import { useSearchParams } from 'next/navigation'
 
 const Pertandingan = () => {
   const [pulse, setPulse] = useState(true);
-
+  const searchParams = useSearchParams()
+  const cabang = searchParams.get('nama')
   useEffect(() => {
     const interval = setInterval(() => {
       setPulse((prev) => !prev);
@@ -32,8 +34,14 @@ const Pertandingan = () => {
     <div className="flex flex-col items-center gap-4 w-full px-3 sm:px-6 py-8">
       {/* Judul */}
       <h1 className="text-center text-[#1D2225] font-[Snowstorm_Bold] text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-none w-full">
-        SEPAK BOLA
+        <strong>{cabang}</strong>
       </h1>
+
+      {cabang === 'Badminton' && <p className="text-center text-[#1D2225] font-[Snowstorm_Bold] text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-none w-full"> BADMINTON</p>}
+      {cabang === 'Futsal' && <p>FUTSAL</p>}
+      {cabang === 'Voli' && <p>VOLI</p>}
+      {cabang === 'Basket' && <p>BASKET</p>}
+      {cabang === 'Lainnya' && <p>LAINNYA</p>}
 
       {/* Live Indicator */}
       <div className="flex flex-row items-center gap-2">

@@ -3,6 +3,9 @@ import React from 'react'
 import { IoChevronDownSharp, IoLogInOutline } from 'react-icons/io5'
 
 const NavbarDesktop = () => {
+   const handleCabangClick = (namaCabang) => {
+    router.push(`/subcabang?cabang=${namaCabang}`)
+  }
   return (
 
     <div className='fixed top-0 left-0 w-full z-50 bg-transparent'>

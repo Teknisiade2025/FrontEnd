@@ -4,6 +4,7 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { IoChevronDownSharp, IoLogInOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,14 +13,19 @@ const Navbar = () => {
 
   const dropdownRef = useRef();
   const mobileMenuRef = useRef();
+  const router = useRouter()
 
   const olahragaList = [
-    { name: 'Badminton', link: '/cabang/badminton' },
-    { name: 'Futsal', link: '/cabang/futsal' },
-    { name: 'Voli', link: '/cabang/voli' },
-    { name: 'Basket', link: '/cabang/basket' },
-    { name: 'Lainnya', link: '/cabang/lainnya' },
-  ];
+  { name: 'Badminton', link: '/subcabang?nama=badminton' },
+  { name: 'Futsal', link: '/subcabang?nama=futsal' },
+  { name: 'Voli', link: '/subcabang?nama=voli' },
+  { name: 'Basket', link: '/subcabang?nama=basket' },
+  { name: 'Lainnya', link: '/subcabang?nama=lainnya' },
+];
+
+  const handleCabangClick = (namaCabang) => {
+    router.push(`/subcabang?cabang=${namaCabang}`)
+  }
 
   // Close dropdown or mobile menu if clicked outside
   useEffect(() => {
@@ -49,12 +55,13 @@ const Navbar = () => {
             width={56}
             height={56}
             className="w-12 h-12 object-contain"
+            onClick={() => router.push("/mainPage")}
           />
 
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-6 lg:gap-12 items-center text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] flex-wrap max-w-[70%]">
-            <a href="#schedule" className="hover:underline whitespace-nowrap">Schedule</a>
-            <a href="#klasemen" className="hover:underline whitespace-nowrap">Klasemen</a>
+            <a href="/schedule" className="hover:underline whitespace-nowrap">Schedule</a>
+            <a href="/klasemen" className="hover:underline whitespace-nowrap">Klasemen</a>
             <div className="relative flex flex-col justify-center" ref={dropdownRef}>
               <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="flex items-center justify-center gap-1 hover:underline whitespace-nowrap">
                 Cabang <IoChevronDownSharp className="text-lg" />
@@ -71,12 +78,13 @@ const Navbar = () => {
                 </ul>
               </div>
             </div>
-            <a href="#supporter" className="hover:underline whitespace-nowrap">Supporter</a>
-            <a href="#faq" className="hover:underline whitespace-nowrap">FAQ</a>
+            <a href="/supporter" className="hover:underline whitespace-nowrap">Supporter</a>
+            <a href="/faq" className="hover:underline whitespace-nowrap">FAQ</a>
           </div>
 
           {/* Login (Desktop) */}
-          <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer">
+          <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer"
+              onClick={() => router.push("/login")}>
             <span>Login</span>
             <IoLogInOutline size={24} />
           </div>
@@ -97,8 +105,8 @@ const Navbar = () => {
 
         {/* Mobile Menu Items */}
         <nav className="mt-13 flex flex-col gap-13 text-neutral-800 text-xl font-black font-['Sofia_Sans_Condensed'] items-center">
-          <a href="#schedule" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Schedule</a>
-          <a href="#klasemen" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Klasemen</a>
+          <Link href="/schedule" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Schedule</Link>
+          <a href="/klasemen" className="hover:underline" onClick={() => router.push("/klasemen")}>Klasemen</a>
 
           {/* Dropdown Mobile */}
           <div className="w-full">
@@ -118,10 +126,13 @@ const Navbar = () => {
             </div>
           </div>
 
-          <a href="#supporter" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Supporter</a>
-          <a href="#faq" className="hover:underline" onClick={() => setIsMenuOpen(false)}>FAQ</a>
 
-          <div className="flex items-center gap-2 cursor-pointer self-start">
+
+          <a href="/supporter" className="hover:underline" onClick={() => router.push("/supporterPage")}>Supporter</a>
+          <a href="/faq" className="hover:underline" onClick={() => router.push("/faq")}>FAQ</a>
+
+          <div className="flex items-center gap-2 cursor-pointer self-start"
+          onClick={() => router.push("/login")}>
             <span>Login</span>
             <IoLogInOutline size={24} />
           </div>
