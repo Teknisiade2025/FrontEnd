@@ -51,7 +51,7 @@ const page = () => {
       <div className="max-w-xl md:w-2/5 hidden md:block">
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-black text-6xl md:text-[6vw] font-bold font-sans drop-shadow-md">
+            <h2 className="text-black text-6xl md:text-[6vw] font-bold font-sans drop-shadow-md font-snowstorm">
               CHANT
             </h2>
             <Image
