@@ -253,9 +253,6 @@ const Kalender = () => {
                     <div className="font-bold font-snowstorm text-[#806037] text-sm">
                       {match.sport} - {match.stage}
                     </div>
-                    <div className="text-xs text-[#1D2225] font-sofia">
-                      {formatDate(match.date)}
-                    </div>
                   </div>
                   <div className="text-center font-sofia font-bold text-[#1D2225] mb-2">
                     {match.teamA.name} vs {match.teamB.name}
@@ -277,24 +274,6 @@ const Kalender = () => {
         )}
       </div>
 
-      {/* Tooltip untuk desktop */}
-      {!isMobile && hoveredMatch && (
-        <div 
-          className="fixed z-50 pointer-events-none transform -translate-x-1/2 -translate-y-full"
-          style={{ left: `${hoverPosition.x}px`, top: `${hoverPosition.y}px` }}
-        >
-          <div className="bg-[#1D2225] text-[#FBEBD2] p-4 rounded-[20px] shadow-lg max-w-xs">
-            <div className="font-bold font-snowstorm text-[16px] mb-2 text-center">
-              {hoveredMatch.sport} - {hoveredMatch.stage}
-            </div>
-            <div className="text-sm font-sofia text-center">{hoveredMatch.teamA.name} vs {hoveredMatch.teamB.name}</div>
-            <div className="mt-2 text-xs space-y-1">
-              <div className="flex items-center gap-2"><IoTimeOutline /> {new Date(hoveredMatch.date).toLocaleString('id-ID')}</div>
-              <div className="flex items-center gap-2"><IoLocationOutline /> {hoveredMatch.venue}</div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Tooltip untuk hover pada tanggal (desktop) */}
       {!isMobile && hoveredDate && (
@@ -303,22 +282,16 @@ const Kalender = () => {
           style={{ left: `${hoverPosition.x}px`, top: `${hoverPosition.y}px` }}
         >
           <div className="bg-[#1D2225] text-[#FBEBD2] p-4 rounded-[20px] shadow-lg max-w-sm">
-            <div className="font-bold font-snowstorm text-[14px] mb-2 text-center text-white ">
-              {hoveredDate.date.toLocaleDateString('id-ID', { 
-                weekday: 'long', 
-                day: 'numeric', 
-                month: 'long' 
-              })}
-            </div>
             <div className="space-y-2">
               {hoveredDate.matches.map(match => (
                 <div key={match.id} className="text-xs border-b border-[#806037] pb-1 last:border-b-0">
                   <div className="font-sofia font-bold">{match.teamA.name} vs {match.teamB.name}</div>
-                  <div className="text-[#FAEDDABD]">{match.sport} - {match.stage}</div>
+                  <div className="font-sofia font-bold text-[#FAEDDABD]">{match.sport} - {match.stage}</div>
                   <div className="flex items-center gap-1 mt-1">
                     <IoTimeOutline size={10} />
                     {formatTime(match.date)}
                   </div>
+                  <div className="flex items-center gap-2"><IoLocationOutline /> {match.venue}</div>
                 </div>
               ))}
             </div>
