@@ -7,7 +7,7 @@ const FaqPage = () => {
       {/* Background */}
       <div
         className="absolute top-0 left-0 w-full min-h-screen bg-no-repeat bg-cover z-0
-        bg-[url('/faqmobilebg.svg')] sm:bg-[url('/faqBG.svg')]"
+        bg-[url('/faqmobilebg.svg')] sm:bg-[url('/faq/bg-faq-dt.svg')]"
         style={{
           backgroundSize: "cover",
           backgroundPosition: "top",
