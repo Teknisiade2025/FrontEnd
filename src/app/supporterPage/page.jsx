@@ -9,48 +9,48 @@ const items = [
       },
       { 
         card: "/card kmhm/Card HMTI.svg",  
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet"
+        spt_name: "PANSER IRENG" ,
+        spt_dec: "Pasukan Supporter Industrial Engineering"
       },
       { 
         card: "/card kmhm/Card HMTG.svg",  
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet" 
+        spt_name: "PANSERGEO" ,
+        spt_dec: "Pasukan Suporter Geologi" 
       },
       { 
         card: "/card kmhm/Card KMTA.svg", 
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet"
+        spt_name: "SUPARMAN" ,
+        spt_dec: " "
       },
       { 
         card: "/card kmhm/Card KMTETI.svg", 
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet" 
+        spt_name: "SUTET" ,
+        spt_dec: "Suporter TETI" 
       },
       { 
         card: "/card kmhm/Card KMTG.svg", 
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet" 
+        spt_name: "SUPERGEGER" ,
+        spt_dec: " " 
       },
       { 
         card: "/card kmhm/Card KMTK.svg",  
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet"
+        spt_name: "MAXIMANIA" ,
+        spt_dec: " "
       },
       { 
         card: "/card kmhm/Card KMTM.svg",  
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet"
+        spt_name: "SUPERMESIN" ,
+        spt_dec: " "
       },
       { 
         card: "/card kmhm/Card KMTNTF.svg",  
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet"
+        spt_name: "ALASKA" ,
+        spt_dec: " "
       },
       { 
         card: "/card kmhm/Card KMTSL.svg",  
-        spt_name: "xxx" ,
-        spt_dec: "Lorem ipsum dolor sit amet" 
+        spt_name: "CIVILION" ,
+        spt_dec: " " 
       },
 ];
 

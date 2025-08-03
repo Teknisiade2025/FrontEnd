@@ -28,20 +28,20 @@ export const FaqSection = () => {
   return (
     <section className="relative w-full max-w-[1759px] mx-auto px-6 py-16 font-['Sofia_Sans_Condensed'] text-[#1D2225]">
       {/* Judul FAQ */}
-      <h1 className="text-[103px] font-[Snowstorm] text-center leading-tight drop-shadow-[0_6px_6px_rgba(0,0,0,0.25)] mb-6">
+      <h1 className="text-[90px] font-[Snowstorm] text-center leading-tight drop-shadow-[0_6px_6px_rgba(0,0,0,0.25)] ">
         FAQ
       </h1>
-      <p className="text-center text-[20px] font-semibold mb-12">
+      <p className="text-center text-[40px] font-semibold mb-15">
         Frequently Asked Questions
       </p>
 
       {/* List FAQ */}
-      <div className="flex flex-col gap-8 max-w-4xl mx-auto">
+      <div className="flex flex-col gap-4 max-w-4xl mx-auto">
         {allFaqs.map((faq) => (
-          <div key={faq.id} className="bg-[rgba(240,238,215,0.8)] p-6 rounded-xl shadow-md">
+          <div key={faq.id} className="bg-[#FBEBD2]/70 p-6 rounded-xl shadow-md">
             <div className="flex justify-between items-start gap-4">
               <button
-                className="text-left text-[20px] font-bold text-[#3C3022] flex-1"
+                className="text-left text-[24px] font-bold text-[#3C3022] flex-1"
                 onClick={() => toggleFaq(faq.id)}
               >
                 {faq.question}
@@ -53,7 +53,7 @@ export const FaqSection = () => {
               </button>
             </div>
             {openFaq === faq.id && (
-              <p className="mt-4 text-[18px] text-[#3C3022] font-medium">
+              <p className="mt-4 text-[22px] text-[#3C3022] font-medium">
                 {faq.answer}
               </p>
             )}
