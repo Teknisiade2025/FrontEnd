@@ -10,7 +10,7 @@ export default function NotFound() {
                 backgroundPosition: "center top", 
             }}>
             
-            <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center pt-[10vh] md:pt-[10vh] lg:mt-10">
+            <div className="w-[85vw] lg:w-[1200px] px-4 flex flex-col items-center pt-[10vh] lg:mt-10">
                 {/*404 NOT FOUND*/}
                 <div className="text-center mb-8 lg:mb-12">
                 <h1 className="font-snowstorm font-bold tracking-[0] leading-none"

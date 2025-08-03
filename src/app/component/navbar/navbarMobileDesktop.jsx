@@ -108,7 +108,7 @@ const Navbar = () => {
           </div>
 
           {/* Login (Desktop) */}
-          <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer"
+          <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-amber-100 transition-colors duration-200 p-2 px-7 rounded-4xl"
               onClick={() => router.push("/login")}>
             <span>Login</span>
             <IoLogInOutline size={24} />
@@ -191,7 +191,7 @@ const Navbar = () => {
           <a href="/supporter" className="hover:underline" onClick={() => router.push("/supporterPage")}>Supporter</a>
           <a href="/faq" className="hover:underline" onClick={() => router.push("/faq")}>FAQ</a>
 
-          <div className="flex items-center gap-2 cursor-pointer self-start"
+          <div className="flex items-center gap-2 cursor-pointer self-start hover:bg-amber-100 transition-colors duration-200 p-2 rounded"
           onClick={() => router.push("/login")}>
             <span>Login</span>
             <IoLogInOutline size={24} />

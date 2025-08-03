@@ -76,7 +76,7 @@ export default function MedalTable() {
         <div
         className="min-h-screen w-full flex flex-col justify-center items-center bg-no-repeat bg-cover py-30 sm:py-40 bg-[url('/klasemen/bg-kl-mb.svg')] sm:bg-[url('/klasemen/bg-kl-dt.svg')]" >
 
-            <div className="w-full px-0 sm:-pt-20 sm:px-25 mx-auto max-w-[1800px]">
+            <div className="w-[100vw] mx-auto max-w-[1800px] pt-10 sm:pt-0 sm:px-25">
                 <h1 className="font-snowstorm font-normal text-center text-[80px] md:text-[80px] lg:text-[120px] mb-8 md:mb-16 lg:mb-30">
                 Klasemen
                 </h1>
