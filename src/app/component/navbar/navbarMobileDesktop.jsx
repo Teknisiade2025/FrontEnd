@@ -66,11 +66,11 @@ const Navbar = () => {
                       className="flex items-center justify-center gap-1 hover:underline whitespace-nowrap">
                       Cabang <IoChevronDownSharp className="text-lg" />
               </button>
-              <div className={`absolute top-full -left-1000 min-w-[320px]  grid grid-cols-2 gap-6 p-6 bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] rounded-xl shadow-md z-30 overflow-hidden transition-all duration-1000 ease-in-out transform ${isDropdownOpen ? 'max-h-[500px] opacity-100 translate-y-1' : 'max-h-0 opacity-0 -translate-y-2'} origin-top mt-6`}>
+              <div className={`absolute top-full -left-25 min-w-[300px] grid grid-cols-2 gap-6 p-6 bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] rounded-xl shadow-md z-30 overflow-hidden transition-all duration-1000 ease-in-out transform ${isDropdownOpen ? 'max-h-[500px] opacity-100 translate-y-1' : 'max-h-0 opacity-0 -translate-y-2'} origin-top mt-6`}>
                 {/* Olahraga Column */}
                 <div>
-                <h3 className="font-bold text-center font-sofia text-base mb-3 max-w-[150px] px-3 text-[#806037]">Olahraga</h3>
-                <ul className="flex flex-col gap-2 text-medium font-sofia text-center max-w-[150px]  px-3">
+                <h3 className="font-extrabold text-left font-sofia text-base mb-3 max-w-[150px] px-3 text-[#806037]">Olahraga</h3>
+                <ul className="flex flex-col gap-2 text-medium font-sofia text-left max-w-[150px]  px-3">
                   {dropdownOptions.Olahraga.map((option, idx) => (
                     <li key={`olahraga-${idx}`}
                     className="cursor-pointer hover:underline text-sm py-1 hover:text-[#806037] transition-colors"
@@ -86,8 +86,8 @@ const Navbar = () => {
                 </div>
                 {/* Seni Column */}
                 <div>
-                  <h3 className="font-bold text-base text-center mb-3 max-w-[150px] px-3 text-[#806037]">Seni</h3>
-                  <ul className="flex flex-col gap-2 text-base text-center max-w-[150px]  px-3">
+                  <h3 className="font-extrabold text-base text-left mb-3 max-w-[150px] px-3 text-[#806037]">Seni</h3>
+                  <ul className="flex flex-col gap-2 text-base text-left max-w-[150px]  px-3">
                     {dropdownOptions.Seni.map((option, idx) => (
                       <li key={`seni-${idx}`}
                       className="cursor-pointer hover:underline text-sm py-1 hover:text-[#806037] transition-colors"
