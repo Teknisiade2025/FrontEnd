@@ -18,7 +18,7 @@ export default function Supporter({ items }) {
       className="min-h-screen w-full flex flex-col justify-center items-center bg-no-repeat bg-cover bg-[url('/supporter/bg-sp-mb.svg')] sm:bg-[url('/supporter/bg-sp-dt.svg')]"
     >
       {/* ===== TEXT CONTENT SECTION ===== */}
-      <div className="flex w-full justify-center sm:justify-end px-[2vw] sm:px-4 lg:pr-15 pt-110 sm:pt-0 lg:pt-55 pb-15 sm:pb-5 lg:pb-75">
+      <div className="flex w-full justify-center sm:justify-end px-[2vw] sm:px-4 lg:pr-15 pt-110 sm:pt-0 lg:pt-55 pb-15 sm:pb-5 lg:pb-55">
 
 
         <div className="bg-[#FBEBD2] flex items-center sm:items-start shadow-lg shadow-black/40 overflow-hidden sm:max-w-[430px] sm:max-h-250px lg:max-w-[650px] pr-12 py-8 w-full rounded-[50px]">
@@ -77,7 +77,7 @@ export default function Supporter({ items }) {
 
                       {/* === ROW 2: Text Only === */}
                       <div className="flex flex-col items-center text-center px-4 -pt-20 lg:p-6">
-                        <h4 className="font-snowstorm font-light text-[35px] lg:text-[60px] text-[#1D2225]/80">
+                        <h4 className="font-snowstorm font-light text-[35px] lg:text-[50px] text-[#1D2225]/80">
                           {item.spt_name}
                         </h4>
                         <p className="font-sofia font-medium text-[20px] lg:text-[30px] text-[#1D2225]/80 leading-tight -mt-4">
