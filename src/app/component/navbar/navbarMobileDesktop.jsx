@@ -104,11 +104,10 @@ const Navbar = () => {
               </div>
               </div>
             </div>
-<<<<<<< HEAD
+
             <a href="/comingsoon" className="hover:underline whitespace-nowrap">Supporter</a>
-=======
             <a href="/supporterPage" className="hover:underline whitespace-nowrap">Supporter</a>
->>>>>>> e995443143379f8b383e2544351f64404771bc86
+
             <a href="/faq" className="hover:underline whitespace-nowrap">FAQ</a>
           </div>
 

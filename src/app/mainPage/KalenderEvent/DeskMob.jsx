@@ -3,14 +3,14 @@ import { IoChevronDown } from 'react-icons/io5';
 import Image from 'next/image';
 
 const events = [
-  { title: 'coming soon', date: 'coming soon' },
-  { title: 'coming soon', date: 'coming soon' },
-  { title: 'coming soon', date: 'coming soon' },
-  { title: 'coming soon', date: 'coming soon' },
-  { title: 'coming soon', date: 'coming soon' },
-  { title: 'coming soon', date: 'coming soon' },
-  { title: 'coming soon', date: 'coming soon' },
-  { title: 'coming soon', date: 'coming soon' },
+  { title: 'Upacara Pembukaan', date: '29 Agustus' },
+  { title: 'Bulu Tangkis', date: '1 September' },
+  { title: 'Softball', date: '3 September' },
+  { title: 'Basket', date: '5 September' },
+  { title: 'Futsal', date: '7 September' },
+  { title: 'Softball', date: '3 September' },
+  { title: 'Basket', date: '5 September' },
+  { title: 'Futsal', date: '7 September' },
 ];
 
 const CalendarCarousel = () => {
