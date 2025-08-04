@@ -37,9 +37,9 @@ export default function CabangSeniSection() {
   }
 
   return (
-    <section className="w-full flex justify-center mt-40">
+    <section className="w-full lg:h-[70vh] flex justify-center  lg:mt-10 mt-40">
       {/* Desktop Layout (horizontal) */}
-      <div className="hidden lg:flex w-[70%] flex-row-reverse items-center justify-between gap-10">
+      <div className="hidden lg:flex w-[90%] flex-row-reverse items-center justify-between gap-10 lg:gap-[10%]">
         {/* Left: Title + Carousel */}
         <div className="w-3/5 flex flex-col items-center gap-6">
           <Image
@@ -75,10 +75,10 @@ export default function CabangSeniSection() {
             alt="Perkamen"
             width={518}
             height={320}
-            className="w-[90%] h-auto max-w-md"
+            className="w-[100%] h-auto max-w-md"
           />
-          <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center px-8">
-            <p className="text-center text-neutral-800 text-lg md:text-xl font-bold font-['Sofia_Sans_Condensed'] leading-6">
+          <div className="absolute top-0 left-12 w-[80%] h-full flex justify-center items-center px-8">
+            <p className="text-center text-neutral-800 text-lg md:text-[1.5vw] font-bold font-['Sofia_Sans_Condensed'] leading-relative">
               Cabang Seni terdiri dari 7 lomba, yaitu Modern Dance, Lukis, Vokal Group, Fotografi, Band, Monolog, dan Desain Grafis
             </p>
           </div>

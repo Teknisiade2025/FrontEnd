@@ -86,7 +86,7 @@ const CalendarCarousel = () => {
       <div className={`absolute w-full max-w-[1500px] ${isMobile ? 'h-[80vh]' : 'h-[55vh]'} mb-0 flex items-center justify-center relative`}>
         
         {/* Konten kalender - struktur berbeda untuk mobile dan desktop */}
-        <div className={`${isMobile ? 'w-[55vw] h-[81vh] sm:w-[30vw] sm:pt-15 pt-24 top-2 flex-col gap-[5vh] ' : 'md:w-[8%]  md:h-[37%] lg:h-[60%] lg:w-[87%] md:-mt-[6vh] lg:-mt-24 flex-row justify-betwen'} flex items-center  px-6 py-8 bg-[radial-gradient(ellipse_64.47%_64.47%_at_53.91%_50.00%,_#FBEBD2_0%,_#C6A97D_100%)] relative z-10`}>
+        <div className={`${isMobile ? 'w-[58vw] h-[81vh] sm:w-[30vw] sm:pt-15 pt-24 top-2 flex-col gap-[5vh] ' : 'md:w-[8%]  md:h-[37%] lg:h-[60%] lg:w-[87%] md:-mt-[6vh] lg:-mt-24 flex-row justify-betwen'} flex items-center  px-6 py-8 bg-[radial-gradient(ellipse_64.47%_64.47%_at_53.91%_50.00%,_#FBEBD2_0%,_#C6A97D_100%)] relative z-10`}>
           
           {/* Title Section - selalu di atas baik mobile maupun desktop */}
           <div className="w-[30%] flex justify-center lg:justify-end md:mb-5 ">

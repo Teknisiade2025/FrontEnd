@@ -15,6 +15,7 @@ const olahragaList = [
   { src: '/OlahragaLP/tenismeja.png', alt: 'tenisMeja' },
   { src: '/OlahragaLP/valorant.png', alt: 'valo' },
   { src: '/OlahragaLP/voli.png', alt: 'voli' },
+  { src: '/OlahragaLP/sepakbola.png', alt: 'sepakbola' },
 ]
 
 export default function CabangOlahragaSection() {
@@ -38,9 +39,9 @@ export default function CabangOlahragaSection() {
   }
 
   return (
-    <section className="w-full flex justify-center mt-[35vh] lg:mt-[90vh]">
+    <section className="w-full lg:h-[70vh] flex justify-center mt-[35vh] lg:mt-[60vh]">
       {/* Desktop Layout (horizontal) */}
-      <div className="hidden lg:flex w-[70%] flex-row items-center justify-between gap-10">
+      <div className="hidden lg:flex lg:w-[90%] flex-row items-center justify-between gap-[10%] ">
         {/* Left: Title + Carousel */}
         <div className="w-3/5 flex flex-col items-center gap-6">
           <Image
@@ -59,9 +60,9 @@ export default function CabangOlahragaSection() {
                   key={idx}
                   src={item.src}
                   alt={item.alt}
-                  width={160}
-                  height={160}
-                  className="w-36 h-36 object-contain"
+                  width={180}
+                  height={180}
+                  className="w-36  h-36 object-contain"
                 />
               ))}
             </div>
@@ -76,10 +77,10 @@ export default function CabangOlahragaSection() {
             alt="Perkamen"
             width={518}
             height={320}
-            className="w-[90%] h-auto max-w-md"
+            className="w-[100%] h-auto max-w-md"
           />
-          <div className="absolute top-0 left-7 w-[80%] h-full flex justify-center items-center px-6">
-            <p className="text-center text-neutral-800 text-lg md:text-xl font-bold font-['Sofia_Sans_Condensed'] leading-6">
+          <div className="absolute top-0 left-12 w-[80%] h-full flex justify-center items-center px-6">
+            <p className="text-center text-neutral-800 text-lg md:text-[1.5vw] font-bold font-['Sofia_Sans_Condensed'] leading-relative">
               Para Atlet Teknisiade 2025 akan berkompetisi pada delapan cabang olahraga, yaitu Catur, Tenis Meja, Atletik, Futsal, Voli, Basket, Badminton, dan E-Sports.
             </p>
           </div>
