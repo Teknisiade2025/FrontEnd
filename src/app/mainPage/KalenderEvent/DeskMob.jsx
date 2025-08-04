@@ -3,19 +3,30 @@ import { IoChevronDown } from 'react-icons/io5';
 import Image from 'next/image';
 
 const events = [
-  { title: 'Upacara Pembukaan', date: '29 Agustus' },
-  { title: 'Bulu Tangkis', date: '1 September' },
-  { title: 'Softball', date: '3 September' },
-  { title: 'Basket', date: '5 September' },
-  { title: 'Futsal', date: '7 September' },
-  { title: 'Softball', date: '3 September' },
-  { title: 'Basket', date: '5 September' },
-  { title: 'Futsal', date: '7 September' },
+  { title: 'coming soon', date: 'coming soon' },
+  { title: 'coming soon', date: 'coming soon' },
+  { title: 'coming soon', date: 'coming soon' },
+  { title: 'coming soon', date: 'coming soon' },
+  { title: 'coming soon', date: 'coming soon' },
+  { title: 'coming soon', date: 'coming soon' },
+  { title: 'coming soon', date: 'coming soon' },
+  { title: 'coming soon', date: 'coming soon' },
 ];
 
 const CalendarCarousel = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Hitung jumlah slide untuk dot navigasi
+  const totalSlides = isMobile 
+    ? Math.max(1, events.length - 1) 
+    : Math.max(1, events.length - 2);
+  
+  // Status tombol navigasi
+  const isPrevDisabled = startIndex === 0;
+  const isNextDisabled = isMobile 
+    ? startIndex >= events.length - 2
+    : startIndex >= events.length - 3;
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -25,37 +36,31 @@ const CalendarCarousel = () => {
   }, []);
 
   const handlePrev = () => {
-    setStartIndex((prev) => (prev > 0 ? prev - 1 : events.length - 1));
+    if (!isPrevDisabled) {
+      setStartIndex(prev => prev - 1);
+    }
   };
 
   const handleNext = () => {
-    setStartIndex((prev) => (prev + 1) % events.length);
+    if (!isNextDisabled) {
+      setStartIndex(prev => prev + 1);
+    }
   };
 
   const handlePrevMobile = () => {
-    setStartIndex((prev) => (prev > 0 ? prev - 1 : events.length - 1));
+    if (!isPrevDisabled) {
+      setStartIndex(prev => prev - 1);
+    }
   };
 
   const handleNextMobile = () => {
-    setStartIndex((prev) => (prev + 1) % events.length);
+    if (!isNextDisabled) {
+      setStartIndex(prev => prev + 1);
+    }
   };
 
-  const getDisplayedEvents = () => {
-    const visible = [];
-    for (let i = 0; i < 3; i++) {
-      const index = (startIndex + i) % events.length;
-      visible.push(events[index]);
-    }
-    return visible;
-  };
-
-  const getDisplayedMobileEvents = () => {
-    const visible = [];
-    for (let i = 0; i < 2; i++) {
-      const index = (startIndex + i) % events.length;
-      visible.push(events[index]);
-    }
-    return visible;
+  const goToSlide = (index) => {
+    setStartIndex(index);
   };
 
   return (
@@ -77,71 +82,113 @@ const CalendarCarousel = () => {
           {isMobile ? (
             // Mobile Version - Vertikal
             <div className="w-full flex flex-col items-center justify-center gap-1 min-h-[250px]">
-  {/* Tombol atas */}
-            <button onClick={handlePrevMobile} className="z-30">
-              <IoChevronDown className="text-black rotate-180 w-8 h-8" />
-            </button>
-
-            {/* Viewport Carousel */}
-            <div className="w-full overflow-hidden mt-2 flex justify-center">
-              <div
-                className="transition-transform duration-500 ease-in-out flex flex-col"
-                style={{ transform: `translateY(-${startIndex * 50}%)` }}
+              {/* Tombol atas */}
+              <button 
+                onClick={handlePrevMobile} 
+                className={`z-30 ${isPrevDisabled ? 'text-gray-400' : 'text-black'}`}
+                disabled={isPrevDisabled}
               >
-                {events.map((event, i) => (
-                  <div
-                    key={i}
-                    className="h-[100px] w-full flex-shrink-0 flex flex-col items-center justify-center text-black p-2"
-                  >
-                    <div className="text-center font-['Snowstorm'] text-xl leading-tight mb-1">
-                      {event.title}
-                    </div>
-                    <div className="text-center font-['Sofia_Sans_Condensed'] text-base">
-                      {event.date}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Tombol bawah */}
-            <button onClick={handleNextMobile} className="z-30">
-              <IoChevronDown className="text-black w-8 h-8" />
-            </button>
-          </div>
-
-          ) : (
-            // Desktop Version - Horizontal
-            <div className="w-full md:w-[70%] flex items-center justify-center gap-2">
-              <button onClick={handlePrev} className="z-30">
-                <IoChevronDown className="text-black rotate-90 w-8 h-8" />
+                <IoChevronDown className="rotate-180 w-8 h-8" />
               </button>
 
-              <div className="w-full max-w-xl overflow-hidden  ">
+              {/* Viewport Carousel */}
+              <div className="w-full overflow-hidden mt-2 flex justify-center h-[200px]">
                 <div
-                  className="flex gap-4 transition-transform duration-500 ease-in-out"
-                  style={{ transform: `translateX(-${startIndex * 50}%)` }}
+                  className="transition-transform duration-500 ease-in-out flex flex-col"
+                  style={{ transform: `translateY(-${startIndex * 100}px)` }}
                 >
                   {events.map((event, i) => (
-                   <div
-                    key={i}
-                    className="w-1/3 flex-shrink-0 grid grid-rows-[2fr_auto] place-items-center text-black"
-                  >
-                    <div className="h-[3.5rem] flex items-center justify-center text-center font-['Snowstorm'] text-2xl md:text-[2.5vw] lg:text-[2vw] leading-7 mb-2">
-                      {event.title}
+                    <div
+                      key={i}
+                      className="h-[100px] w-full flex-shrink-0 flex flex-col items-center justify-center text-black p-2"
+                    >
+                      <div className="text-center font-['Snowstorm'] text-xl leading-tight mb-1">
+                        {event.title}
+                      </div>
+                      <div className="text-center font-['Sofia_Sans_Condensed'] text-base">
+                        {event.date}
+                      </div>
                     </div>
-                    <div className="text-center font-['Sofia_Sans_Condensed'] text-base md:text-[1.8vw] lg:text-[1.4vw]">
-                      {event.date}
-                    </div>
-                  </div>
-
                   ))}
                 </div>
               </div>
 
-              <button onClick={handleNext} className="z-30">
-                <IoChevronDown className="text-black -rotate-90 w-8 h-8" />
+              {/* Tombol bawah */}
+              <button 
+                onClick={handleNextMobile} 
+                className={`z-30 ${isNextDisabled ? 'text-gray-400' : 'text-black'}`}
+                disabled={isNextDisabled}
+              >
+                <IoChevronDown className="w-8 h-8" />
               </button>
+
+              {/* Dot Navigation - Mobile */}
+              <div className="flex justify-center mt-4 space-x-2 z-30">
+                {Array.from({ length: totalSlides }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goToSlide(idx)}
+                    className={`w-3 h-3 rounded-full ${
+                      startIndex === idx ? 'bg-black' : 'bg-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            // Desktop Version - Horizontal
+            <div className="w-full md:w-[70%] flex flex-col items-center">
+              <div className="w-full flex items-center justify-center gap-2">
+                <button 
+                  onClick={handlePrev} 
+                  className={`z-30 ${isPrevDisabled ? 'text-gray-400' : 'text-black'}`}
+                  disabled={isPrevDisabled}
+                >
+                  <IoChevronDown className="rotate-90 w-8 h-8" />
+                </button>
+
+                <div className="w-full max-w-xl overflow-hidden">
+                  <div
+                    className="flex gap-4 transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateX(-${startIndex * 33.333}%)` }}
+                  >
+                    {events.map((event, i) => (
+                      <div
+                        key={i}
+                        className="w-1/3 flex-shrink-0 grid grid-rows-[2fr_auto] place-items-center text-black"
+                      >
+                        <div className="h-[3.5rem] flex items-center justify-center text-center font-['Snowstorm'] text-2xl md:text-[2.5vw] lg:text-[2vw] leading-7 mb-2">
+                          {event.title}
+                        </div>
+                        <div className="text-center font-['Sofia_Sans_Condensed'] text-base md:text-[1.8vw] lg:text-[1.4vw]">
+                          {event.date}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <button 
+                  onClick={handleNext} 
+                  className={`z-30 ${isNextDisabled ? 'text-gray-400' : 'text-black'}`}
+                  disabled={isNextDisabled}
+                >
+                  <IoChevronDown className="-rotate-90 w-8 h-8" />
+                </button>
+              </div>
+
+              {/* Dot Navigation - Desktop */}
+              <div className="flex justify-center mt-4 space-x-2 z-30">
+                {Array.from({ length: totalSlides }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goToSlide(idx)}
+                    className={`w-3 h-3 rounded-full ${
+                      startIndex === idx ? 'bg-black' : 'bg-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </div>
