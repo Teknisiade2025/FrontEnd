@@ -19,7 +19,7 @@ export default function LandingPage1() {
           className="w-[80vw] md:w-[65vw] h-auto mb-8"
         />
 
-        <Link href={"https://www.instagram.com/reel/DMfQ6D9Titd/?igsh=YmFlajdyM211OTl4"}>
+        <Link href={"#tentang"}>
           <button className=" w-[45vw] h-[9vw] sm:h-[7vw] sm:w-[30vw]  md:w-[20vw] md:h-[6vw]  lg:w-[14vw] lg:h-[4.2vw] px-2 py-2 bg-amber-500 rounded-[30.4px] shadow-md inline-flex justify-center items-center ">
 
               <span className="text-neutral-800 text-[4vw] sm:text-[2.5vw] md:text-[1.5vw] font-bold font-sofia">Lihat Teaser</span>

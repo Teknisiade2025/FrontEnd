@@ -5,7 +5,7 @@ const page = () => {
   const descriptionText = `Teknisiade telah menjadi bagian tak terpisahkan dari kehidupan kampus, dan tahun ini, lebih dari 4000 mahasiswa siap merayakannya. Teknisiade bukan sekadar acara biasa. Ia adalah panggung bagi para mahasiswa untuk mengekspresikan bakat, semangat, dan dedikasi mereka. Bagi banyak orang, Teknisiade adalah lebih dari sekadar kompetisi; ia adalah perayaan persaudaraan dan kebersamaan.`;
 
   return (
-    <section className="px-6 md:px-28 py-14 lg:-py-3 mt-[8vh] lg:-top-10 flex flex-col md:flex-row-reverse justify-center items-center gap-6 md:gap-12 sm:mt-[27vh] md:mt-0">
+    <section className="px-6 md:px-28 py-14 lg:-py-3 mt-[8vh] flex flex-col md:flex-row-reverse justify-center items-center gap-6 md:gap-12 sm:mt-[27vh] md:mt-[25vh]">
       {/* Mobile: Title and Logos (Top) */}
       <div className="md:hidden w-full flex justify-between items-start">
         <div>
