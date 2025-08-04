@@ -38,13 +38,13 @@ const TemuTekiSection = () => {
           {/* Teks deskripsi desktop - lebih sempit */}
           <div className="w-full flex flex-row justify-center gap-[30vw] lg:gap-[32vw] mt-26  lg:right-[100vw]">
             <div className="w-full max-w-[30%]">
-              <p className="text-center text-neutral-900 text-xl md:text-[2vw] lg:text-[1.4vw] font-bold font-['Sofia_Sans_Condensed'] leading-relaxed">
+              <p className="text-justify indent-12 text-neutral-900 text-xl md:text-[2vw] lg:text-[1.4vw] font-bold font-['Sofia_Sans_Condensed'] leading-relaxed">
                 Teki, sang badak bercula satu, kembali hadir membawa semangat juang yang tak tergoyahkan. Tahun ini, ia tampil gagah dengan kostum bertema kesatria yang melambangkan kekuatan, keberanian, dan ketangguhan.
               </p>
             </div>
             
             <div className="w-full max-w-[30%]">
-              <p className="text-center text-neutral-900 text-xl md:text-[2vw] lg:text-[1.4vw] font-bold font-['Sofia_Sans_Condensed'] leading-relaxed">
+              <p className="text-justify indent-12 text-neutral-900 text-xl md:text-[2vw] lg:text-[1.4vw] font-bold font-['Sofia_Sans_Condensed'] leading-relaxed">
                 Sosok Teki merepresentasikan semangat para atlet, seniman, KM/HM, dan panitia Teknisiade yang siap berjuang dengan tekad baja, solidaritas tinggi, dan jiwa pantang menyerah layaknya seorang kesatria sejati.
               </p>
             </div>
