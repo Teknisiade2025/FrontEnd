@@ -13,17 +13,17 @@ export default function NotFound() {
             <div className="w-[85vw] lg:w-[1200px] px-4 flex flex-col items-center pt-[10vh] lg:mt-10">
                 {/*404 NOT FOUND*/}
                 <div className="text-center mb-8 lg:mb-12">
-                    <h1 className="font-snowstorm font-bold tracking-[0] leading-none"
+                    <h1 className="font-snowstorm font-bold tracking-[0] leading-[20vh]"
                         style={{textShadow: "0px 3px 4px rgba(0,0,0,0.25)"}}>
                         <span className="text-[80px] sm:text-[100px] lg:text-[120px]">C</span>
-                        <span className="text-[70px] sm:text-[90px] lg:text-[100px]">oming soo</span>
-                        <span className="text-[80px] sm:text-[100px] lg:text-[120px]">N</span>
+                        <span className="text-[70px] sm:text-[90px] lg:text-[100px]">omin</span>
+                        <span className="text-[80px] sm:text-[100px] lg:text-[120px]">G</span>
                     </h1>
                     <h2 className="font-snowstorm font-bold leading-none tracking-[0] -mt-4 sm:-mt-8 lg:-mt-12"
                         style={{textShadow: "0px 3px 4px rgba(0,0,0,0.25)"}}>
+                        <span className="text-[60px] sm:text-[80px] lg:text-[120px]">S</span>
+                        <span className="text-[50px] sm:text-[70px] lg:text-[100px]">oo</span>
                         <span className="text-[60px] sm:text-[80px] lg:text-[120px]">N</span>
-                        <span className="text-[50px] sm:text-[70px] lg:text-[100px]">OT FOUN</span>
-                        <span className="text-[60px] sm:text-[80px] lg:text-[120px]">D</span>
                     </h2>
                 
                     {/* Back Button */}
@@ -35,7 +35,7 @@ export default function NotFound() {
                             <div className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-8 gap-4 sm:gap-10">
                                 <div className="text-center sm:text-left">
                                     <p className="font-sofia font-bold text-base sm:text-2xl text-[#1D2225] leading-snug">
-                                        Oops, kami tidak bisa menemukan <br className="hidden sm:block"/> halaman yang anda cari.
+                                        Oops, Halaman yang anda cari <br className="hidden sm:block"/> belum tersedia.
                                     </p>
                                 </div>
         

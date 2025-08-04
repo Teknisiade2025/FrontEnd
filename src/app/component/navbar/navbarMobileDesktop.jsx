@@ -79,7 +79,7 @@ const Navbar = () => {
                 </ul>
               </div>
             </div>
-            <a href="/supporter" className="hover:underline whitespace-nowrap">Supporter</a>
+            <a href="/comingsoon" className="hover:underline whitespace-nowrap">Supporter</a>
             <a href="/faq" className="hover:underline whitespace-nowrap">FAQ</a>
           </div>
 
