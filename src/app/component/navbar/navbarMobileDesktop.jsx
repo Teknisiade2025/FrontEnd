@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -103,7 +104,10 @@ const Navbar = () => {
               </div>
               </div>
             </div>
-            <a href="/supporter" className="hover:underline whitespace-nowrap">Supporter</a>
+
+            <a href="/comingsoon" className="hover:underline whitespace-nowrap">Supporter</a>
+            <a href="/supporterPage" className="hover:underline whitespace-nowrap">Supporter</a>
+
             <a href="/faq" className="hover:underline whitespace-nowrap">FAQ</a>
           </div>
 
@@ -115,21 +119,21 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden ">
             <AiOutlineMenu size={28} onClick={() => setIsMenuOpen(true)} className="cursor-pointer text-black" />
           </div>
         </div>
       </div>
 
       {/* Mobile Menu Slide-In */}
-      <div ref={mobileMenuRef} className={`fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white z-50 shadow-lg transition-transform duration-300 ease-in-out rounded-l-2xl px-6 py-8 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div ref={mobileMenuRef} className={`fixed top-0 right-0 h-full w-3/4 max-w-xs bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] z-50 shadow-lg transition-transform duration-300 ease-in-out rounded-l-2xl px-6 py-8 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         {/* Close Button */}
         <div className="flex justify-end">
           <AiOutlineClose size={24} onClick={() => setIsMenuOpen(false)} className="cursor-pointer text-black" />
         </div>
 
         {/* Mobile Menu Items */}
-        <nav className="mt-13 flex flex-col gap-13 text-neutral-800 text-xl font-black font-['Sofia_Sans_Condensed'] items-center">
+        <nav className="mt-13 flex flex-col gap-13 text-neutral-800 text-xl  font-black font-['Sofia_Sans_Condensed'] items-center">
           <Link href="/schedule" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Schedule</Link>
           <a href="/klasemen" className="hover:underline" onClick={() => router.push("/klasemen")}>Klasemen</a>
 
@@ -139,7 +143,7 @@ const Navbar = () => {
               Cabang <IoChevronDownSharp className="text-lg" />
             </button>
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isMobileDropdownOpen ? 'max-h-[400px] mt-2' : 'max-h-0'}`}>  
-              <div className="bg-[#FBEBD2] rounded-xl p-4 space-y-6 max-h-[400px] overflow-y-auto">
+              <div className="bg-transparant shadow-lg rounded-xl p-4 space-y-6 max-h-[400px] overflow-y-auto">
               {/* Olahraga */}
               {/* Olahraga */}
       <div>

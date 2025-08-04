@@ -15,7 +15,7 @@ const SponsorSection = () => {
   return (
     <section className="w-full flex justify-center items-center min-h-screen bg-transparent px-4 py-16 md:mt-[70vh]">
       {/* Desktop Layout */}
-      <div className="hidden md:flex w-[80%] max-w-screen-xl mx-auto flex-row items-center gap-10">
+      <div className="hidden md:flex w-[80%] max-w-screen-xl mx-auto flex-col items-center gap-10">
         {/* Left: Description (1/6) */}
         <div className="w-2/6 flex flex-col px-4">
           <h2 className="text-8xl font-['Snowstorm'] text-neutral-800 drop-shadow-md mb-4">
@@ -46,7 +46,7 @@ const SponsorSection = () => {
       </div>
 
       {/* Mobile Layout */}
-      <div className="md:hidden w-full flex flex-col items-center gap-8 px-4 -top-15">
+      <div className="md:hidden w-full flex flex-col items-center gap-8 px-4 -top-15 mt-[30]">
         {/* Title */}
         <h2 className="text-[20vw] font-['Snowstorm'] text-neutral-800 drop-shadow-md">
           Sponsor

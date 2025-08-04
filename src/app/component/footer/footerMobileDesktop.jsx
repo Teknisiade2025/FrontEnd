@@ -4,7 +4,7 @@ import { FaInstagram, FaYoutube } from 'react-icons/fa';
 
 const FooterTeknisiade = () => {
   return (
-    <footer className="relative w-full -top-42 lg:-top-84 ">
+    <footer className="relative w-full -top-45 lg:-top-90">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         {/* Desktop Background */}
@@ -66,7 +66,7 @@ const FooterTeknisiade = () => {
                 className="hover:opacity-80 w-6 h-6 md:w-[2vw] md:h-[2vw]"
               />
             </a>
-            <a href="https://www.youtube.com/channel/nama_channel" target="_blank" rel="noopener noreferrer">
+            <a href="https://youtube.com/@teknisiadeugm?si=OTakLii6k8IdSqua" target="_blank" rel="noopener noreferrer">
               <FaYoutube className="hover:text-gray-700 w-6 h-6 md:w-[2.2vw] md:h-[2.2vw]" />
             </a>
           </div>
