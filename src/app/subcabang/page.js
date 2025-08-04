@@ -12,7 +12,7 @@ const Schedule = () => {
       {/* Background Layer */}
       <div
         className="absolute inset-0 bg-no-repeat bg-cover z-0
-                   bg-[url('/bgsubcabangmobile.svg')] sm:bg-[url('/bgsubcabang.svg')]"
+                   bg-[url('/bgsubcabangmobile.svg')] sm:bg-[url('/bgsubcabang_desktop.svg')]"
         style={{
           backgroundSize: "cover",
           backgroundPosition: "top",
@@ -23,14 +23,14 @@ const Schedule = () => {
       <main className="relative z-10 flex flex-col items-center gap-[280px] md:gap-[800px] ">
         
         {/* Pertandingan Section */}
-        <section className="w-full flex justify-end px-5 md:px-6 pt-[100px] md:pt-[200px]">
+        <section className="w-full flex justify-end px-5 md:px-30 pt-[100px] md:pt-[249px]">
           <div className="w-full max-w-[600px]">
             <Pertandingan />
           </div>
         </section>
 
         {/* Jadwal & Atlet Section */}
-        <section className="w-full flex flex-col items-center gap-[100px] md:gap-[280px]">
+        <section className="w-full flex flex-col items-center gap-[100px] md:gap-[180px]">
           <Jadwal />
           <Atlet />
         </section>

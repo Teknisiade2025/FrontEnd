@@ -16,9 +16,9 @@ const Navbar = () => {
   const router = useRouter() 
 
   const dropdownOptions = {
-  Olahraga: ["Sepak Bola", "Futsal", "Mobile Legends", "valorant",
+  Olahraga: ["Sepak Bola", "Futsal", "Mobile Legends", "Valorant",
               "Voli", "Tenis Meja", "FIFA", "Atletik",
-              "Badminton", "Basket", "catur", "PUBG"],
+              "Badminton", "Basket", "Catur", "PUBG"],
   Seni: ["Band", "Tari Tradisional", "Cipta Puisi", "Fotografi",
           "Vokal Grup", "Dance", "Poster", "Seni Lukis", 
           "Solo Vokal", "Monolog" ],

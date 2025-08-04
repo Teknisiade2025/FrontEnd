@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { IoChevronDownSharp } from "react-icons/io5";
+import { FaUserCircle } from "react-icons/fa";
+
 
 const Atlet = () => {
   const [selectedTab, setSelectedTab] = useState("Semua");
@@ -96,16 +98,16 @@ const Atlet = () => {
       `}</style>
 
       {/* Judul */}
-      <h1 className="text-center text-[#1D2225] text-4xl sm:text-5xl md:text-7xl font-bold font-['Snowstorm_Bold'] drop-shadow-md">
+      <h1 className="font-snowstorm text-center text-[#1D2225] text-4xl sm:text-5xl md:text-7xl font-bold font-['Snowstorm_Bold'] drop-shadow-md">
         ATLET/SENIMAN
       </h1>
 
       {/* Tab Navigasi */}
-      <div className="relative flex flex-row flex-wrap w-full sm:w-[565px] h-auto sm:h-[66px] px-4 py-2 gap-4 sm:gap-[6.031px] rounded-[53.415px] bg-[#1D2225] z-30">
+      <div className="relative flex flex-row flex-wrap w-full sm:w-[565px] h-auto sm:h-[66px] px-2 py-2 gap-4 sm:gap-[6.031px] rounded-[53.415px] bg-[#1D2225] z-30">
         {/* Tab Semua */}
         <div
-          className={`flex-1 flex items-center justify-center px-4 py-2 rounded-[45.66px] cursor-pointer transition-all duration-200
-          ${selectedTab === "Semua" ? "bg-[#806037]" : ""}`}
+          className={`font-sofia flex-1 flex items-center justify-center px-4 py-2 rounded-[45.66px] cursor-pointer transition-all duration-200
+          ${selectedTab === "Semua" ? "bg-[#806037] text-[#FBEBD2]" : "bg-[#1D2225] text-[#FBEBD2] hover:bg-[#2a2f33]"}`}
         >
           <button
             onClick={() => {
@@ -113,7 +115,7 @@ const Atlet = () => {
               setSelectedDropdown("Semua");
               setIsDropdownOpen(false);
             }}
-            className="text-center text-[#FBEBD2] text-[16px] sm:text-[18px] font-['Sofia_Sans'] font-extrabold"
+            className="font-sofia text-center text-[#FBEBD2] text-[16px] sm:text-[18px] font-['Sofia_Sans'] font-extrabold"
           >
             Semua
           </button>
@@ -123,7 +125,7 @@ const Atlet = () => {
         <div
           ref={dropdownRef}
           className={`relative flex-1 flex items-center justify-center px-4 py-2 rounded-[27.57px] cursor-pointer
-          ${selectedTab === "KMHM" ? "bg-[#806037]" : "bg-[#1D2225]"}`}
+          ${selectedTab === "KMHM" ? "bg-[#806037] text-[#FBEBD2]" : "bg-[#1D2225] text-[#FBEBD2] hover:bg-[#2a2f33]"}`}
         >
           <button
             onClick={() => {
@@ -141,10 +143,10 @@ const Atlet = () => {
 
           {/* Dropdown */}
           <div
-            className={`absolute left-0 top-full mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-md transition-all duration-300 ease-in-out
+            className={`absolute left-0 top-full mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out z-10
             ${isDropdownOpen ? "max-h-[300px] opacity-100 translate-y-0 py-2" : "max-h-0 opacity-0 -translate-y-2 overflow-hidden"}`}
           >
-            <ul className="flex flex-col px-4 text-[#1D2225] text-sm">
+            <ul className="font-sofia text-base text-medium text-sm flex flex-col px-4 text-[#1D2225]">
               {dropdownOptions.map((option, index) => (
                 <li key={index}>
                   <button
@@ -166,15 +168,15 @@ const Atlet = () => {
 
       {/* Kartu Atlet */}
       <div className="w-full h-[400px] overflow-y-scroll pr-2 atlet-scrollbar max-w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[1600px] mx-auto pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[1600px] mx-auto pb-8">
           {filteredAtlet.map((a) => (
             <div
               key={a.id}
               className="flex flex-col md:flex-row items-start gap-6 p-6 rounded-2xl hover:bg-[#806037] bg-[#F0EED7] transition-colors duration-300 shadow-lg hover:text-[#F0EED7] text-[#806037] min-h-[300px] w-full"
             >
               {/* Avatar */}
-              <div className="w-[100px] h-[120px] bg-[#806037] rounded-xl flex items-center justify-center shrink-0">
-                <div className="w-[70px] h-[70px] bg-[#F0EED7] rounded-full" />
+              <div className="w-[100px] h-[120px] bg-[#806037] rounded-xl flex items-center justify-center shrink-0 group-hover:bg-[#F0EED7] transition-colors duration-300">
+                <FaUserCircle className="w-[70px] h-[70px] text-[#F0EED7] group-hover:text-[#806037] transition-colors duration-300" />
               </div>
 
               {/* Info */}
