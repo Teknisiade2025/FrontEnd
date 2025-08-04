@@ -20,11 +20,11 @@ const Schedule = () => {
       />
 
       {/* Konten di atas background */}
-      <main className="relative z-10 flex flex-col items-center gap-[280px] md:gap-[550px] ">
+      <main className="relative z-10 flex flex-col items-center gap-[280px] md:gap-[800px] ">
         
         {/* Pertandingan Section */}
-        <section className="w-full flex justify-center md:justify-end px-1 md:px-4 md:px-[100px] pt-[100px] md:pt-[200px]">
-          <div className="max-w-full">
+        <section className="w-full flex justify-end px-5 md:px-6 pt-[100px] md:pt-[200px]">
+          <div className="w-full max-w-[600px]">
             <Pertandingan />
           </div>
         </section>

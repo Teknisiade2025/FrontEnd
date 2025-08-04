@@ -9,7 +9,7 @@ const Atlet = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const dropdownOptions = ["KMTETI", "KMKMTG", "KMFT"];
+  const dropdownOptions = ["HMTPWK", "KMTA", "KMTG", "KMTSL", "HMTG", "HMTI", "KMTETI", "KMTNTF", "KMTM", "KMTK"];
 
   const atletData = [
     {

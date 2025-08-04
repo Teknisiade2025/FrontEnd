@@ -125,7 +125,7 @@ const Kalender = () => {
     const daysInMonth = getDaysInMonth(currentDate);
     const firstDay = getFirstDayOfMonth(currentDate);
 
-    for (let i = 0; i < firstDay; i++) days.push(<div key={`empty-${i}`} className="h-24 md:h-32 aspect-square"></div>);
+    for (let i = 0; i < firstDay; i++) days.push(<div key={`empty-${i}`} className="aspect-square p-2 border border-[#FBEBD2]"></div>);
 
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
@@ -202,12 +202,12 @@ const Kalender = () => {
   return (
     <div className="w-full px-4 py-6 flex flex-col items-center">
       <div className="max-w-screen-2xl w-full">
+        <div className="mb-6 flex justify-center">
+          <p className="text-6xl sm:text-7xl lg:text-8xl text-[#1D2225] font-snowstorm font-bold text-center">
+            KALENDER
+          </p>
+        </div>
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full">
-          <div className="flex justify-center w-full md:w-auto">
-            <div className="w-[100px] h-[100px] rounded-full bg-[#806037] flex items-center justify-center">
-              <IoCalendarOutline className="w-12 h-12 text-[#FBEBD2]" />
-            </div>
-          </div>
 
           <div className="flex-1 w-full bg-[#FAEDDABD] rounded-[40px] p-6 shadow-md">
             <div className="flex items-center justify-between mb-4">
@@ -244,7 +244,7 @@ const Kalender = () => {
             <h3 className="text-xl font-bold font-snowstorm text-[#1D2225] mb-4 text-center">
               Jadwal Pertandingan Bulan Ini
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-4 overflow-y-auto max-h-[400px] pr-2">
               {monthMatches
                 .sort((a, b) => new Date(a.date) - new Date(b.date))
                 .map(match => (
@@ -252,9 +252,6 @@ const Kalender = () => {
                   <div className="flex justify-between items-start mb-2">
                     <div className="font-bold font-snowstorm text-[#806037] text-sm">
                       {match.sport} - {match.stage}
-                    </div>
-                    <div className="text-xs text-[#1D2225] font-sofia">
-                      {formatDate(match.date)}
                     </div>
                   </div>
                   <div className="text-center font-sofia font-bold text-[#1D2225] mb-2">
@@ -277,24 +274,6 @@ const Kalender = () => {
         )}
       </div>
 
-      {/* Tooltip untuk desktop */}
-      {!isMobile && hoveredMatch && (
-        <div 
-          className="fixed z-50 pointer-events-none transform -translate-x-1/2 -translate-y-full"
-          style={{ left: `${hoverPosition.x}px`, top: `${hoverPosition.y}px` }}
-        >
-          <div className="bg-[#1D2225] text-[#FBEBD2] p-4 rounded-[20px] shadow-lg max-w-xs">
-            <div className="font-bold font-snowstorm text-[16px] mb-2 text-center">
-              {hoveredMatch.sport} - {hoveredMatch.stage}
-            </div>
-            <div className="text-sm font-sofia text-center">{hoveredMatch.teamA.name} vs {hoveredMatch.teamB.name}</div>
-            <div className="mt-2 text-xs space-y-1">
-              <div className="flex items-center gap-2"><IoTimeOutline /> {new Date(hoveredMatch.date).toLocaleString('id-ID')}</div>
-              <div className="flex items-center gap-2"><IoLocationOutline /> {hoveredMatch.venue}</div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Tooltip untuk hover pada tanggal (desktop) */}
       {!isMobile && hoveredDate && (
@@ -303,22 +282,16 @@ const Kalender = () => {
           style={{ left: `${hoverPosition.x}px`, top: `${hoverPosition.y}px` }}
         >
           <div className="bg-[#1D2225] text-[#FBEBD2] p-4 rounded-[20px] shadow-lg max-w-sm">
-            <div className="font-bold font-snowstorm text-[14px] mb-2 text-center">
-              {hoveredDate.date.toLocaleDateString('id-ID', { 
-                weekday: 'long', 
-                day: 'numeric', 
-                month: 'long' 
-              })}
-            </div>
             <div className="space-y-2">
               {hoveredDate.matches.map(match => (
                 <div key={match.id} className="text-xs border-b border-[#806037] pb-1 last:border-b-0">
                   <div className="font-sofia font-bold">{match.teamA.name} vs {match.teamB.name}</div>
-                  <div className="text-[#FAEDDABD]">{match.sport} - {match.stage}</div>
+                  <div className="font-sofia font-bold text-[#FAEDDABD]">{match.sport} - {match.stage}</div>
                   <div className="flex items-center gap-1 mt-1">
                     <IoTimeOutline size={10} />
                     {formatTime(match.date)}
                   </div>
+                  <div className="flex items-center gap-2"><IoLocationOutline /> {match.venue}</div>
                 </div>
               ))}
             </div>

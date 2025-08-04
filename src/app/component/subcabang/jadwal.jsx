@@ -10,7 +10,8 @@ const Jadwal = () => {
   const [selectedTab, setSelectedTab] = useState("Mendatang");
   const dropdownRef = useRef(null);
 
-  const dropdownOptions = ["Semua", "KMHM", "KMFT", "KMTETI", "KMKMTG"];
+  const dropdownOptions = ["Semua", "HMTPWK", "KMTA", "KMTG", "KMTSL", "HMTG", "HMTI", "KMTETI", "KMTNTF", "KMTM", "KMTK"];
+
 
   const scheduleData = [
     {
@@ -175,50 +176,64 @@ const Jadwal = () => {
 
 const MatchCard = ({ match }) => {
   return (
-    <div className="w-full px-3 py-4 sm:px-6 sm:py-6 bg-[#5F56487F] shadow-md rounded-[20px] flex flex-row items-center justify-between gap-2 sm:gap-4">
-      {/* Team A */}
-      <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
-          <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" />
-        </div>
-        <span className="text-[#1D2225] font-bold font-snowstorm text-xs sm:text-sm lg:text-base text-center">
-          {match.teamA.name}
-        </span>
-      </div>
+    <div className="w-full px-3 py-4 sm:px-6 sm:py-6 bg-[#5F56487F] shadow-md rounded-[20px] flex flex-col gap-4">
+      {/* Judul Pertandingan */}
+  <div className="text-center">
+    <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-lg font-bold">
+      SEPAK BOLA - PUTRI
+    </div>
+    <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-lg font-bold">
+      BABAK PENYISIHAN
+    </div>
+  </div>
 
-      {/* Info Tengah */}
-      <div className="flex flex-col items-center text-center gap-1 sm:gap-2 mx-auto flex-1 min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
-        <p className="text-[#1D2225] text-xs sm:text-sm lg:text-base font-[Snowstorm] font-bold leading-[135%]">
-          SEPAK BOLA - PENYISIHAN
-        </p>
-        <p className="text-[#1D2225] font-sofia text-xs sm:text-sm font-normal">
-          {new Date(match.date).toLocaleString("id-ID", {
-            weekday: "short",
-            day: "numeric",
-            month: "short",
-            hour: "2-digit",
-            minute: "2-digit",
-          })}{" "}
-          WIB
-        </p>
-        <p className="text-[#1D2225] font-sofia text-xs sm:text-sm">{match.venue}</p>
-        <div className="text-[#1D2225] font-extrabold text-lg sm:text-2xl lg:text-3xl font-snowstorm">V/S</div>
-        <div className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:underline">
-          <span className="text-[#1D2225] text-xs sm:text-sm font-sofia font-bold">Tonton Live</span>
-          <HiArrowRight className="text-[#1D2225] text-xs sm:text-sm" />
-        </div>
-      </div>
 
-      {/* Team B */}
-      <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
-          <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" />
+      {/* Baris 2: Logo A | Info Tengah | Logo B */}
+      <div className="flex flex-row items-center justify-between gap-2 sm:gap-4">
+        {/* Team A */}
+        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
+            <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" />
+          </div>
+          <span className="text-[#1D2225] font-bold font-snowstorm text-xs sm:text-sm lg:text-base text-center">
+            {match.teamA.name}
+          </span>
         </div>
-        <span className="text-[#1D2225] font-bold font-snowstorm text-xs sm:text-sm lg:text-base text-center">
-          {match.teamB.name}
-        </span>
+
+        {/* Info Tengah */}
+        <div className="flex flex-col items-center text-center gap-3 sm:gap-6 mx-auto flex-1 min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
+          <div  className="flex flex-col items-center text-center ">
+          <p className="text-[#1D2225] font-sofia text-xs sm:text-sm font-normal">
+            {new Date(match.date).toLocaleString("id-ID", {
+              weekday: "short",
+              day: "numeric",
+              month: "short",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}{" "}
+            WIB
+          </p>
+          <p className="text-[#1D2225] font-sofia text-xs sm:text-sm">{match.venue}</p>
+          </div>
+          <div className="text-[#1D2225] font-extrabold text-lg sm:text-2xl lg:text-3xl font-snowstorm">V/S</div>
+          <div className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:underline">
+            <span className="text-[#1D2225] text-xs sm:text-sm font-sofia font-bold">Tonton Live</span>
+            <HiArrowRight className="text-[#1D2225] text-xs sm:text-sm" />
+          </div>
+        </div>
+
+        {/* Team B */}
+        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
+            <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" />
+          </div>
+          <span className="text-[#1D2225] font-bold font-snowstorm text-xs sm:text-sm lg:text-base text-center">
+            {match.teamB.name}
+          </span>
+        </div>
       </div>
     </div>
   );
 };
+
 export default Jadwal;

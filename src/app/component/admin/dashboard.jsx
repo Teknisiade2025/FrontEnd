@@ -2,60 +2,70 @@
 
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { Check, Calendar, Trophy, ChevronRight } from 'lucide-react';
 
 export default function Dashboard() {
   const router = useRouter();
 
   return (
-    <div className="w-[813px] inline-flex flex-col justify-start items-center gap-7">
-    <div className="w-[777px] flex flex-col justify-start items-center">
-        <div className="self-stretch text-center justify-start text-Color-2 text-7xl font-normal font-['Snowstorm']">Selamat Datang, Admin!</div>
-        <div className="w-[739.20px] text-center justify-start text-Color-2 text-2xl font-bold font-['Sofia_Sans_Condensed'] leading-loose">Selamat datang di menu utama. Dari sini, Anda bisa memulai untuk memverifikasi atlet, mengatur jadwal pertandingan, mengatur timeline event, atau mengupdate skor.</div>
-    </div>
-    <div className="self-stretch flex flex-col justify-start items-start gap-2.5">
-        <div className="self-stretch flex flex-col justify-start items-start gap-5">
-            <div className="w-[813px] pl-14 pr-7 py-6 bg-stone-500 rounded-[64px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden">
-                <div className="flex justify-start items-center gap-8">
-                    <div className="w-16 h-16 relative">
-                        <div className="w-14 h-14 left-[6.80px] top-[6.80px] absolute bg-Color border-Color" />
-                    </div>
-                    <div className="w-96 inline-flex flex-col justify-start items-start">
-                        <div className="self-stretch justify-start text-Color text-2xl font-normal font-['Snowstorm']">Verifikasi Registrasi Atlet</div>
-                        <div className="self-stretch justify-start text-Color text-base font-normal font-['Sofia_Sans_Condensed'] leading-snug">Verifikasi atlet berdasarkan cabang lomba.</div>
-                    </div>
-                </div>
-                <div className="w-16 h-16 relative">
-                    <div className="w-5 h-9 left-[25.20px] top-[18.04px] absolute bg-Color border-Color-3" />
-                </div>
-            </div>
-            <div className="w-[813px] pl-14 pr-7 py-7 bg-Color rounded-[64px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden">
-                <div className="flex justify-start items-center gap-9">
-                    <div className="w-14 h-14 relative">
-                        <div className="w-14 h-14 left-0 top-0 absolute bg-slate-600 border-slate-600" />
-                    </div>
-                    <div className="w-80 inline-flex flex-col justify-start items-start gap-px">
-                        <div className="self-stretch justify-start text-slate-600 text-2xl font-normal font-['Snowstorm']">Schedule Pertandingan</div>
-                        <div className="self-stretch justify-start text-slate-600 text-base font-semibold font-['Sofia_Sans_Condensed'] leading-snug">Tambah, edit, atau atur pertandingan.</div>
-                    </div>
-                </div>
-                <div className="w-16 h-16 relative">
-                    <div className="w-5 h-9 left-[25.20px] top-[18.04px] absolute bg-Color-3 border-Color-3" />
-                </div>
-            </div>
-            <div className="w-[813px] px-14 py-8 bg-Color rounded-[64px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden">
-                <div className="flex justify-start items-center gap-10">
-                    <div className="w-14 h-14 relative">
-                        <div className="w-12 h-11 left-[5.62px] top-[7.50px] absolute bg-slate-600 border-slate-600" />
-                    </div>
-                    <div className="w-96 inline-flex flex-col justify-start items-start">
-                        <div className="self-stretch justify-start text-slate-600 text-2xl font-normal font-['Snowstorm']">Update Skor</div>
-                        <div className="self-stretch justify-start text-slate-600 text-base font-semibold font-['Sofia_Sans_Condensed'] leading-snug">Tambah dan edit perolehan nilai akhir.</div>
-                    </div>
-                </div>
-                <div className="w-3.5 h-10 rounded-[3px] outline outline-[6px] outline-offset-[-3px] outline-slate-600" />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-amber-100 via-orange-100 to-amber-200 p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-6xl font-bold text-amber-900 mb-4" style={{fontFamily: 'serif'}}>
+            Selamat Datang, Admin!
+          </h1>
+          <p className="text-xl text-amber-800 max-w-3xl mx-auto leading-relaxed font-medium">
+            Selamat datang di menu utama. Dari sini, Anda bisa memulai untuk memverifikasi atlet, 
+            mengatur jadwal pertandingan, mengatur timeline event, atau mengupdate skor.
+          </p>
         </div>
+
+        {/* Menu Cards */}
+        <div className="space-y-6">
+          {/* Verifikasi Registrasi Atlet */}
+          <div className="bg-amber-800 hover:bg-amber-700 transition-colors duration-200 rounded-full px-8 py-6 flex items-center justify-between cursor-pointer shadow-lg">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
+                <Check className="w-8 h-8 text-amber-800" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-1">Verifikasi Registrasi Atlet</h3>
+                <p className="text-amber-100 text-lg">Verifikasi atlet berdasarkan cabang lomba.</p>
+              </div>
+            </div>
+            <ChevronRight className="w-8 h-8 text-amber-100" />
+          </div>
+
+          {/* Schedule Pertandingan */}
+          <div className="bg-white hover:bg-gray-50 transition-colors duration-200 rounded-full px-8 py-6 flex items-center justify-between cursor-pointer shadow-lg">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                <Calendar className="w-8 h-8 text-blue-600" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-700 mb-1">Schedule Pertandingan</h3>
+                <p className="text-gray-600 text-lg font-semibold">Tambah, edit, atau atur pertandingan.</p>
+              </div>
+            </div>
+            <ChevronRight className="w-8 h-8 text-blue-500" />
+          </div>
+
+          {/* Update Skor */}
+          <div className="bg-white hover:bg-gray-50 transition-colors duration-200 rounded-full px-8 py-6 flex items-center justify-between cursor-pointer shadow-lg">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
+                <Trophy className="w-8 h-8 text-yellow-600" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-700 mb-1">Update Skor</h3>
+                <p className="text-gray-600 text-lg font-semibold">Tambah dan edit perolehan nilai akhir.</p>
+              </div>
+            </div>
+            <ChevronRight className="w-8 h-8 text-yellow-500" />
+          </div>
+        </div>
+      </div>
     </div>
-</div>
   );
 }

@@ -3,11 +3,16 @@ import { FaqSection } from "../component/FaqSection/faqDesktop";
 
 const FaqPage = () => {
   return (
-    <div className="w-full max-w-[1920px] mx-auto relative min-h-screen pb-[500px]">
+    <div className="w-full max-w-[1920px] mx-auto relative min-h-screen pb-[100px]">
       {/* Background */}
       <div
+<<<<<<< HEAD
         className="absolute top-0 left-0 w-full h-full bg-cover z-0 ]
         bg-[url('/faqmobilebg.svg')] sm:bg-[url('/faqBG.png')]"
+=======
+        className="absolute inset-0 bg-no-repeat bg-cover z-0
+        bg-[url('/faqmobilebg.svg')] sm:bg-[url('/faq/bg-faq-dt.png')]"
+>>>>>>> e995443143379f8b383e2544351f64404771bc86
         style={{
           backgroundSize: "cover",
           backgroundPosition: "top",

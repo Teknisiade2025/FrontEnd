@@ -4,11 +4,11 @@ import Kalender from "../component/schedule/kalender";
 
 const schedulePage = () => {
   return (
-    <div className="w-full max-w-[1920px] h-auto mx-auto relative overflow-hidden pb-[100px]">
+    <div className="relative w-full max-w-[1920px] mx-auto overflow-hidden pb-[20vh]">
       {/* Background */}
       <div
         className="absolute inset-0 bg-no-repeat bg-cover z-0
-        bg-[url('/faqmobilebg.svg')] sm:bg-[url('/bgschedule.svg')]"
+        bg-[url('/bgschedulemobile.png')] sm:bg-[url('/bgschedule.png')]"
         style={{
           backgroundSize: "cover",
           backgroundPosition: "top",
@@ -16,14 +16,14 @@ const schedulePage = () => {
       />
 
       {/* Konten */}
-      <main className="relative z-10 flex flex-col items-center w-full px-4 sm:px-8 pt-32 gap-[500] pb-20">
+      <main className="relative z-10 flex flex-col items-center justify-center w-full px-2 sm:px-8 pt-15 sm:pt-32 pb-10 gap-[130px] sm:gap-[400px]">
         {/* Schedule Section */}
-        <div className="w-full max-w-6xl">
+        <div className="w-full max-w-[450px] sm:max-w-[700px] ">
           <Schedule />
         </div>
 
         {/* Kalender Section */}
-        <div className="w-full max-w-6xl">
+        <div className="w-full max-w-4xl">
           <Kalender />
         </div>
       </main>
