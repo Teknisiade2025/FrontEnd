@@ -49,7 +49,7 @@ export const FaqSection = () => {
               <button onClick={() => toggleFaq(faq.id)} className="text-[#3C3022]">
                 <IoChevronDownSharp
                   className={`w-6 h-6 transition-transform duration-300 ${openFaq === faq.id ? "rotate-180" : ""}`}
-                />
+                /> 
               </button>
             </div>
             {openFaq === faq.id && (

@@ -20,6 +20,7 @@ const Page = () => {
       const imagePath = isMobile ? '/landingPageBGmobile.png' : '/landingPageBG.png'
       img.src = imagePath
       
+      
       img.onload = () => {
         const screenWidth = window.innerWidth
         const ratio = img.height / img.width
@@ -47,7 +48,7 @@ const Page = () => {
 
   return (
     <div
-      className="w-[100%] sm:w-[100%] g-no-repeat bg-cover bg-top bg-[#E1C791] overflow-hidden"
+      className="w-[100%] sm:w-[100%] g-no-repeat bg-cover bg-top bg-[#E1C791] overflow-auto"
       style={{
         backgroundImage: `url('${bgImage}')`,
         height: bgHeight,
@@ -55,14 +56,17 @@ const Page = () => {
         backgroundPosition: 'top',
       }}
     >
-      <Hero />
-      <KalerderEvent />
+        <Hero />
+        <KalerderEvent />
       <TentangTeksid />
       <TemuTeki />
       <Chant />
       <Olahraga />
       <Seni />
       <Sponsorship />
+
+      
+      
     </div>
   )
 }

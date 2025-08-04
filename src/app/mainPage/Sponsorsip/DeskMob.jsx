@@ -13,7 +13,7 @@ const SponsorSection = () => {
   }, []);
 
   return (
-    <section className="w-full flex justify-center items-center min-h-screen bg-transparent px-4 py-16 md:mt-[70vh]">
+    <section className="w-full flex justify-center items-center min-h-screen bg-transparent px-4 py-5 md:mt-[70vh]">
       {/* Desktop Layout */}
       <div className="hidden md:flex w-[80%] max-w-screen-xl mx-auto flex-col items-center gap-10">
         {/* Left: Description (1/6) */}

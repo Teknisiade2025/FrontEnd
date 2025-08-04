@@ -17,20 +17,20 @@ const Pertandingan = () => {
     return () => clearInterval(interval);
   }, []);
  
-  const matchData = {
-    date: "29 Februari, 19.00 WIB",
-    venue: "Gor Kridosono",
-    teamA: {
-      name: "KMHM",
-      logo: "/supreme-planner-logo.png",
-    },
-    teamB: {
-      name: "KMHM",
-      logo: "/supermesin-logo.png",
-    },
-    scoreA: 0,
-    scoreB: 0,
-  };
+  const matchData = [];
+    // date: "29 Februari, 19.00 WIB",
+    // venue: "Gor Kridosono",
+    // teamA: {
+    //   name: "KMHM",
+    //   logo: "/supreme-planner-logo.png",
+    // },
+    // teamB: {
+    //   name: "KMHM",
+    //   logo: "/supermesin-logo.png",
+    // },
+    // scoreA: 0,
+    // scoreB: 0,
+  // };
 
   return (
     <div className="flex flex-col items-center gap-4 w-full mac-w[400px] px-2 sm:px-5 py-2">
@@ -51,8 +51,10 @@ const Pertandingan = () => {
       </div>
 
       {/* Kartu Pertandingan */}
-      <div className="w-full rounded-[20px] sm:rounded-[38px] bg-[#F1E0C4] shadow-md px-14 py-5 flex flex-col gap-1 sm:gap-1">
+      <div className="w-full max-h-[300px] rounded-[20px] sm:rounded-[38px] bg-[#F1E0C4] shadow-md px-14 py-5 flex flex-col gap-1 sm:gap-1">
         {/* Judul Pertandingan */}
+        {matchData && matchData.teamA && matchData.teamB ?(
+        <>
         <div className="text-center">
           <div className="text-[#1D2225] font-[Snowstorm] self-stretch h-5 text-sm sm:text-base md:text-xl font-bold">
             <strong>{nama}</strong> - PUTRA
@@ -100,7 +102,15 @@ const Pertandingan = () => {
             </div>
           </div>
         </div>
-      </div>
+        </>
+        ) : (
+          <div className="flex items-center justify-center h-screen">
+                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
+                Tidak ditemukan jadwal next match.
+                </div>
+              </div>
+          )}
+        </div>
 
     </div>
   );

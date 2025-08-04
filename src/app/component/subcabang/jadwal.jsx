@@ -14,34 +14,34 @@ const Jadwal = () => {
 
 
   const scheduleData = [
-    {
-      id: 1,
-      date: "2025-08-01T19:00:00",
-      venue: "Gor Kridosono",
-      teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 2,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 3,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 4,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-    },
+  //   {
+  //     id: 1,
+  //     date: "2025-08-01T19:00:00",
+  //     venue: "Gor Kridosono",
+  //     teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 2,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 3,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 4,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //   },
   ];
 
   const filteredSchedule = scheduleData.filter((match) => {
@@ -163,8 +163,10 @@ const Jadwal = () => {
             {displayedMatches.length > 0 ? (
               displayedMatches.map((match) => <MatchCard key={match.id} match={match} />)
             ) : (
-              <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
-                Tidak ada jadwal untuk tim ini.
+              <div className="flex items-center justify-center h-screen">
+                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
+                Tidak ada jadwal untuk pertandingan ini.
+                </div>
               </div>
             )}
           </div>

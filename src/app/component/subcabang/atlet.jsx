@@ -14,42 +14,42 @@ const Atlet = () => {
   const dropdownOptions = ["HMTPWK", "KMTA", "KMTG", "KMTSL", "HMTG", "HMTI", "KMTETI", "KMTNTF", "KMTM", "KMTK"];
 
   const atletData = [
-    {
-      id: 1,
-      nama: "John Doe",
-      cabang: "Basket Putra",
-      asalKMHM: "KMTETI",
-      jurusan: "Teknik Elektro",
-      angkatan: "2022",
-      email: "JohnDoe@gmail.com",
-      noHP: "08123456789",
-      tempatTanggalLahir: "Jakarta, 25 April 2022",
-      asalKota: "DKI Jakarta",
-    },
-    {
-      id: 2,
-      nama: "Jane Smith",
-      cabang: "Futsal Putri",
-      asalKMHM: "KMKMTG",
-      jurusan: "Teknik Geologi",
-      angkatan: "2021",
-      email: "JaneSmith@gmail.com",
-      noHP: "08129876543",
-      tempatTanggalLahir: "Bandung, 10 Mei 2001",
-      asalKota: "Bandung",
-    },
-    {
-      id: 3,
-      nama: "Ahmad Yani",
-      cabang: "Pencak Silat",
-      asalKMHM: "KMFT",
-      jurusan: "Teknik Mesin",
-      angkatan: "2020",
-      email: "AhmadYani@gmail.com",
-      noHP: "08125551234",
-      tempatTanggalLahir: "Yogyakarta, 7 Agustus 2000",
-      asalKota: "Yogyakarta",
-    },
+    // {
+    //   id: 1,
+    //   nama: "John Doe",
+    //   cabang: "Basket Putra",
+    //   asalKMHM: "KMTETI",
+    //   jurusan: "Teknik Elektro",
+    //   angkatan: "2022",
+    //   email: "JohnDoe@gmail.com",
+    //   noHP: "08123456789",
+    //   tempatTanggalLahir: "Jakarta, 25 April 2022",
+    //   asalKota: "DKI Jakarta",
+    // },
+    // {
+    //   id: 2,
+    //   nama: "Jane Smith",
+    //   cabang: "Futsal Putri",
+    //   asalKMHM: "KMKMTG",
+    //   jurusan: "Teknik Geologi",
+    //   angkatan: "2021",
+    //   email: "JaneSmith@gmail.com",
+    //   noHP: "08129876543",
+    //   tempatTanggalLahir: "Bandung, 10 Mei 2001",
+    //   asalKota: "Bandung",
+    // },
+    // {
+    //   id: 3,
+    //   nama: "Ahmad Yani",
+    //   cabang: "Pencak Silat",
+    //   asalKMHM: "KMFT",
+    //   jurusan: "Teknik Mesin",
+    //   angkatan: "2020",
+    //   email: "AhmadYani@gmail.com",
+    //   noHP: "08125551234",
+    //   tempatTanggalLahir: "Yogyakarta, 7 Agustus 2000",
+    //   asalKota: "Yogyakarta",
+    // },
   ];
 
   const filteredAtlet =
@@ -167,6 +167,8 @@ const Atlet = () => {
       </div>
 
       {/* Kartu Atlet */}
+      <div className="w-full h-[400px] pr-2 atlet-scrollbar max-w-full">
+      {filteredAtlet.length > 0 ? (
       <div className="w-full h-[400px] overflow-y-scroll pr-2 atlet-scrollbar max-w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[1600px] mx-auto pb-8">
           {filteredAtlet.map((a) => (
@@ -194,15 +196,24 @@ const Atlet = () => {
             </div>
           ))}
         </div>
-      </div>
+        </div>
+          ) : (
+        <div className="flex items-top justify-center h-screen">
+                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
+                Tidak ada atlet/seniman untuk ditampilkan.
+                </div>
+              </div>
+                )}
+      
+    </div>
     </div>
   );
 };
 
 const Info = ({ label, value }) => (
   <div className="flex gap-2 md:gap-4 flex-wrap">
-    <div className="w-[140px] font-bold">{label}</div>
-    <div className="flex-1 break-words">{value}</div>
+    <div className="w-[140px] font-sofia font-bold">{label}</div>
+    <div className="flex-1 font-sofia break-words">{value}</div>
   </div>
 );
 
