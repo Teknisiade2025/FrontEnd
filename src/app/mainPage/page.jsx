@@ -9,6 +9,7 @@ import Chant from '@/app/mainPage/Chant/DeskMob'
 import Olahraga from '@/app/mainPage/CabangOlahraga/DeskMob'
 import Seni from '@/app/mainPage/CabangSeni/DeskMob'
 import Sponsorship from '@/app/mainPage/Sponsorsip/DeskMob'
+import Tagline from '@/app/mainPage/TagLine/page'
 
 const Page = () => {
   const [bgHeight, setBgHeight] = useState('80vh')
@@ -60,7 +61,8 @@ const Page = () => {
         <KalerderEvent />
       <TentangTeksid />
       <TemuTeki />
-      <Chant />
+      {/* <Chant /> */}
+      <Tagline /> 
       <Olahraga />
       <Seni />
       <Sponsorship />
