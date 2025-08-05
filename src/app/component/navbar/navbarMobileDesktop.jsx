@@ -11,6 +11,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+  const [selectedDropdown, setSelectedDropdown] = useState(null);
 
   const dropdownRef = useRef();
   const mobileMenuRef = useRef();
@@ -142,7 +143,7 @@ const Navbar = () => {
             <button onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)} className="flex justify-center items-center gap-1 hover:underline w-full">
               Cabang <IoChevronDownSharp className={`w-6 h-6 transition-transform duration-300 text-lg ${isMobileDropdownOpen ? "rotate-180" : ""}`} />
             </button>
-            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isMobileDropdownOpen ? 'max-h-[400px] border-1 border-black mt-2' : 'max-h-0'}`}>  
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isMobileDropdownOpen ? 'max-h-[400px] border-1 rounded-xl border-black mt-2' : 'max-h-0'}`}>  
               <div className="  rounded-xl p-4 space-y-6 max-h-[400px] overflow-y-auto">
               {/* Olahraga */}
           

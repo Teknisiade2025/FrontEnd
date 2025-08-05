@@ -68,7 +68,7 @@ const Jadwal = () => {
 
   return (
     <div className="w-full">
-      <div className="w-full flex flex-col lg:flex-row items-start lg:items-stretch gap-50 px-4 sm:px-14 max-w-7xl mx-auto">
+      <div className="w-full flex flex-col lg:flex-row items-start lg:items-stretch gap-5 sm:gap-50 px-4 sm:px-14 max-w-7xl mx-auto">
         {/* Gambar Jadwal */}
         <div className="w-full lg:w-auto flex justify-center lg:justify-start lg:min-w-[200px] lg:self-stretch">
           <div className="h-full flex items-center justify-center py-6">

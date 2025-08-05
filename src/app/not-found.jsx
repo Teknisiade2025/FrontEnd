@@ -31,7 +31,7 @@ export default function NotFound() {
             
             <div className="w-[85vw] lg:w-[1200px] px-4 flex flex-col items-center pt-[10vh] lg:mt-15">
                 {/*404 NOT FOUND*/}
-                <div className="text-center mb-8 lg:mb-12">
+                <div className="text-center  mb-20 sm:mb-8 lg:mb-18">
                 <h1 className="font-snowstorm font-bold tracking-[0] leading-none"
                         style={{textShadow: "0px 3px 4px rgba(0,0,0,0.25)"}}>
                         <span className="text-[80px] sm:text-[100px] lg:text-[120px]">4</span>
