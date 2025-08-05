@@ -97,10 +97,10 @@ const CalendarCarousel = () => {
 
           {/* Carousel Section - layout berbeda untuk mobile dan desktop */}
           {events.length === 0 ? (
-  <div className="w-full h-[100px] flex items-center justify-center text-center text-black font-sofia font-bold text-[2vw]">
-    Tidak ada event untuk ditampilkan.
-  </div>
-) : isMobile ? (
+            <div className="w-full h-[100px] flex items-center justify-center text-center text-black font-sofia font-bold text-6vw sm:text-[2vw]">
+              Tidak ada event untuk ditampilkan.
+            </div>
+          ) : isMobile ? (
             // Mobile Version - Vertikal
             <div className="w-full flex flex-col items-center justify-center gap-1 min-h-[250px]">
               {/* Tombol atas */}

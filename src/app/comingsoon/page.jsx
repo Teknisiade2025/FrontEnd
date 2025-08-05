@@ -1,6 +1,7 @@
 'use client';
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function NotFound() {
     const [isMobile, setIsMobile] = useState(false);
@@ -59,11 +60,11 @@ export default function NotFound() {
                                 </div>
         
                                 <div className="w-full sm:w-auto">
-                                    <a href="/mainPage"
+                                    <Link href="/mainPage"
                                         className="flex items-center justify-center gap-2 sm:gap-3 bg-[#B1844D] text-[#1D2225] font-sofia font-bold text-base sm:text-2xl px-4 sm:px-10 py-2 sm:py-4 rounded-[20px] sm:rounded-[25px] shadow-md hover:bg-[#9c6f3c] transition whitespace-nowrap">
                                         Ke Beranda
                                         <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6" />
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

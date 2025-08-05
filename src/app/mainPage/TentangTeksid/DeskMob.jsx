@@ -38,7 +38,7 @@ const page = () => {
             autoPlay loop
             className="w-full h-full object-cover"
             >
-            <source src="/videos/videoTest.mp4" type="video/mp4" />
+            <source src="/videos/teaser.mp4" type="teaser/mp4" />
             Your browser does not support the video tag.
             </video>
         </div>

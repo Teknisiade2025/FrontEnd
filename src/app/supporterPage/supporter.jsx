@@ -36,9 +36,7 @@ export default function Supporter({ items }) {
                 Supporter Solid Teknik UGM
             </h2>
             <p className="text-[15px] sm:text-[15px] lg:text-[22px] font-sofia font-light text-[#1D2225]/80 text-justify leading-relative mt-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Supersonik, singkatan dari Suporter Solid Teknik, adalah kelompok pendukung resmi Fakultas Teknik Universitas Gadjah Mada (UGM) yang dikenal karena semangat dan militansi mereka dalam mendukung tim fakultanya di berbagai ajang kompetisi, terutama dalam Pekan Olahraga dan Seni Gadjah Mada (Porsenigama). Mereka tidak hanya hadir sebagai penonton, tetapi juga sebagai penyemangat utama yang membawa yel-yel khas dan koreografi yang membangkitkan semangat.
             </p>
             </div>
         </div>
