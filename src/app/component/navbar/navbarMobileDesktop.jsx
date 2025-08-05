@@ -17,9 +17,9 @@ const Navbar = () => {
   const router = useRouter() 
 
   const dropdownOptions = {
-  Olahraga: ["Sepak Bola", "Futsal", "Mobile Legends", "valorant",
+  Olahraga: ["Sepak Bola", "Futsal", "Mobile Legends", "Valorant",
               "Voli", "Tenis Meja", "FIFA", "Atletik",
-              "Badminton", "Basket", "catur", "PUBG"],
+              "Badminton", "Basket", "Catur", "PUBG"],
   Seni: ["Band", "Tari Tradisional", "Cipta Puisi", "Fotografi",
           "Vokal Grup", "Dance", "Poster", "Seni Lukis", 
           "Solo Vokal", "Monolog" ],
@@ -49,14 +49,15 @@ const Navbar = () => {
       <div className="p-4 sm:p-4 md:p-7">
         <div className="rounded-[40px] shadow-md bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] flex items-center justify-between px-6 py-1 md:py-2 relative z-40">
           {/* Logo */}
+          <Link href="/mainPage">
           <Image
             src="/logoTeksid.png"
             alt="Logo"
             width={56}
             height={56}
             className="w-12 h-12 object-contain"
-            onClick={() => router.push("/mainPage")}
-          />
+            />
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-6 lg:gap-12 items-center text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] flex-wrap max-w-[70%]">
@@ -65,7 +66,7 @@ const Navbar = () => {
             <div className="relative flex flex-col justify-center" ref={dropdownRef}>
               <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} 
                       className="flex items-center justify-center gap-1 hover:underline whitespace-nowrap">
-                      Cabang <IoChevronDownSharp className="text-lg" />
+                      Cabang <IoChevronDownSharp className={`w-6 h-6 transition-transform duration-300 text-lg ${isDropdownOpen ? "rotate-180" : ""}`} />
               </button>
               <div className={`absolute top-full -left-25 min-w-[300px] grid grid-cols-2 gap-6 p-6 bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] rounded-xl shadow-md z-30 overflow-hidden transition-all duration-1000 ease-in-out transform ${isDropdownOpen ? 'max-h-[500px] opacity-100 translate-y-1' : 'max-h-0 opacity-0 -translate-y-2'} origin-top mt-6`}>
                 {/* Olahraga Column */}
@@ -105,19 +106,18 @@ const Navbar = () => {
               </div>
             </div>
 
-            
             <a href="/supporterPage" className="hover:underline whitespace-nowrap">Supporter</a>
 
             <a href="/faq" className="hover:underline whitespace-nowrap">FAQ</a>
           </div>
 
           {/* Login (Desktop) */}
-          <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-amber-100 transition-colors duration-200 p-2 px-7 rounded-4xl"
-              onClick={() => router.push("/login")}>
-            <span>Login</span>
-            <IoLogInOutline size={24} />
-          </div>
-
+          <Link href="/comingsoon" passHref>
+  <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-amber-100 transition-colors duration-200 p-2 px-7 rounded-4xl">
+    <span>Login</span>
+    <IoLogInOutline size={24} />
+  </div>
+</Link>
           {/* Mobile Menu Button */}
           <div className="md:hidden ">
             <AiOutlineMenu size={28} onClick={() => setIsMenuOpen(true)} className="cursor-pointer text-black" />
@@ -140,12 +140,12 @@ const Navbar = () => {
           {/* Dropdown Mobile */}
           <div className="w-full">
             <button onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)} className="flex justify-center items-center gap-1 hover:underline w-full">
-              Cabang <IoChevronDownSharp className="text-lg" />
+              Cabang <IoChevronDownSharp className={`w-6 h-6 transition-transform duration-300 text-lg ${isMobileDropdownOpen ? "rotate-180" : ""}`} />
             </button>
-            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isMobileDropdownOpen ? 'max-h-[400px] mt-2' : 'max-h-0'}`}>  
-              <div className="bg-transparant shadow-lg rounded-xl p-4 space-y-6 max-h-[400px] overflow-y-auto">
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isMobileDropdownOpen ? 'max-h-[400px] border-1 border-black mt-2' : 'max-h-0'}`}>  
+              <div className="  rounded-xl p-4 space-y-6 max-h-[400px] overflow-y-auto">
               {/* Olahraga */}
-              {/* Olahraga */}
+          
       <div>
         <h3 className="font-bold text-base mb-3 text-[#806037] text-center">Olahraga</h3>
         <ul className="flex flex-col gap-2 text-black text-lg">
@@ -192,11 +192,11 @@ const Navbar = () => {
 
 
 
-          <a href="/supporter" className="hover:underline" onClick={() => router.push("/supporterPage")}>Supporter</a>
+          <a href="/supporterPage" className="hover:underline" onClick={() => router.push("/supporterPage")}>Supporter</a>
           <a href="/faq" className="hover:underline" onClick={() => router.push("/faq")}>FAQ</a>
 
           <div className="flex items-center gap-2 cursor-pointer self-start hover:bg-amber-100 transition-colors duration-200 p-2 rounded"
-          onClick={() => router.push("/login")}>
+          onClick={() => router.push("/comingsoon")}>
             <span>Login</span>
             <IoLogInOutline size={24} />
           </div>

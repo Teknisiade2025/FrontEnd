@@ -3,72 +3,72 @@ export default function MedalTable() {
       { 
         logo: "/logoKMHM/HMTPWK.svg", 
         name: "HMTPWK", 
-        gold: 5, 
-        silver: 3, 
-        bronze: 2 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/KMTA.svg", 
         name: "KMTA", 
-        gold: 3, 
-        silver: 4, 
-        bronze: 1 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/KMTG.svg", 
         name: "KMTG", 
-        gold: 2, 
-        silver: 2, 
-        bronze: 5 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/KMTSL.svg", 
         name: "KMTSL", 
-        gold: 2, 
-        silver: 2, 
-        bronze: 5 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/HMTG.svg", 
         name: "HMTG", 
-        gold: 2, 
-        silver: 2, 
-        bronze: 5 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/HMTI.svg", 
         name: "HMTI", 
-        gold: 2, 
-        silver: 2, 
-        bronze: 5 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/KMTETI.svg", 
         name: "KMTETI", 
-        gold: 2, 
-        silver: 2, 
-        bronze: 5 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/KMTNTF.svg", 
         name: "KMTNTF", 
-        gold: 2, 
-        silver: 2, 
-        bronze: 5 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/KMTM.svg", 
         name: "KMTM", 
-        gold: 2, 
-        silver: 2, 
-        bronze: 5 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
       { 
         logo: "/logoKMHM/KMTK.svg", 
         name: "KMTK", 
-        gold: 2, 
-        silver: 2, 
-        bronze: 5 
+        gold: 0, 
+        silver: 0, 
+        bronze: 0 
       },
     ];
   

@@ -21,43 +21,43 @@ const Kalender = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const scheduleData = [
-    {
-      id: 1,
-      date: "2025-07-31T19:00:00",
-      venue: "Stadion Gelora Bung Karno",
-      teamA: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTSL", logo: "https://placehold.co/80x80" },
-      sport: "SEPAK BOLA",
-      stage: "SEMIFINAL"
-    },
-    {
-      id: 2,
-      date: "2025-08-02T15:30:00",
-      venue: "Stadion Kapten I Wayan Dipta",
-      teamA: { name: "KMTG", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-      sport: "SEPAK BOLA",
-      stage: "PENYISIHAN"
-    },
-    {
-      id: 3,
-      date: "2025-08-05T20:00:00",
-      venue: "GOR Bima Sakti",
-      teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-      sport: "BASKET",
-      stage: "FINAL"
-    },
-    {
-      id: 4,
-      date: "2025-08-02T10:00:00",
-      venue: "Lapangan Voli UGM",
-      teamA: { name: "KMTM", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTK", logo: "https://placehold.co/80x80" },
-      sport: "VOLI",
-      stage: "PENYISIHAN"
-    },
+  const scheduleData = [{},
+    // {
+    //   id: 1,
+    //   date: "2025-07-31T19:00:00",
+    //   venue: "Stadion Gelora Bung Karno",
+    //   teamA: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+    //   teamB: { name: "KMTSL", logo: "https://placehold.co/80x80" },
+    //   sport: "SEPAK BOLA",
+    //   stage: "SEMIFINAL"
+    // },
+    // {
+    //   id: 2,
+    //   date: "2025-08-02T15:30:00",
+    //   venue: "Stadion Kapten I Wayan Dipta",
+    //   teamA: { name: "KMTG", logo: "https://placehold.co/80x80" },
+    //   teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+    //   sport: "SEPAK BOLA",
+    //   stage: "PENYISIHAN"
+    // },
+    // {
+    //   id: 3,
+    //   date: "2025-08-05T20:00:00",
+    //   venue: "GOR Bima Sakti",
+    //   teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
+    //   teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+    //   sport: "BASKET",
+    //   stage: "FINAL"
+    // },
+    // {
+    //   id: 4,
+    //   date: "2025-08-02T10:00:00",
+    //   venue: "Lapangan Voli UGM",
+    //   teamA: { name: "KMTM", logo: "https://placehold.co/80x80" },
+    //   teamB: { name: "KMTK", logo: "https://placehold.co/80x80" },
+    //   sport: "VOLI",
+    //   stage: "PENYISIHAN"
+    // },
   ];
 
   const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -239,7 +239,9 @@ const Kalender = () => {
         </div>
 
         {/* Mobile: Daftar pertandingan di bawah kalender */}
-        {isMobile && monthMatches.length > 0 && (
+        {isMobile  && (
+          <div className="mt-6 bg-[#FAEDDABD] rounded-[40px] p-6 shadow-md min-h-[200px] flex items-center justify-center">
+          {monthMatches.length > 0 ? (
           <div className="mt-6 bg-[#FAEDDABD] rounded-[40px] p-6 shadow-md">
             <h3 className="text-xl font-bold font-snowstorm text-[#1D2225] mb-4 text-center">
               Jadwal Pertandingan Bulan Ini
@@ -271,7 +273,15 @@ const Kalender = () => {
               ))}
             </div>
           </div>
+           ) : (
+            <div className="flex items-center justify-center h-full">
+                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
+                Tidak ada jadwal di bulan ini.
+                </div>
+              </div>
         )}
+      </div>
+      )}
       </div>
 
 

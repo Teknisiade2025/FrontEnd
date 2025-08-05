@@ -1,16 +1,35 @@
+'use client';
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function NotFound() {
+    const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
     return (
 
-        <div
-        className="min-h-screen w-full flex flex-col items-center bg-no-repeat bg-cover bg-center pt-16 sm:pt-20 lg:pt-28"
-        style={{backgroundImage: "url('/not-found/Background 404 - Desktop.svg')",
-                backgroundSize: "cover",
-                backgroundPosition: "center top", 
-            }}>
+    <div
+      className={`w-full flex flex-col items-center bg-no-repeat bg-cover bg-center pt-16 sm:pt-20 lg:pt-28 ${
+        isMobile ? '' : 'min-h-screen'
+      }`}
+      style={{
+        backgroundImage: `url('${
+          isMobile
+            ? '/not-found/bgmobile.svg'
+            : '/not-found/Background 404 - Desktop.svg'
+        }')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center top',
+      }}
+    >
+
             
-            <div className="w-[85vw] lg:w-[1200px] px-4 flex flex-col items-center pt-[10vh] lg:mt-10">
+            <div className="w-[85vw] lg:w-[1200px] px-4 flex flex-col items-center pt-[10vh] lg:mt-15">
                 {/*404 NOT FOUND*/}
                 <div className="text-center mb-8 lg:mb-12">
                 <h1 className="font-snowstorm font-bold tracking-[0] leading-none"

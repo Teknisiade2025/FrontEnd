@@ -14,34 +14,34 @@ const Jadwal = () => {
 
 
   const scheduleData = [
-    {
-      id: 1,
-      date: "2025-08-01T19:00:00",
-      venue: "Gor Kridosono",
-      teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 2,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 3,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 4,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-    },
+  //   {
+  //     id: 1,
+  //     date: "2025-08-01T19:00:00",
+  //     venue: "Gor Kridosono",
+  //     teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 2,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 3,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 4,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //   },
   ];
 
   const filteredSchedule = scheduleData.filter((match) => {
@@ -68,7 +68,7 @@ const Jadwal = () => {
 
   return (
     <div className="w-full">
-      <div className="w-full flex flex-col lg:flex-row items-start lg:items-stretch gap-6 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div className="w-full flex flex-col lg:flex-row items-start lg:items-stretch gap-50 px-4 sm:px-14 max-w-7xl mx-auto">
         {/* Gambar Jadwal */}
         <div className="w-full lg:w-auto flex justify-center lg:justify-start lg:min-w-[200px] lg:self-stretch">
           <div className="h-full flex items-center justify-center py-6">
@@ -81,7 +81,7 @@ const Jadwal = () => {
         </div>
 
         {/* Main Container */}
-        <div className="flex-1 w-full h-auto lg:h-[500px] p-6 lg:p-8 bg-[#FAEDDABD] shadow-lg rounded-[24px] flex flex-col gap-6">
+        <div className="flex-1 w-full h-auto lg:h-[500px] p-6 lg:p-8 bg-[#FAEDDABD] shadow-lg rounded-[47px] flex flex-col gap-6">
           <style jsx>{`
             .matches-scrollbar::-webkit-scrollbar {
               width: 8px;
@@ -118,15 +118,15 @@ const Jadwal = () => {
                 <IoChevronDownSharp size={16} />
               </button>
               <div
-                className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-10 ${
-                  isDropdownOpen ? "max-h-[300px] opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
+                className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out z-10 ${
+                  isDropdownOpen ? "max-h-[350px] opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
                 }`}
               >
-                <ul className="flex flex-col px-4 py-3 text-[#1D2225]">
+                <ul className="font-sofia text-base font-extrabold flex flex-col px-4 py-3 text-[#1D2225] ">
                   {dropdownOptions.map((option, idx) => (
                     <li
                       key={idx}
-                      className="cursor-pointer py-2 hover:underline text-sm font-medium"
+                      className="cursor-pointer py-1 hover:underline text-sm font-medium"
                       onClick={() => {
                         setSelectedDropdown(option);
                         setIsDropdownOpen(false);
@@ -145,7 +145,7 @@ const Jadwal = () => {
                 <button
                   key={tab}
                   onClick={() => setSelectedTab(tab)}
-                  className={`w-[150px] py-2.5 font-sofia font-extrabold text-sm rounded-full transition-all duration-200 ${
+                  className={`w-[150px] py-2.5 font-sofia font-extrabold text-base rounded-full transition-all duration-200 ${
                     selectedTab === tab ? "bg-[#806037] text-[#FBEBD2]" : "bg-[#1D2225] text-[#FBEBD2] hover:bg-[#2a2f33]"
                   }`}
                 >
@@ -163,8 +163,10 @@ const Jadwal = () => {
             {displayedMatches.length > 0 ? (
               displayedMatches.map((match) => <MatchCard key={match.id} match={match} />)
             ) : (
-              <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
-                Tidak ada jadwal untuk tim ini.
+              <div className="flex items-center justify-center h-screen">
+                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
+                Tidak ada jadwal untuk pertandingan ini.
+                </div>
               </div>
             )}
           </div>
@@ -176,26 +178,24 @@ const Jadwal = () => {
 
 const MatchCard = ({ match }) => {
   return (
-    <div className="w-full px-3 py-4 sm:px-6 sm:py-6 bg-[#5F56487F] shadow-md rounded-[20px] flex flex-col gap-4">
+    <div className="w-full px-3 py-4 sm:px-16 sm:py-6 bg-[#5F56487F] shadow-md rounded-[38px] flex flex-col gap-1 sm:gap-1">
       {/* Judul Pertandingan */}
-  <div className="text-center">
-    <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-lg font-bold">
-      SEPAK BOLA - PUTRI
-    </div>
-    <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-lg font-bold">
-      BABAK PENYISIHAN
-    </div>
-  </div>
-
-
+      <div className="text-center">
+        <div className="text-[#1D2225] font-[Snowstorm] self-stretch h-5 text-sm sm:text-base md:text-xl font-bold">
+          SEPAK BOLA - PUTRI
+        </div>
+        <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-xl font-bold">
+          BABAK PENYISIHAN
+        </div>
+      </div>
       {/* Baris 2: Logo A | Info Tengah | Logo B */}
-      <div className="flex flex-row items-center justify-between gap-2 sm:gap-4">
+      <div className="flex flex-row justify-between items-center gap-2 sm:gap-4">
         {/* Team A */}
         <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
           <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
             <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" />
           </div>
-          <span className="text-[#1D2225] font-bold font-snowstorm text-xs sm:text-sm lg:text-base text-center">
+          <span className="text-[#1D2225] font-bold font-snowstorm text-sm sm:text-base md:text-xl text-center">
             {match.teamA.name}
           </span>
         </div>
@@ -203,7 +203,7 @@ const MatchCard = ({ match }) => {
         {/* Info Tengah */}
         <div className="flex flex-col items-center text-center gap-3 sm:gap-6 mx-auto flex-1 min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
           <div  className="flex flex-col items-center text-center ">
-          <p className="text-[#1D2225] font-sofia text-xs sm:text-sm font-normal">
+          <p className="text-[#1D2225] self-stretch h-5 text-sm sm:text-lg font-sofia font-extrabold">
             {new Date(match.date).toLocaleString("id-ID", {
               weekday: "short",
               day: "numeric",
@@ -213,11 +213,11 @@ const MatchCard = ({ match }) => {
             })}{" "}
             WIB
           </p>
-          <p className="text-[#1D2225] font-sofia text-xs sm:text-sm">{match.venue}</p>
+          <p className="text-[#1D2225] font-sofia font-extrabold text-sm sm:text-lg">{match.venue}</p>
           </div>
-          <div className="text-[#1D2225] font-extrabold text-lg sm:text-2xl lg:text-3xl font-snowstorm">V/S</div>
+          <div className="text-[#1D2225] font-extrabold text-lg sm:text-4xl lg:text-5xl font-snowstorm">V/S</div>
           <div className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:underline">
-            <span className="text-[#1D2225] text-xs sm:text-sm font-sofia font-bold">Tonton Live</span>
+            <span className="flex items-center gap-1 text-[#1D2225] font-sofia font-bold text-sm sm:text-lg cursor-pointer hover:underline">Tonton Live</span>
             <HiArrowRight className="text-[#1D2225] text-xs sm:text-sm" />
           </div>
         </div>
@@ -227,7 +227,7 @@ const MatchCard = ({ match }) => {
           <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
             <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" />
           </div>
-          <span className="text-[#1D2225] font-bold font-snowstorm text-xs sm:text-sm lg:text-base text-center">
+          <span className="text-[#1D2225] font-bold font-snowstorm text-sm sm:text-base md:text-xl text-center">
             {match.teamB.name}
           </span>
         </div>

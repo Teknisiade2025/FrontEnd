@@ -3,14 +3,14 @@ import { IoChevronDown } from 'react-icons/io5';
 import Image from 'next/image';
 
 const events = [
-  { title: 'Upacara Pembukaan', date: '29 Agustus' },
-  { title: 'Bulu Tangkis', date: '1 September' },
-  { title: 'Softball', date: '3 September' },
-  { title: 'Basket', date: '5 September' },
-  { title: 'Futsal', date: '7 September' },
-  { title: 'Softball', date: '3 September' },
-  { title: 'Basket', date: '5 September' },
-  { title: 'Futsal', date: '7 September' },
+  // { title: 'Upacara Pembukaan', date: '29 Agustus' },
+  // { title: 'Bulu Tangkis', date: '1 September' },
+  // { title: 'Softball', date: '3 September' },
+  // { title: 'Basket', date: '5 September' },
+  // { title: 'Futsal', date: '7 September' },
+  // { title: 'Softball', date: '3 September' },
+  // { title: 'Basket', date: '5 September' },
+  // { title: 'Futsal', date: '7 September' },
 ];
 
 const CalendarCarousel = () => {
@@ -81,7 +81,7 @@ const CalendarCarousel = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-[8vh] sm:mt-[2vh] md:mt-[4vh] lg:mt-[60vh] relative">
+    <div className="flex justify-center items-center mt-[8vh] sm:mt-[2vh] md:mt-[4vh] lg:mt-[25vh] relative">
       {/* Container utama untuk desktop dan mobile */}
       <div className={`absolute w-full max-w-[1500px] ${isMobile ? 'h-[80vh]' : 'h-[55vh]'} mb-0 flex items-center justify-center relative`}>
         
@@ -96,7 +96,11 @@ const CalendarCarousel = () => {
           </div>
 
           {/* Carousel Section - layout berbeda untuk mobile dan desktop */}
-          {isMobile ? (
+          {events.length === 0 ? (
+  <div className="w-full h-[100px] flex items-center justify-center text-center text-black font-sofia font-bold text-[2vw]">
+    Tidak ada event untuk ditampilkan.
+  </div>
+) : isMobile ? (
             // Mobile Version - Vertikal
             <div className="w-full flex flex-col items-center justify-center gap-1 min-h-[250px]">
               {/* Tombol atas */}
@@ -117,7 +121,8 @@ const CalendarCarousel = () => {
                   className="transition-transform duration-500 ease-in-out flex flex-col"
                   style={{ transform: `translateY(-${startIndex * 100}px)` }}
                 >
-                  {events.map((event, i) => (
+                  
+                    {events.map((event, i) => (
                     <div
                       key={i}
                       className="h-[100px] w-full flex-shrink-0 flex flex-col items-center justify-center text-black p-2"
@@ -127,11 +132,12 @@ const CalendarCarousel = () => {
                       </div>
                       <div className="text-center font-['Sofia_Sans_Condensed'] text-base">
                         {event.date}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                       </div>
+          </div>
+        ))}
+      </div>
+    </div>
+              
 
               {/* Tombol bawah */}
               <button 

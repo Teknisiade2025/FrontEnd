@@ -19,34 +19,34 @@ const Jadwal = () => {
   };
 
   const scheduleData = [
-    {
-      id: 1,
-      date: "2025-08-01T19:00:00",
-      venue: "Gor Kridosono",
-      teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 2,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 3,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-    },
-    {
-      id: 4,
-      date: "2025-07-01T20:00:00",
-      venue: "Gor Amongrogo",
-      teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-      teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-    },
+  //   {
+  //     id: 1,
+  //     date: "2025-08-01T19:00:00",
+  //     venue: "Gor Kridosono",
+  //     teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 2,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 3,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //   },
+  //   {
+  //     id: 4,
+  //     date: "2025-07-01T20:00:00",
+  //     venue: "Gor Amongrogo",
+  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
+  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
+  //   },
   ];
 
   const filteredSchedule = scheduleData.filter((match) => {
@@ -79,7 +79,7 @@ const Jadwal = () => {
       </div>
 
       {/* Main Container - Centered and Wider */}
-      <div className="w-full  h-auto md:h-[520px] p-6 md:p-8 bg-[#FAEDDABD] shadow-lg rounded-[30px] flex flex-col gap-6">
+      <div className="w-full  h-auto md:h-[520px] pb-6 md:p-8 bg-[#FAEDDABD] shadow-lg rounded-[30px] flex flex-col gap-6">
         <style jsx>{`
           .matches-scrollbar::-webkit-scrollbar {
             width: 8px;
@@ -171,9 +171,9 @@ const Jadwal = () => {
           {displayedMatches.length > 0 ? (
             displayedMatches.map((match) => <MatchCard key={match.id} match={match} />)
           ) : (
-            <div className="h-full flex items-center justify-center">
+            <div className="h-screen flex items-center justify-center">
               <div className="text-center text-[#1D2225] font-sofia font-bold text-lg">
-              Tidak ada jadwal untuk tim ini.
+              Tidak ada jadwal pertandingan untuk hari ini.
               </div>
             </div>
           )}

@@ -20,6 +20,7 @@ const Page = () => {
       const imagePath = isMobile ? '/landingPageBGmobile.png' : '/landingPageBG.png'
       img.src = imagePath
       
+      
       img.onload = () => {
         const screenWidth = window.innerWidth
         const ratio = img.height / img.width
@@ -55,14 +56,17 @@ const Page = () => {
         backgroundPosition: 'top',
       }}
     >
-      <Hero />
-      <KalerderEvent />
+        <Hero />
+        <KalerderEvent />
       <TentangTeksid />
       <TemuTeki />
       <Chant />
       <Olahraga />
       <Seni />
       <Sponsorship />
+
+      
+      
     </div>
   )
 }

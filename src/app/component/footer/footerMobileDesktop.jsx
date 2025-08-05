@@ -80,7 +80,7 @@ const FooterTeknisiade = () => {
           <div className="flex gap-4 mt-2">
             <Image src="/Footer/logoUgm.png" alt="UGM" width={64} height={64} className="w-16 h-16 md:w-[6vw] md:h-[6vw]" />
             <Image src="/Footer/logoBemFT.png" alt="BEM FT" width={64} height={64} className="w-16 h-16 md:w-[6vw] md:h-[6vw]" />
-            <Image src="/Footer/logoKementrian.png" alt="Kementrian" width={64} height={64} className="w-16 h-16 md:w-[6vw] md:h-[6vw]" />
+            {/* <Image src="/Footer/logoKementrian.png" alt="Kementrian" width={64} height={64} className="w-16 h-16 md:w-[6vw] md:h-[6vw]" /> */}
           </div>
         </div>
       </div>
