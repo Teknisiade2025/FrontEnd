@@ -48,7 +48,7 @@ const Page = () => {
 
   return (
     <div
-      className="w-[100%] sm:w-[100%] g-no-repeat bg-cover bg-top bg-[#E1C791] overflow-auto"
+      className="w-[100%] sm:w-[100%] g-no-repeat bg-cover bg-top bg-[#E1C791] overflow-hidden"
       style={{
         backgroundImage: `url('${bgImage}')`,
         height: bgHeight,

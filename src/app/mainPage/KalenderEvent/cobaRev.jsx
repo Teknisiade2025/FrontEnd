@@ -81,7 +81,7 @@ const CalendarCarousel = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-[8vh] sm:mt-[2vh] md:mt-[4vh] lg:mt-[60vh] relative">
+    <div className="flex justify-center items-center mt-[8vh] sm:mt-[2vh] md:mt-[4vh] lg:mt-[25vh] relative">
       {/* Container utama untuk desktop dan mobile */}
       <div className={`absolute w-full max-w-[1500px] ${isMobile ? 'h-[80vh]' : 'h-[55vh]'} mb-0 flex items-center justify-center relative`}>
         

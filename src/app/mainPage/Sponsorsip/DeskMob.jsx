@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 
 const SponsorSection = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const sponsors = new Array(16).fill('/path-to-your-sponsor.png'); 
+  const sponsors = []; // Sponsor masih kosong
+  // const sponsors = new Array(16).fill('/path-to-your-sponsor.png'); 
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);

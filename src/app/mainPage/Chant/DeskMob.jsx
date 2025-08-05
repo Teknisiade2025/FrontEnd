@@ -9,7 +9,7 @@ const page = () => {
       {/* Mobile: Title and Logos (Top) */}
       <div className="md:hidden w-full flex justify-between items-start">
         <div>
-          <h2 className="text-black text-[13vw] sm:text-[10vw] md:text-[1vw] lg:text-[5vw] font-bold font-sans drop-shadow-md">
+          <h2 className="text-black text-[13vw] sm:text-[10vw] md:text-[1vw] lg:text-[5vw] font-bold font-sans font-snowstorm drop-shadow-md">
             CHANT
           </h2>
           <Image

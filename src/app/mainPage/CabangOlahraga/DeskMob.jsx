@@ -39,7 +39,7 @@ export default function CabangOlahragaSection() {
   }
 
   return (
-    <section className="w-full lg:h-[70vh] flex justify-center mt-[35vh] lg:mt-[60vh]">
+    <section className="w-full lg:h-[70vh] flex justify-center mt-[35vh] lg:mt-[35vh]">
       {/* Desktop Layout (horizontal) */}
       <div className="hidden lg:flex lg:w-[90%] flex-row items-center justify-between gap-[10%] ">
         {/* Left: Title + Carousel */}
