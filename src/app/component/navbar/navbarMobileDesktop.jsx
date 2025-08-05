@@ -105,7 +105,7 @@ const Navbar = () => {
               </div>
             </div>
 
-            <a href="/comingsoon" className="hover:underline whitespace-nowrap">Supporter</a>
+            
             <a href="/supporterPage" className="hover:underline whitespace-nowrap">Supporter</a>
 
             <a href="/faq" className="hover:underline whitespace-nowrap">FAQ</a>
