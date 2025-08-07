@@ -6,8 +6,8 @@ const FaqPage = () => {
     <div className="w-full max-w-[1920px] mx-auto relative min-h-screen pb-[100px]">
       {/* Background */}
       <div
-        className="absolute top-0 left-0 w-full h-full bg-cover z-0 ]
-        bg-[url('/faqmobilebg.svg')] sm:bg-[url('/faqBG.png')]"
+        className="absolute top-0 left-0 w-full sm:h-full h-[300vh]  bg-cover z-0 ]
+        bg-[url('/faqmobilebg.svg')] sm:bg-[url('/faqBG.svg')]"
         style={{
           backgroundSize: "cover",
           backgroundPosition: "top",

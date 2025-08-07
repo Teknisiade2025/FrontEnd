@@ -117,7 +117,7 @@ const Jadwal = () => {
 
             <div
               className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-10 ${
-                isDropdownOpen ? "max-h-[200px] sm:max-h-[300px] overflow-y-auto pl-30 matches-scrollbar opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
+                isDropdownOpen ? "max-h-[200px] sm:max-h-[300px] overflow-y-auto pl-10 matches-scrollbar opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
               }`}
             >
               <div className="grid grid-cols-2 gap-6 p-6 text-[#1D2225]">

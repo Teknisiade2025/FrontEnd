@@ -62,6 +62,7 @@ const Navbar = () => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-6 lg:gap-12 items-center text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] flex-wrap max-w-[70%]">
+            <a href="/mainPage" className="hover:underline whitespace-nowrap">Beranda</a>
             <a href="/schedule" className="hover:underline whitespace-nowrap">Schedule</a>
             <a href="/klasemen" className="hover:underline whitespace-nowrap">Klasemen</a>
             <div className="relative flex flex-col justify-center" ref={dropdownRef}>
@@ -114,11 +115,11 @@ const Navbar = () => {
 
           {/* Login (Desktop) */}
           <Link href="/comingsoon" passHref>
-  <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-amber-100 transition-colors duration-200 p-2 px-7 rounded-4xl">
-    <span>Login</span>
-    <IoLogInOutline size={24} />
-  </div>
-</Link>
+            <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-amber-100 transition-colors duration-200 p-2 px-7 rounded-4xl">
+              <span>Login</span>
+              <IoLogInOutline size={24} />
+            </div>
+          </Link>
           {/* Mobile Menu Button */}
           <div className="md:hidden ">
             <AiOutlineMenu size={28} onClick={() => setIsMenuOpen(true)} className="cursor-pointer text-black" />
@@ -135,6 +136,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Items */}
         <nav className="mt-13 flex flex-col gap-13 text-neutral-800 text-xl  font-black font-['Sofia_Sans_Condensed'] items-center">
+          <Link href="" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Beranda</Link>
           <Link href="/schedule" className="hover:underline" onClick={() => setIsMenuOpen(false)}>Schedule</Link>
           <a href="/klasemen" className="hover:underline" onClick={() => router.push("/klasemen")}>Klasemen</a>
 

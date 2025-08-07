@@ -73,7 +73,7 @@ export default function CabangOlahragaSection() {
         {/* Right: Perkamen */}
         <div className="relative w-2/5 flex justify-center">
           <Image
-            src="/OlahragaLP/perkamen.png"
+            src="/OlahragaLP/Perkamen.png"
             alt="Perkamen"
             width={518}
             height={320}

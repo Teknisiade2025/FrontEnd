@@ -57,7 +57,7 @@ const FooterTeknisiade = () => {
             <a href="https://www.instagram.com/teknisiade?igsh=MWNpNmswbG5pNjE0OA==" target="_blank" rel="noopener noreferrer">
               <FaInstagram className="hover:text-gray-700 w-6 h-6 md:w-[2.2vw] md:h-[2.2vw]" />
             </a>
-            <a href="https://youtube.com/@teknisiadeugm?si=OTakLii6k8IdSqua" target="_blank" rel="noopener noreferrer">
+            <a href="https://x.com/teknisiade?s=21&t=RGvIQwg336IBicXX3a9ORw" target="_blank" rel="noopener noreferrer">
               <Image
                 src="/Footer/logoX.svg"
                 alt="Logo X"
