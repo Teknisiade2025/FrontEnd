@@ -99,7 +99,7 @@ export default function CabangSeniSection() {
         {/* Perkamen */}
         <div className="relative w-full flex justify-center">
           <Image
-            src="/OlahragaLP/perkamen.png"
+            src="/OlahragaLP/Perkamen.png"
             alt="Perkamen"
             width={518}
             height={320}
