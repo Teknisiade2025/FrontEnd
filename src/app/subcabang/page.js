@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React,{Suspense} from "react";
 import Pertandingan from "../component/subcabang/pertandingan";
 import Jadwal from "../component/subcabang/jadwal";
 import Atlet from "../component/subcabang/atlet";
@@ -25,7 +25,9 @@ const Schedule = () => {
         {/* Pertandingan Section */}
         <section className="w-full flex justify-end px-5 md:px-30 pt-[100px] md:pt-[249px]">
           <div className="w-full max-w-[600px]">
-            <Pertandingan />
+            <Suspense fallback={<div>Loading Pertandingan...</div>}>
+              <Pertandingan />
+            </Suspense>
           </div>
         </section>
 
