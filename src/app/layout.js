@@ -37,10 +37,10 @@ export default function RootLayout({ children }) {
       >
 
         {/*<NavbarDesktop />  */}
-        <NavbarMobileDeskto />
+        {/*<NavbarMobileDeskto /> */}
         <main className="flex-grow">{children}</main>
         {/*<FooterDesktop />*/}
-        <FooterMobileDesktop/>
+        {/*<FooterMobileDesktop/> */}
       </body>
     </html>
   );
