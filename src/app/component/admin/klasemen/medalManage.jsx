@@ -95,7 +95,7 @@ const MedalManage = () => {
       <div
         className="flex flex-col items-center p-8 rounded-[40px]"
         style={{
-          width: "1120px",
+          width: "900px",
           height: "780px",
           backgroundColor: "#806037",
           border: "3px solid #FFFFFF",
