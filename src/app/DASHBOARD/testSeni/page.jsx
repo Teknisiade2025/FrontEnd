@@ -1,6 +1,6 @@
 import React from "react";
 import NavigasiCabang from "@/app/component/admin/compNavigasiCabang/cabangNav.jsx"
-import Scoreboard from "@/app/component/admin/scoreboard/scoreboard.jsx";
+import ScoreboardSeni from "@/app/component/admin/scoreboard/scoreboardSeni.jsx";
 
 const ScoreboardPage = () => {
   return (
@@ -12,7 +12,7 @@ const ScoreboardPage = () => {
       
       {/* Konten Utama - Scoreboard */}
       <div className="flex-1 pr-20">
-        <Scoreboard />
+        <ScoreboardSeni />
       </div>
     </div>
   );
