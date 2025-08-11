@@ -1,0 +1,133 @@
+'use client';
+import { useState, useEffect } from 'react';
+
+import React from 'react';
+import Sidebar from '@/app/component/admin/compNavigasiCabang/cabangNav.jsx';
+import { useSearchParams, useRouter } from 'next/navigation';
+import AthleteRegistration from '@/app/component/manager/registrasi/registv2.jsx';
+
+export default function HomePage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  // Inisialisasi selectedRole sekali saja
+  const [selectedRole, setSelectedRole] = useState(() => {
+    return searchParams.get('role') || 'Atlet';
+  });
+  
+  const [selectedData, setSelectedData] = useState(null);
+  const kmhmName = searchParams.get('kmhm') || '';
+
+  // Update URL ketika selectedRole berubah, tapi jangan reset selectedRole dari URL
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('role', selectedRole);
+    
+    // Hanya update URL jika role di URL berbeda dengan selectedRole
+    if (searchParams.get('role') !== selectedRole) {
+      router.push(`?${params.toString()}`);
+    }
+  }, [selectedRole]);
+
+  // Sinkronisasi selectedData dengan URL parameters
+  useEffect(() => {
+    const category = searchParams.get('category');
+    const subcategory = searchParams.get('subcategory');
+    
+    if (category) {
+      const newData = {
+        mainCategory: category,
+        subCategory: subcategory || null
+      };
+      
+      // Hanya update jika data benar-benar berubah
+      setSelectedData(prevData => {
+        if (!prevData || 
+            prevData.mainCategory !== newData.mainCategory || 
+            prevData.subCategory !== newData.subCategory) {
+          console.log('Updating selectedData:', newData);
+          return newData;
+        }
+        return prevData;
+      });
+    }
+  }, [searchParams]);
+
+  const handleCategorySelect = (data) => {
+    setSelectedData(data);
+  };
+
+  const handleRoleChange = (role) => {
+    setSelectedRole(role);
+  };
+
+  const handleLogout = () => {
+    router.push('/login'); 
+  };
+
+  return (
+    <div
+      className="flex flex-col min-h-screen pt-10 gap-1 w-[100vw] bg-[url('/bglogin.svg')]"
+    >
+      {/* HEADER */}
+      <div className="flex items-center justify-between px-6 pt-20 w-full">
+        <div className="flex items-center gap-4 pr-5">
+          {/* Toggle Role */}
+          <div className="w-80 h-14 px-8 py-2 bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] overflow-hidden">
+            <button
+              onClick={() => handleRoleChange('Atlet')}
+              className={`flex-1 py-2 px-12 w-full rounded-[37.74px] flex justify-center items-center
+                ${selectedRole === 'Atlet' ? 'bg-[#F8E7C1]' : 'bg-[#BFA78A]'}`}
+            >
+              <span className="text-neutral-800 text-sm font-extrabold">Atlet</span>
+            </button>
+            <button
+              onClick={() => handleRoleChange('Coach')}
+              className={`flex-1 py-2 px-12 w-full rounded-[37.74px] flex justify-center items-center
+                ${selectedRole === 'Coach' ? 'bg-[#F8E7C1]' : 'bg-[#BFA78A]'}`}
+            >
+              <span className="text-neutral-800 text-sm font-extrabold">Coach</span>
+            </button>
+          </div>
+
+          {/* Judul Registrasi */}
+          <h1 className="text-xl px-15 font-extrabold text-neutral-900">
+            Registrasi {selectedRole}
+          </h1>
+        </div>
+
+        {/* Logout */}
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-sm font-bold text-neutral-800 hover:text-red-600"
+        >
+          <i className="fas fa-sign-out-alt"></i> Keluar
+        </button>
+
+        {/* Info Cabang */}
+        {selectedData && (
+          <div className="flex items-center gap-2 px-20 text-xxl font-extrabold">
+            <span>{selectedData.mainCategory}</span>
+            <span>•</span>
+            <span>{selectedData.subCategory}</span>
+          </div>
+        )}
+      </div>
+
+      {/* SIDEBAR + FORM */}
+      <div className="flex flex-row gap-10 h-[600px] w-full items-center justify-center">
+        <div className="w-64 px-8 h-full">
+          <Sidebar onCategorySelect={handleCategorySelect} />
+        </div>
+
+        <div className="flex-1 px-8 h-full">
+          <AthleteRegistration 
+            selectedSport={selectedData} 
+            kmhmName={kmhmName} 
+            role={selectedRole.toLowerCase()} // pastikan lowercase untuk konsistensi
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
