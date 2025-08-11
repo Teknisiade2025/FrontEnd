@@ -50,7 +50,7 @@ const MedalManage = () => {
   // Sub-komponen kartu medali
   const MedalCard = ({ type, value, color }) => (
     <div className="flex flex-col items-center space-y-4">
-      <h3 className="text-[#FBEBD2] text-[30px] font-semibold uppercase">
+      <h3 className="text-[#FBEBD2] text-[30px] font-semibold font-sofia">
         {type}
       </h3>
 
@@ -90,13 +90,13 @@ const MedalManage = () => {
   );
 
   return (
-    <div className="hidden lg:flex items-center justify-center min-h-screen bg-gray-900">
+    <div className="hidden lg:flex items-center justify-center min-h-screen">
       {/* Wrapper khusus desktop */}
       <div
-        className="flex flex-col items-center p-8 rounded-[40px]"
+        className="flex flex-col items-center p-10 rounded-[20px]"
         style={{
           width: "900px",
-          height: "780px",
+          height: "600px",
           backgroundColor: "#806037",
           border: "3px solid #FFFFFF",
         }}
@@ -154,7 +154,7 @@ const MedalManage = () => {
 
         {/* Status Display */}
         <div className="mt-6 text-center">
-          <p className="text-white text-sm opacity-75">
+          <p className="text-[#F0EED7] font-sofia text-sm opacity-75">
             Status:{" "}
             {JSON.stringify(medals) === JSON.stringify(savedMedals)
               ? "Tersimpan"

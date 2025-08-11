@@ -47,15 +47,15 @@ const CabangNavigasi = ({ onSelect }) => {
   };
 
   return (
-    <div className = "w-[40vw] scale-70">
-      <div className="w-full h-[780px] px-8 pt-9 pb-8 bg-[#806037] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]  outline-[3px] outline-offset-[-3px] outline-white">
+    <div className = "w-[30vw] scale-77">
+      <div className="w-full h-[780px] px-12 pt-9 pb-12 bg-[#806037] rounded-[30px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]  border-[5px] outline-offset-[-3px] border-white">
         <div className="w-full h-[731px] flex flex-col justify-start items-start gap-2.5 overflow-hidden">
           
           {/* Cabang Olahraga */}
           <div className="w-full">
             {/* Perubahan font untuk judul */}
             <div className="px-3 pb-4">
-              <div className="justify-start text-neutral-100 text-2xl font-normal font-['Snowstorm']">
+              <div className="justify-start text-[#FBEBD2] text-[26px] font-normal font-['Snowstorm']">
                 Cabang Olahraga
               </div>
             </div>
@@ -75,7 +75,7 @@ const CabangNavigasi = ({ onSelect }) => {
                   onMouseLeave={() => setHoveredCabang(null)}
                 >
                   {/* Perubahan font untuk jenis cabang */}
-                  <div className={`w-6/7 justify-start py-2.5 text-md font-bold font-['Sofia_Sans_Condensed'] leading-tight ${
+                  <div className={`w-6/7 justify-start py-2.5 text-[20px] font-bold font-sofia leading-tight ${
                     activeCabang === cabang || hoveredCabang === cabang
                       ? 'text-gray-300'
                       :  'text-gray-900' 
@@ -100,7 +100,7 @@ const CabangNavigasi = ({ onSelect }) => {
           <div className="w-full mt-6"> {/* Tambah margin top */}
             {/* Perubahan font untuk judul */}
             <div className="px-3 pb-4">
-              <div className="justify-start text-neutral-100 text-xl font-normal font-['Snowstorm']">
+              <div className="justify-start text-[#FBEBD2] text-[26px] font-normal font-['Snowstorm']">
                 Cabang SENI
               </div>
             </div>
@@ -120,7 +120,7 @@ const CabangNavigasi = ({ onSelect }) => {
                   onMouseLeave={() => setHoveredCabang(null)}
                 >
                   {/* Perubahan font untuk jenis cabang */}
-                  <div className={`w-5/6 justify-start py-2.5 text-md font-bold font-['Sofia_Sans_Condensed'] leading-tight ${
+                  <div className={`w-5/6 justify-start py-2.5 text-[20px] font-bold font-sofia leading-tight ${
                     activeCabang === cabang || hoveredCabang === cabang
                       ? 'text-gray-300'
                       :  'text-gray-900' 
@@ -155,12 +155,12 @@ const CabangNavigasi = ({ onSelect }) => {
           onMouseLeave={() => setHoveredCabang(null)}
         >
           <div className="w-56 px-6 py-5 bg-[#065D79] rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-[#FBEBD2] inline-flex flex-col justify-start items-center gap-3.5 overflow-hidden">
-            <div className="self-stretch text-center justify-start text-[#FBEBD2] text-xl font-normal font-['Snowstorm']">
+            <div className="self-stretch text-center justify-start text-[#FBEBD2] text-[22px] font-normal font-['Snowstorm']">
               Kategori
             </div>
             <div className="self-stretch flex flex-col justify-start items-center gap-2.5">
               <div 
-                className="self-stretch text-center justify-start text-[#FBEBD2] text-lg font-bold font-['Sofia_Sans_Condensed'] cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
+                className="self-stretch text-center justify-start text-[#FBEBD2] text-[20px] font-bold font-sofia cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
                 onClick={() => handleSelectKategori(hoveredCabang, 'Putra')}
               >
                 Putra
@@ -168,7 +168,7 @@ const CabangNavigasi = ({ onSelect }) => {
             </div>
             <div className="self-stretch flex flex-col justify-start items-center gap-2.5">
               <div 
-                className="self-stretch text-center justify-start text-[#FBEBD2] text-lg font-bold font-['Sofia_Sans_Condensed'] cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
+                className="self-stretch text-center justify-start text-[#FBEBD2] text-[20px] font-bold font-sofia cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
                 onClick={() => handleSelectKategori(hoveredCabang, 'Putri')}
               >
                 Putri

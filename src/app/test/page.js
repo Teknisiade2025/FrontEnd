@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import NavigasiCabang from '@/app/component/admin/compNavigasiCabang/page';
+import NavigasiCabang from '@/app/component/admin/compNavigasiCabang/cabangNav';
 import JadwalPertandingan from '@/app/component/admin/jadwalPertandingan/page';
 
 const page = () => {
