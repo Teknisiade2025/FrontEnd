@@ -99,14 +99,7 @@ export default function HomePage() {
           </h1>
         </div>
 
-        {/* Logout */}
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 text-lg font-bold font-snowstorm text-neutral-800 hover:text-red-600"
-        >
-          <i className="fas fa-sign-out-alt"></i> Keluar
-          <IoLogOut className = "h-6 w-6"/>
-        </button>
+        \
 
         {/* Info Cabang */}
         {selectedData && (
