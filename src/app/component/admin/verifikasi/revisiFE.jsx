@@ -138,7 +138,7 @@ const CabangDiversifikasi = () => {
                       src={iconPath} 
                       alt={cabang.name} 
                       layout="fill"
-                      objectFit="contain"
+                      style={{ objectFit: "contain" }}
                     />
                   </div>
                 )}
@@ -232,7 +232,7 @@ const CabangDiversifikasi = () => {
                     handleKategoriChange(kat, selectedCabang.name);
                     setShowPopup(false);
                     }}
-                    className="self-stretch text-center text-orange-100 text-lg font-bold font-['Sofia_Sans_Condensed'] hover:opacity-80 transition"
+                    className="self-stretch text-center text-orange-100 text-lg font-bold font-['Sofia_Sans_Condensed'] hover:opacity-50 transition"
                 >
                     {kat}
                 </button>

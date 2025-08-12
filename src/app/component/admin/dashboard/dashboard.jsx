@@ -12,7 +12,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-200 via-orange-200 to-amber-300 flex items-center justify-center p-8">
+    <div className="min-h-screen  flex items-center justify-center p-8">
       <div className="w-full max-w-4xl">
         {/* Header */}
         <div className="text-center mb-7 flex flex-col items-center">
