@@ -54,11 +54,11 @@ const Navbar = () => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-6 lg:gap-12 items-center text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] flex-wrap max-w-[70%]">
-            <a href="/#" className="hover:underline whitespace-nowrap">Menu Utama</a>
-            <a href="/#" className="hover:underline whitespace-nowrap">Verifikasi Peserta</a>
-            <a href="/#" className="hover:underline whitespace-nowrap">Schedule Pertandingan</a>
+            <a href="/DASHBOARD/adminDashboard" className="hover:underline whitespace-nowrap">Menu Utama</a>
+            <a href="/DASHBOARD/adminVerifikasi" className="hover:underline whitespace-nowrap">Verifikasi Peserta</a>
+            <a href="/DASHBOARD/formJadwal" className="hover:underline whitespace-nowrap">Schedule Pertandingan</a>
 
-            <a href="/#" className="hover:underline whitespace-nowrap">Update Skor</a>
+            <a href="/DASHBOARD/scoreBoard" className="hover:underline whitespace-nowrap">Update Skor</a>
           </div>
 
           {/* Login (Desktop) */}

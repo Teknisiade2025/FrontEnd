@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { HiUser } from 'react-icons/hi2';
 import { IoKey } from 'react-icons/io5';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
@@ -7,6 +8,7 @@ import { dummyUsers } from '@/app/dummyUsers';
 import { supabase } from '@/app/lib/supabase';
 
 export default function SignIn() {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -30,18 +32,16 @@ export default function SignIn() {
       setError('Wrong Email or password!');
     } else {
       setError('');
-      localStorage.setItem('role', role);
-      localStorage.setItem('kmhm_name', kmhm_name ?? '');
-      window.location.href = role === 'page-a' ? '/manager' : '/admin';
+      // kirim kmhm_name via router state
+      const target = role === 'page-a' ? '/DASHBOARD/adminDashboard' : '/DASHBOARD/adminDashboard';
+      router.push(`${target}?kmhm=${encodeURIComponent(kmhm_name ?? '')}`);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen ">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen">
       <div className="w-[446px] flex flex-col gap-6">
-        {/* Title */}
-        <h1
-          className="text-[60px] text-[#1D2225] text-center font-[400] drop-shadow-md"
+        <h1 className="text-[60px] text-[#1D2225] text-center font-[400] drop-shadow-md"
           style={{ fontFamily: 'Snowstorm, sans-serif' }}
         >
           Sign In
@@ -49,10 +49,7 @@ export default function SignIn() {
 
         {/* Username */}
         <div className="flex flex-col gap-[11px]">
-          <label
-            className="flex items-center gap-2 text-[24px] font-extrabold text-[#1D2225]"
-            style={{ fontFamily: "'Sofia Sans Condensed', sans-serif" }}
-          >
+          <label className="flex items-center gap-2 text-[24px] font-extrabold text-[#1D2225]">
             <HiUser className="w-[31px] h-[31px]" />
             Username
           </label>
@@ -61,19 +58,13 @@ export default function SignIn() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="username kamu"
-            className={`w-full h-[56px] px-7 py-3 bg-[#F5F5F5] rounded-[32px] shadow-md text-[20px] font-semibold placeholder:text-[#B6B7BA] focus:outline-none ${
-              username ? 'text-black' : 'text-[#B6B7BA]'
-            }`}
-            style={{ fontFamily: "'Sofia Sans Condensed', sans-serif" }}
+            className="w-full h-[56px] px-7 py-3 bg-[#F5F5F5] rounded-[32px] shadow-md text-[20px] font-semibold placeholder:text-[#B6B7BA] focus:outline-none"
           />
         </div>
 
         {/* Password */}
         <div className="flex flex-col gap-[11px]">
-          <label
-            className="flex items-center gap-2 text-[24px] font-extrabold text-[#1D2225]"
-            style={{ fontFamily: "'Sofia Sans Condensed', sans-serif" }}
-          >
+          <label className="flex items-center gap-2 text-[24px] font-extrabold text-[#1D2225]">
             <IoKey className="w-[28px] h-[28px]" />
             Password
           </label>
@@ -83,10 +74,7 @@ export default function SignIn() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="password kamu"
-              className={`flex-1 bg-transparent text-[20px] font-semibold placeholder:text-[#B6B7BA] focus:outline-none ${
-                password ? 'text-black' : 'text-[#B6B7BA]'
-              }`}
-              style={{ fontFamily: "'Sofia Sans Condensed', sans-serif" }}
+              className="flex-1 bg-transparent text-[20px] font-semibold placeholder:text-[#B6B7BA] focus:outline-none"
             />
             <button type="button" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? (
@@ -98,18 +86,11 @@ export default function SignIn() {
           </div>
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <p className="text-red-600 text-center font-medium -mt-2">
-            {error}
-          </p>
-        )}
+        {error && <p className="text-red-600 text-center font-medium -mt-2">{error}</p>}
 
-        {/* Sign In Button */}
         <button
           onClick={handleLogin}
           className="mt-2 w-full bg-[#806037] text-[#FBEBD2] rounded-[32px] py-2 text-[20px] font-semibold shadow-md hover:opacity-90 transition-all"
-          style={{ fontFamily: "'Sofia Sans Condensed', sans-serif" }}
         >
           Sign In
         </button>

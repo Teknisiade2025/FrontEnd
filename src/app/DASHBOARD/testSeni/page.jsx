@@ -1,8 +1,7 @@
 import React from "react";
 import NavigasiCabang from "@/app/component/admin/compNavigasiCabang/cabangNav.jsx"
-import Scoreboard from "@/app/component/admin/scoreboard/scoreboard.jsx";
-
-import { Suspense } from 'react';
+import ScoreboardSeni from "@/app/component/admin/scoreboard/scoreboardSeni.jsx";
+import { Suspense } from "react";
 
 const ScoreboardPage = () => {
   return (
@@ -13,8 +12,8 @@ const ScoreboardPage = () => {
       </div>
       
       {/* Konten Utama - Scoreboard */}
-      <div className="flex-1 pr-20" fallback={<div>Loading...</div>}>
-        <Scoreboard />
+      <div className="flex-1 pr-20">
+        <ScoreboardSeni />
       </div>
     </div>
   );

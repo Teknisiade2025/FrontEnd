@@ -90,9 +90,9 @@ const JadwalPertandingan = ({ cabang, kategori }) => {
 
   return (
     
-    <div className="flex flex-col items-center p-10 rounded-[20px]">
+    <div className="flex flex-col items-center p-14 rounded-[20px]">
       {/* Header Cabang & Kategori */}
-      <div className="mb-4 flex justify-end">
+      <div className="mb-1 flex justify-end">
         <div className="px-4 py-1 rounded-full shadow-md bg-[#806037]">
           <h1 className="text-lg font-normal font-['Snowstorm'] text-[#FCFCFC]">
             {cabang} - {kategori}

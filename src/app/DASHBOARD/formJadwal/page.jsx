@@ -8,6 +8,8 @@ import Image from 'next/image';
 import CabangNavigasi from '@/app/component/admin/compNavigasiCabang/cabangNav';
 import JadwalPertandingan from '@/app/component/admin/jadwalPertandingan/page';
 import VokalForm from '@/app/component/admin/jadwalPertandingan/vokalForm'
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 
 
@@ -19,7 +21,15 @@ const AdminSchedulePage = () => {
     setSelectedCabang(cabang);
     setSelectedKategori(kategori);
   };
-  console.log("Nama:", selectedCabang);
+  
+
+  const searchParams = useSearchParams();
+  const cabang = searchParams.get("category");
+  const kategori = searchParams.get("subcategory");
+
+  console.log("Nama2:", cabang);
+  console.log("Nama3:", kategori);
+
 
   return (
     
@@ -29,15 +39,18 @@ const AdminSchedulePage = () => {
           
             {/* Navigasi cabang (sidebar kiri) */}
             <div className="pt-5">
-              <CabangNavigasi onSelect={handleCabangSelect} />
+              <CabangNavigasi  />
+
             </div>
+              
+      
           
             {/* Area konten utama (kanan) */}
             <div>
               {selectedCabang? (
-                selectedCabang === 'Vokal Grup' ? 
-                <VokalForm cabang={selectedCabang} kategori={selectedKategori} />
-                : <JadwalPertandingan cabang={selectedCabang} kategori={selectedKategori} />
+                cabang === 'Vokal Grup' ? 
+                <VokalForm cabang={cabang} kategori={kategori} />
+                : <JadwalPertandingan cabang={cabang} kategori={kategori} />
               ): (
                 <p className="text-gray-500">Silakan pilih cabang dan kategori</p>
               )

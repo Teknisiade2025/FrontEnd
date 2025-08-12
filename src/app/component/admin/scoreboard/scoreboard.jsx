@@ -102,17 +102,17 @@ const Scoreboard = () => {
       <div className="flex items-center bg-transparent rounded-lg overflow-hidden border-[2px] border-[#FBEBD2]">
         <button
           onClick={onDecrement}
-          className="px-4 py-1.5 text-[#FBEBD2] text-[35px] hover:bg-[#9C6F3C] transition-colors font-semibold"
+          className="px-4 py-1.5 text-[#FBEBD2] text-[30px] hover:bg-[#9C6F3C] transition-colors font-semibold"
           disabled={score <= 0}
         >
           −
         </button>
-        <div className="px-5 py-1.5 text-[#FBEBD2] text-[35px] font-semibold min-w-[60px] text-center bg-transparent border-l-[2px] border-r-[2px] border-[#FBEBD2]">
+        <div className="px-5 py-1.5 text-[#FBEBD2] text-[30px] font-semibold min-w-[60px] text-center bg-transparent border-l-[2px] border-r-[2px] border-[#FBEBD2]">
           {score}
         </div>
         <button
           onClick={onIncrement}
-          className="px-4 py-1.5 text-[#FBEBD2] text-[35px] hover:bg-[#9C6F3C] transition-colors font-semibold"
+          className="px-4 py-1.5 text-[#FBEBD2] text-[30px] hover:bg-[#9C6F3C] transition-colors font-semibold"
         >
           +
         </button>
@@ -121,31 +121,31 @@ const Scoreboard = () => {
   );
 
   return (
-    <div className="hidden lg:flex items-center justify-center min-h-screen bg-gray-900">
+    <div className="hidden lg:flex items-center justify-center min-h-screen">
       {/* Wrapper khusus desktop */}
       <div
-        className="flex flex-col items-center p-8 rounded-[40px]"
+        className="flex flex-col items-center p-8 rounded-[20px]"
         style={{
           width: "900px",
-          height: "780px",
+          height: "600px",
           backgroundColor: "#B1844D",
           border: "3px solid #FFFFFF",
         }}
       >
         {/* Header */}
-        <div className="flex flex-col items-center mb-4 w-full">
-          <h1 className="text-white text-5xl font-snowstorm font-medium mb-8">Atur Skor Akhir</h1>
+        <div className="flex flex-col items-center mb-2 w-full">
+          <h1 className="text-white text-5xl font-snowstorm font-medium">Atur Skor Akhir</h1>
         </div>
 
         {/* Match Selection Dropdown */}
-        <div className="mb-12 w-full max-w-2xl">
+        <div className="mb-5 w-full max-w-2xl">
           <div className="relative">
-            <div className="flex items-center mb-2">
-              <span className="text-[#FBEBD2] text-[25px] font-sofia font-bold">Pilih pertandingan</span>
+            <div className="flex items-center mb-1">
+              <span className="text-[#FBEBD2] text-[22px] font-sofia font-bold">Pilih pertandingan</span>
             </div>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full bg-[#FBEBD2] rounded-full px-8 py-3 flex items-center justify-between text-amber-900 font-sofia font-bold text-xl hover:bg-[#F0EED7] transition-colors"
+              className="w-full bg-[#FBEBD2] rounded-full px-5 py-3 flex items-center justify-between text-amber-900 font-sofia font-bold text-[16px] hover:bg-[#F0EED7] transition-colors"
             >
               <span>
                 {selectedMatch.team1} VS {selectedMatch.team2} - {selectedMatch.day}, {selectedMatch.date} [{selectedMatch.time}]
@@ -159,7 +159,7 @@ const Scoreboard = () => {
                   <button
                     key={match.id}
                     onClick={() => handleMatchSelect(match)}
-                    className="w-full px-8 py-3 text-left hover:bg-[#F0EED7] transition-colors text-amber-900 font-sofia border-b border-amber-200 last:border-b-0"
+                    className="w-full px-8 py-3 text-left hover:bg-[#F0EED7] transition-colors text-amber-900 font-sofia"
                   >
                     {match.team1} VS {match.team2} - {match.day}, {match.date} [{match.time}]
                   </button>
@@ -170,7 +170,7 @@ const Scoreboard = () => {
         </div>
 
         {/* Score Management */}
-        <div className="grid grid-cols-[1fr_auto_1fr] w-[80%] gap-0 mb-12 mx-auto">
+        <div className="grid grid-cols-[1fr_auto_1fr] w-[80%] gap-0 mb-10 mx-auto">
             {/* Team 1 */}
             <div className="pr-1"> 
                 <TeamScoreCard
@@ -221,15 +221,13 @@ const Scoreboard = () => {
 
         {/* Status Display */}
         <div className="mt-6 text-center">
-          <p className="text-white text-sm opacity-75">
+          <p className="text-white font-sofia text-sm opacity-75">
             Status:{" "}
             {JSON.stringify(scores) === JSON.stringify(savedScores)
               ? "Tersimpan"
               : "Belum tersimpan"}
           </p>
-          <p className="text-white text-xs opacity-50 mt-2">
-            Pertandingan: {selectedMatch.team1} vs {selectedMatch.team2}
-          </p>
+          
         </div>
       </div>
     </div>

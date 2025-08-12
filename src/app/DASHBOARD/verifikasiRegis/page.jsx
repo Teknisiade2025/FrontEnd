@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import NavigasiVerifikasi from '@/app/component/admin/compNavigasiCabang/verifikasiNav';
 import Verifikasi from "@/app/component/admin/verifikasiKMHM/verifikasiRegis";
 
