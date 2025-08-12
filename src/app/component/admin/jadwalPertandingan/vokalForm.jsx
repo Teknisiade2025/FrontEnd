@@ -13,10 +13,10 @@ const InputJadwalSeni = ({
   onSubmit,
   onCancel
 }) => {
-  const [tim, setTim] = useState(initialData?.tim || 'HMTPWK');
-  const [babak, setBabak] = useState(initialData?.babak || 'Penyisihan');
-  const [tanggal, setTanggal] = useState(initialData?.tanggal || '2002-10-10'); // format YYYY-MM-DD
-  const [waktu, setWaktu] = useState(initialData?.waktu || '19:00');
+  const [tim, setTim] = useState(initialData?.tim || '');
+  const [babak, setBabak] = useState(initialData?.babak || '');
+  const [tanggal, setTanggal] = useState(initialData?.tanggal || ''); // ubah dari 'YYYY-MM-DD' jadi '' supaya kosong default
+  const [waktu, setWaktu] = useState(initialData?.waktu || '');
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimDropdown, setShowTimDropdown] = useState(false);
@@ -29,7 +29,7 @@ const InputJadwalSeni = ({
 
   const pilihanTim = [
     'HMTPWK', 'KMTA', 'KMTG', 'KMTETI', 'KMTNTF', 'KMTM', 'KMTK', 'KMTSL',
-     'HMTI', 'HMTG'
+    'HMTI', 'HMTG'
   ];
   const pilihanBabak = ['Penyisihan', 'Semi Final', 'Final', 'Perebutan Juara 3'];
 
@@ -104,51 +104,39 @@ const InputJadwalSeni = ({
   };
 
   const handleDelete = async () => {
-    if (!initialData?.id) {
-      alert('Tidak ada data untuk dihapus');
-      return;
-    }
-
-    if (!window.confirm('Yakin ingin menghapus jadwal ini?')) return;
-
-    setLoading(true);
-    try {
-      const { error } = await supabase
-        .from('jadwal_seni')
-        .delete()
-        .eq('id', initialData.id);
-
-      if (error) throw error;
-
-      alert('Jadwal berhasil dihapus');
-      if (onCancel) onCancel();
-    } catch (error) {
-      console.error('Error deleting schedule:', error);
-      alert('Gagal menghapus jadwal: ' + error.message);
-    } finally {
-      setLoading(false);
-    }
+    etTim('');
+    setBabak('');
+    setTanggal('');
+    setWaktu('');
   };
 
   return (
-    <div className="flex flex-col items-center p-10 rounded-[20px] w-full">
-      {/* Header Cabang & Kategori */}
-      <div className="mb-4 flex justify-end w-full">
-        <div className="px-4 py-1 rounded-full shadow-md bg-[#806037]">
-          <h1 className="text-lg font-normal font-['Snowstorm'] text-[#FCFCFC]">
-            {cabang} - {kategori}
-          </h1>
-        </div>
-      </div>
+    <div className="flex flex-col items-center p-10 rounded-[20px] w-full relative">
+
+      
 
       {/* Main Content */}
       <div className="w-[100%] mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center">
         <div className="flex-1 self-stretch flex flex-col justify-between items-center gap-8">
+          <div className="flex justify-between items-center w-full">
           {/* Judul */}
-          <div className="self-stretch text-center justify-start text-[#FCFCFC] text-3xl font-normal font-['Snowstorm']">
+
+          <div className="self-stretch text-center justify-end text-[#FCFCFC] text-3xl font-normal font-['Snowstorm']">
             Atur Jadwal Pertandingan
           </div>
-          
+
+          {/* Tombol Cancel (X) pojok kanan atas */}
+        <button
+        onClick={onCancel}
+        className="absolute top-4 right-4 text-bold text-snowtorm text-white text-3xl hover:text-red-400"
+        aria-label="Cancel"
+        type="button"
+        >
+        X
+        </button>
+        </div>
+
+
           {/* Form Input */}
           <div className="self-stretch flex flex-col justify-start items-center gap-4 w-full">
 
@@ -157,7 +145,7 @@ const InputJadwalSeni = ({
               <div className="self-stretch text-left justify-start text-[#FCFCFC] text-2xl font-bold font-['Sofia_Sans_Condensed'] leading-9 mb-1">
                 Tim
               </div>
-              <div 
+              <div
                 className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden cursor-pointer"
                 onClick={() => setShowTimDropdown(!showTimDropdown)}
               >
@@ -165,19 +153,19 @@ const InputJadwalSeni = ({
                   {tim}
                 </div>
                 <div className="w-4 h-3 rounded-sm cursor-pointer flex items-center justify-center">
-                  <Image 
-                    src="/dashboard-jadwalPertandingan/dropdown.svg" 
-                    alt="dropdown" 
+                  <Image
+                    src="/dashboard-jadwalPertandingan/dropdown.svg"
+                    alt="dropdown"
                     width={14}
                     height={14}
                     className="w-2.8 h-2.8"
                   />
                 </div>
               </div>
-                           
+
               {/* Dropdown Tim */}
               {showTimDropdown && (
-                <div 
+                <div
                   ref={timDropdownRef}
                   className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-[#FBEBD2] rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-[#806037] z-50"
                 >
@@ -185,7 +173,7 @@ const InputJadwalSeni = ({
                     KMHM
                   </div>
                   {pilihanTim.map((pilihan, index) => (
-                    <div 
+                    <div
                       key={index}
                       className={`px-4 py-3 text-center text-[#806037] text-lg font-bold font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-[#e6d9c0] ${
                         pilihan === tim ? 'bg-[#e6d9c0]' : ''
@@ -198,13 +186,13 @@ const InputJadwalSeni = ({
                 </div>
               )}
             </div>
-            
+
             {/* Babak */}
             <div className="w-full flex flex-col justify-center items-start relative">
               <div className="self-stretch text-left justify-start text-[#FCFCFC] text-2xl font-bold font-['Sofia_Sans_Condensed'] leading-9 mb-1">
                 Babak
               </div>
-              <div 
+              <div
                 className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden cursor-pointer"
                 onClick={() => setShowBabakDropdown(!showBabakDropdown)}
               >
@@ -212,24 +200,24 @@ const InputJadwalSeni = ({
                   {babak}
                 </div>
                 <div className="w-4 h-3 rounded-sm cursor-pointer flex items-center justify-center">
-                  <Image 
-                    src="/dashboard-jadwalPertandingan/dropdown.svg" 
-                    alt="dropdown" 
+                  <Image
+                    src="/dashboard-jadwalPertandingan/dropdown.svg"
+                    alt="dropdown"
                     width={14}
                     height={14}
                     className="w-2.8 h-2.8"
                   />
                 </div>
               </div>
-                           
+
               {/* Dropdown Babak */}
               {showBabakDropdown && (
-                <div 
+                <div
                   ref={babakDropdownRef}
                   className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-[#FBEBD2] rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-[#806037] z-50"
                 >
                   {pilihanBabak.map((pilihan, index) => (
-                    <div 
+                    <div
                       key={index}
                       className={`px-4 py-3 text-center text-[#806037] text-lg font-bold font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-[#e6d9c0] ${
                         pilihan === babak ? 'bg-[#e6d9c0]' : ''
@@ -242,14 +230,14 @@ const InputJadwalSeni = ({
                 </div>
               )}
             </div>
-            
+
             {/* Tanggal */}
             <div className="w-full flex flex-col justify-center items-start relative">
               <div className="self-stretch text-left justify-start text-[#FCFCFC] text-2xl font-bold font-['Sofia_Sans_Condensed'] leading-9 mb-1">
                 Tanggal
               </div>
               <div className="relative w-full">
-                <div 
+                <div
                   className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden cursor-pointer"
                   onClick={() => setShowDatePicker(!showDatePicker)}
                 >
@@ -258,10 +246,10 @@ const InputJadwalSeni = ({
                   </div>
                   <BsCalendar2PlusFill className="w-6 h-6 text-[#806037] cursor-pointer" />
                 </div>
-                
+
                 {/* Date Picker */}
                 {showDatePicker && (
-                  <div 
+                  <div
                     ref={datePickerRef}
                     className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-lg z-50 p-4 text-black font-sofia text-sm"
                   >
@@ -269,12 +257,13 @@ const InputJadwalSeni = ({
                       type="date"
                       className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#806037]"
                       onChange={handleDateChange}
+                      value={tanggal}
                     />
                   </div>
                 )}
               </div>
             </div>
-            
+
             {/* Waktu */}
             <div className="w-full flex flex-col justify-center items-start">
               <div className="self-stretch justify-start text-left items-start text-[#FCFCFC] text-2xl font-bold font-['Sofia_Sans_Condensed'] leading-9 mb-1">
@@ -291,12 +280,11 @@ const InputJadwalSeni = ({
               </div>
             </div>
           </div>
-       
-          
+
           {/* Tombol Aksi */}
           <div className="self-stretch h-14 inline-flex justify-center items-start gap-6 mt-4">
             {/* Tombol Simpan */}
-            <button 
+            <button
               className="flex-1 self-stretch px-8 py-2 bg-[#065D79] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center gap-2 overflow-hidden hover:bg-[#0a7a9a] transition-colors disabled:opacity-50"
               onClick={handleSave}
               disabled={loading}
@@ -306,22 +294,23 @@ const InputJadwalSeni = ({
               </div>
               {!loading && <IoSaveSharp className="w-5 h-5 text-[#F0EED7]" />}
             </button>
-            
-            {/* Tombol Hapus */}
-            <button 
+
+            {/* Tombol Batal */}
+            <button
               className="flex-1 self-stretch px-8 py-2 bg-[#806037] rounded-full outline-[1.5px] outline-offset-[-1.5px] outline-[#F0EED7] flex justify-center items-center gap-2 overflow-hidden hover:bg-[#9a7b5e] transition-colors"
-              onClick={handleDelete}
+              onClick={onCancel}
               disabled={loading}
+              type="button"
             >
               <div className="justify-start text-[#F0EED7] text-2xl font-bold font-['Sofia_Sans_Condensed']">
-                {initialData ? 'Batal' : 'Hapus'}
+                Batal
               </div>
               <BsXCircleFill className="w-5 h-5 text-[#F0EED7]" />
             </button>
           </div>
         </div>
       </div>
-   
+
       {/* Font Styles */}
       <style jsx global>{`
         @font-face {
@@ -332,7 +321,7 @@ const InputJadwalSeni = ({
           font-style: normal;
           font-display: swap;
         }
-        
+
         @font-face {
           font-family: 'Sofia_Sans_Condensed';
           src: url('/fonts/SofiaSansCondensed-Regular.woff2') format('woff2'),
@@ -341,7 +330,7 @@ const InputJadwalSeni = ({
           font-style: normal;
           font-display: swap;
         }
-        
+
         @font-face {
           font-family: 'Sofia_Sans_Condensed';
           src: url('/fonts/SofiaSansCondensed-Bold.woff2') format('woff2'),

@@ -89,15 +89,13 @@ const InputJadwalOlahraga = ({
   };
 
   const handleDelete = () => {
-    // reset ke default (sesuaikan bila ingin berbeda)
-    setTim1("HMTPWK");
-    setTim2("KMTETI");
-    setBabak("Semi Final");
-    setTanggal("10/10/2002");
-    setWaktu("19:00");
-    // notifikasi sederhana
-    alert("Input berhasil dihapus!");
-  };
+  setTim1("");
+  setTim2("");
+  setBabak("");
+  setTanggal("");
+  setWaktu("");
+};
+
 
   return (
     <div className="flex flex-col items-center p-14 rounded-[20px]">
@@ -111,7 +109,16 @@ const InputJadwalOlahraga = ({
       </div>
 
       {/* Main Content */}
-      <div className="w-[100%] h-[100vh] -mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90">
+      <div className="w-[100%] h-[100vh] -mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90 relative">
+        <button
+    onClick={handleCancel}
+    className="absolute top-4 right-4 text-white hover:text-red-500 transition-colors text-3xl font-bold"
+    aria-label="Cancel"
+    type="button"
+  >
+    ×
+  </button>
+        
         <div className="flex-1 self-stretch flex flex-col justify-between items-center gap-8">
           {/* Judul */}
           <div className="self-stretch text-center justify-start text-[#FCFCFC] text-3xl font-normal font-['Snowstorm']">

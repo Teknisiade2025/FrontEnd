@@ -64,7 +64,7 @@ const MatchCard = ({ match, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="w-full p-5 md:p-6 bg-[#5F56487F] shadow-md rounded-[42px] flex flex-col gap-2 relative">
+    <div className="w-full p-5 md:p-6 bg-[#FBEBD2] shadow-md rounded-[42px] flex flex-col gap-2 relative">
       {/* Action Buttons */}
       <div className="absolute top-4 right-4 flex gap-2">
         <button 
@@ -315,21 +315,7 @@ const JadwalOlahraga = ({ cabang, kategori }) => {
 
   return (
     <div className="flex flex-col items-center p-14 rounded-[20px]">
-      {/* Header */}
-      <div className="mb-1 flex justify-between items-center w-full">
-        <div className="px-4 py-1 rounded-full shadow-md bg-[#806037]">
-          <h1 className="text-lg font-normal font-['Snowstorm'] text-[#FCFCFC]">
-            {cabang} - {kategori}
-          </h1>
-        </div>
-        <button
-          onClick={handleAdd}
-          className="px-6 py-3 bg-[#065D79] rounded-full shadow-md flex items-center gap-2 hover:bg-[#0a7a9a] transition-colors"
-        >
-          <HiPlus className="w-5 h-5 text-white" />
-          <span className="text-white font-bold">Tambah Jadwal</span>
-        </button>
-      </div>
+      
 
       {/* Main Content */}
       {loading ? (
@@ -337,8 +323,24 @@ const JadwalOlahraga = ({ cabang, kategori }) => {
           Memuat data...
         </div>
       ) : (
-        <div className="w-full min-h-[80vh] mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-lg">
-          <div className="flex flex-col-1  gap-6  ">
+        <div className="flex flex-col gap-6 w-full min-h-[80vh] mt-5 px-16 py-8  rounded-[32px] shadow-lg"
+        style={{
+          width: "900px",
+          height: "605px",
+          backgroundColor: "#806037",
+          border: "3px solid #FFFFFF",}}>
+            {/* Header */}
+      <div className="mb-1 flex justify-between items-center w-full">
+
+        <button 
+          onClick={handleAdd}
+          className="px-6 py-3 bg-[#065D79] rounded-full shadow-md flex items-center gap-2 hover:bg-[#0a7a9a] transition-colors"
+        >
+          <HiPlus className="w-5 h-5 text-white" />
+          <span className="text-white font-bold">Tambah Jadwal</span>
+        </button>
+      </div>
+          <div className="flex flex-col gap-6 overflow-y-auto max-h-[300px]">
             {jadwalList.length > 0 ? (
               jadwalList.map((match) => (
                 <MatchCard

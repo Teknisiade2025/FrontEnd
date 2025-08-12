@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
-//import InputJadwalSeni from './InputJadwalSeni';
+import React, { useState, useEffect } from 'react';
 import { HiPencil, HiTrash } from 'react-icons/hi';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { supabase } from "@/app/lib/supabase";
@@ -35,7 +34,6 @@ const JadwalSeni = ({ cabang, kategori }) => {
   };
 
   useEffect(() => {
-    console.log('Kategori:', kategori, 'Cabang:', cabang);
     if (cabang && kategori) {
       fetchJadwal();
     }
@@ -73,17 +71,33 @@ const JadwalSeni = ({ cabang, kategori }) => {
     fetchJadwal();
   };
 
-
   return (
-    <div className="flex flex-col items-center p-10 rounded-[20px] w-full">
-      {/* Header */}
-      <div className="w-full flex justify-between items-center mb-8">
-        <div className="px-4 py-1 rounded-full shadow-md bg-[#806037]">
-          <h1 className="text-lg font-normal font-['Snowstorm'] text-[#FCFCFC]">
-            {cabang} - {kategori}
-          </h1>
+    <div>
+      {/* Render form atau tabel berdasarkan showForm */}
+      {showForm ? (
+        <div className="w-full">
+          <InputJadwalSeni
+            cabang={cabang} 
+            kategori={kategori}
+            initialData={formData}
+            onSubmit={handleSubmit}
+            onCancel={() => setShowForm(false)}
+          />
         </div>
-        
+      ) : (
+        loading ? (
+          <div className="w-full text-center py-10 text-white">
+            Memuat data...
+          </div>
+        ) : (
+          <div className="flex flex-col gap-6 w-full min-h-[80vh] mt-5 px-16 py-8  rounded-[32px] shadow-lg"
+        style={{
+          width: "900px",
+          height: "605px",
+          backgroundColor: "#806037",
+          border: "3px solid #FFFFFF",}}>
+      {/* Header */}
+       <div className="flex justify-end items-center w-full"> 
         <button 
           onClick={handleAdd}
           className="flex items-center gap-2 px-4 py-2 bg-[#065D79] rounded-full text-white font-bold hover:bg-[#0a7a9a] transition-colors"
@@ -92,88 +106,57 @@ const JadwalSeni = ({ cabang, kategori }) => {
           Tambah Jadwal
         </button>
       </div>
-
-      {/* Tabel Jadwal */}
-      {loading ? (
-        <div className="w-full text-center py-10 text-white">
-          Memuat data...
-        </div>
-      ) : (
-        <div className="w-full bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] p-8">
-          <div className="overflow-x-auto">
-            <table className="w-full text-[#FCFCFC] font-['Sofia_Sans_Condensed']">
-              <thead>
-                <tr className="border-b-2 border-[#FBEBD2]">
-                  <th className="pb-4 text-left text-xl font-bold">Tim</th>
-                  <th className="pb-4 text-left text-xl font-bold">Babak</th>
-                  <th className="pb-4 text-left text-xl font-bold">Tanggal</th>
-                  <th className="pb-4 text-left text-xl font-bold">Waktu</th>
-                  
-                  
-                  <th className="pb-4 text-right text-xl font-bold">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {jadwalList.length > 0 ? (
+          <div className="w-full bg-[#FBEBD2] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] p-8">
+            <div className="overflow-x-auto">
+              <table className="w-full text-gray-900 font-['Sofia_Sans_Condensed']">
+                <thead>
+                  <tr className="border-b-2 border-[#B1844D]">
+                    <th className="pb-4 text-left text-xl font-bold">Tim</th>
+                    <th className="pb-4 text-left text-xl font-bold">Babak</th>
+                    <th className="pb-4 text-left text-xl font-bold">Tanggal</th>
+                    <th className="pb-4 text-left text-xl font-bold">Waktu</th>
+                    <th className="pb-4 text-right text-xl font-bold">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {jadwalList.length > 0 ? (
                     jadwalList.map((jadwal) => (
-                    <tr key={jadwal.id} className="border-b border-[#FBEBD2]/50">
-                      <td className="py-4 text-lg">{jadwal.tim}</td>
-                      <td className="py-4 text-lg">{jadwal.babak}</td>
-                      <td className="py-4 text-lg">{jadwal.tanggal}</td>
-                      <td className="py-4 text-lg">{jadwal.waktu}</td>
-                      <td className="py-4 text-right">
-                        <div className="flex justify-end gap-3">
-                          <button 
-                            onClick={() => handleEdit(jadwal)}
-                            className="p-2 text-[#FBEBD2] hover:text-[#065D79] transition-colors"
-                          >
-                            <HiPencil className="text-xl" />
-                          </button>
-                          <button 
-                            onClick={() => handleDelete(jadwal.id)}
-                            className="p-2 text-[#FBEBD2] hover:text-red-500 transition-colors"
-                          >
-                            <HiTrash className="text-xl" />
-                          </button>
-                        </div>
+                      <tr key={jadwal.id} className="border-b border-[#FBEBD2]/50">
+                        <td className="py-4 text-lg">{jadwal.tim}</td>
+                        <td className="py-4 text-lg">{jadwal.babak}</td>
+                        <td className="py-4 text-lg">{jadwal.tanggal}</td>
+                        <td className="py-4 text-lg">{jadwal.waktu}</td>
+                        <td className="py-4 text-right">
+                          <div className="flex justify-end gap-3">
+                            <button 
+                              onClick={() => handleEdit(jadwal)}
+                              className="p-2 text-text-gray-900 hover:text-[#065D79] transition-colors"
+                            >
+                              <HiPencil className="text-xl" />
+                            </button>
+                            <button 
+                              onClick={() => handleDelete(jadwal.id)}
+                              className="p-2 text-text-gray-900 hover:text-red-500 transition-colors"
+                            >
+                              <HiTrash className="text-xl" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="7" className="py-8 text-center text-lg">
+                        Tidak ada jadwal pertandingan
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="7" className="py-8 text-center text-lg">
-                      Tidak ada jadwal pertandingan
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      )}
-
-      {/* Konten: Form atau Tabel */}
-{showForm ? (
-  <div className="w-full">
-    <InputJadwalSeni
-      cabang={cabang} 
-      kategori={kategori}
-      initialData={formData}
-      onSubmit={handleSubmit}
-      onCancel={() => setShowForm(false)}
-    />
-  </div>
-) : loading ? (
-  <div className="w-full text-center py-10 text-white">
-    Memuat data...
-  </div>
-) : (
-  <div className="w-full bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] p-8">
-    <div className="overflow-x-auto">
-      {/* tabel jadwal lama tetap di sini */}
-    </div>
-  </div>
-)}
+          </div>
+        ))}
 
       {/* Font Styles */}
       <style jsx global>{`
@@ -206,6 +189,7 @@ const JadwalSeni = ({ cabang, kategori }) => {
       `}</style>
     </div>
   );
+        
 };
 
 export default JadwalSeni;
