@@ -9,12 +9,8 @@ const MedalPage = () => {
   const [activeKmhm, setActiveKmhm] = useState(null);
 
   return (
-    <div className="flex flex-row h-[120vh] pt-10 pl-10 gap-1 w-[100vw] bg-[url('/admin/bg-medal.svg')]">
-      
-      
-      
-
-      <div className="flex items-center">
+    <div className="flex flex-row max-h-screen items-center pt-10 pl-10 gap-1 w-[100vw] bg-[url('/admin/bg-medal.svg')] overflow-y-hidden overflow-x-hidden">
+      <div className="flex items-center mt-15">
         {/* Navigasi KMHM */}
         <div>
           <KmhmNavigasi
@@ -24,11 +20,11 @@ const MedalPage = () => {
         </div>
  
         {/* Konten Kanan */}
-        <div className="ml-2 pt-12 h-full w-full">
+        <div className="ml-2  h-full w-full">
           {activeKmhm ? (
             <MedalManage kmhm={activeKmhm} />
           ) : (
-                  <div className="w-full h-full pt-10 mt-10 max-w-7xl mx-auto px-25 py-9  rounded-[32px] shadow-lg"
+                  <div className="w-full h-full  max-w-7xl mx-auto px-25 rounded-[32px] shadow-lg"
                   style={{
           width: "900px",
           height: "600px",
@@ -37,7 +33,7 @@ const MedalPage = () => {
         }}>
                     <div className="flex-1 h-full flex items-center justify-center">
                       <div className="text-lg font-semibold text-white text-center">
-                        Nama KMHM tidak ditemukan. Harap login atau pilih KMHM terlebih dahulu.
+                        Silahkan pilih nama KMHM terlebih dahulu.
                       </div>
                     </div>
                   </div>
