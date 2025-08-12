@@ -1,33 +1,46 @@
 
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import { HiChevronRight } from 'react-icons/hi';
-import { BsCalendar2PlusFill, BsXCircleFill } from 'react-icons/bs';
-import { IoSaveSharp } from 'react-icons/io5';
-import Image from 'next/image';
+import React, { useState, useRef, useEffect } from "react";
+import { supabase } from "@/app/lib/supabase";
+import { BsCalendar2PlusFill, BsXCircleFill } from "react-icons/bs";
+import { IoSaveSharp } from "react-icons/io5";
+import Image from "next/image";
 
-const JadwalPertandingan = ({ cabang, kategori }) => {
-  const [tim1, setTim1] = useState('HMTPWK');
-  const [tim2, setTim2] = useState('KMTETI');
-  const [babak, setBabak] = useState('Semi Final');
-  const [tanggal, setTanggal] = useState('10/10/2002');
-  const [waktu, setWaktu] = useState('19.00');
+
+
+const JadwalPertandingan = ({ selectedSport }) => {
+  const [cabang, setCabang] = useState("Sepak Bola");
+  const [kategori, setKategori] = useState("Putra");
+  const [tim1, setTim1] = useState("HMTPWK");
+  const [tim2, setTim2] = useState("KMTETI");
+  const [babak, setBabak] = useState("Semi Final");
+  const [tanggal, setTanggal] = useState("10/10/2002");
+  const [waktu, setWaktu] = useState("19:00");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTim1Dropdown, setShowTim1Dropdown] = useState(false);
   const [showTim2Dropdown, setShowTim2Dropdown] = useState(false);
   const [showBabakDropdown, setShowBabakDropdown] = useState(false);
-  
+
   const datePickerRef = useRef(null);
   const tim1DropdownRef = useRef(null);
   const tim2DropdownRef = useRef(null);
   const babakDropdownRef = useRef(null);
 
-  // Data pilihan untuk dropdown
-  const pilihanTim = ['HMTPWK', 'KMTA', 'KMTG', 'KMTETI', 'HMTF', 'HMM', 'HME', 'HIMATIKA', 'HIMAFAR', 'HIMAKOM'];
-  const pilihanBabak = ['Penyisihan', 'Perempat Final', 'Semi Final', 'Final'];
+  const pilihanTim = [
+    "HMTPWK",
+    "KMTA",
+    "KMTG",
+    "KMTETI",
+    "HMTF",
+    "HMM",
+    "HME",
+    "HIMATIKA",
+    "HIMAFAR",
+    "HIMAKOM"
+  ];
+  const pilihanBabak = ["Penyisihan", "Perempat Final", "Semi Final", "Final"];
 
-  // Tangkap klik di luar dropdown untuk menutupnya
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (tim1DropdownRef.current && !tim1DropdownRef.current.contains(event.target)) {
@@ -43,49 +56,62 @@ const JadwalPertandingan = ({ cabang, kategori }) => {
         setShowDatePicker(false);
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  // Handler untuk memilih tim dari dropdown
   const handleSelectTim = (tim, setTim) => {
     setTim(tim);
     setShowTim1Dropdown(false);
     setShowTim2Dropdown(false);
   };
 
-  // Handler untuk memilih babak
   const handleSelectBabak = (selectedBabak) => {
     setBabak(selectedBabak);
     setShowBabakDropdown(false);
   };
 
-  // Handler untuk memilih tanggal
   const handleDateChange = (e) => {
     const date = new Date(e.target.value);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear();
     setTanggal(`${day}/${month}/${year}`);
     setShowDatePicker(false);
   };
 
-  // Handler untuk menyimpan jadwal
-  const handleSave = () => {
-    alert(`Jadwal berhasil disimpan!\nCabang: ${cabang} - ${kategori}\nTim: ${tim1} vs ${tim2}\nBabak: ${babak}\nTanggal: ${tanggal}\nWaktu: ${waktu}`);
+  // SIMPAN LANGSUNG KE SUPABASE
+  const handleSave = async () => {
+    const { error } = await supabase.from("jadwal_pertandingan").insert([
+      {
+        cabang,
+        kategori,
+        tim1,
+        tim2,
+        babak,
+        tanggal: tanggal.split("/").reverse().join("-"), // YYYY-MM-DD
+        waktu,
+        skor_tim1: 0,
+        skor_tim2: 0
+      }
+    ]);
+    if (error) {
+      alert("Gagal menyimpan jadwal!");
+      console.error(error);
+    } else {
+      alert("Jadwal berhasil disimpan!");
+    }
   };
 
-  // Handler untuk menghapus input
   const handleDelete = () => {
-    setTim1('HMTPWK');
-    setTim2('KMTETI');
-    setBabak('Semi Final');
-    setTanggal('10/10/2002');
-    setWaktu('19.00');
-    alert('Input berhasil dihapus!');
+    setTim1("HMTPWK");
+    setTim2("KMTETI");
+    setBabak("Semi Final");
+    setTanggal("10/10/2002");
+    setWaktu("19:00");
+    alert("Input berhasil dihapus!");
   };
 
   return (

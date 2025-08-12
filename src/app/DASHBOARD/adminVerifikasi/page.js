@@ -9,13 +9,18 @@ import { Suspense } from 'react';
 const AdminVerifikasi = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [dataTerpilih, setDataTerpilih] = useState(null);
   const [activeKmhm, setActiveKmhm] = useState(null);
 
-  const [selectedRole, setSelectedRole] = useState(() => searchParams.get('role') || '');
+  const [selectedRole, setSelectedRole] = useState(() => searchParams.get('role') || 'Atlet');
   const [selectedData, setSelectedData] = useState({
     mainCategory: searchParams.get('category') || null,
     subCategory: searchParams.get('subcategory') || null,
+  });
+
+  console.log('AdminVerifikasi state:', {
+    selectedRole,
+    selectedData,
+    activeKmhm
   });
 
   // Sinkronisasi state selectedRole dengan URL query
@@ -25,7 +30,8 @@ const AdminVerifikasi = () => {
       params.set('role', selectedRole);
       router.push(`?${params.toString()}`);
     }
-  }, [selectedRole]);
+  }, [selectedRole, router, searchParams]);
+
   const handleExport = () => {
     console.log('Exporting data for', selectedRole, 'in', activeKmhm);
   };
@@ -97,16 +103,19 @@ const AdminVerifikasi = () => {
                 <Verifikasi
                   kmhmName={activeKmhm}
                   role={selectedRole.toLowerCase()}
-                  selectedSport={dataTerpilih}
+                  selectedSport={selectedData} // Pass selectedData instead of dataTerpilih
                   onExport={handleExport}
                 />
               ) : (
-                <div className="text-white text-lg font-semibold">
-                  Silahkan pilih KMHM
+                <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-amber-900 rounded-[32px] shadow-lg">
+                  <div className="flex items-center justify-center h-64">
+                    <div className="text-white text-lg font-semibold">
+                      Silahkan pilih KMHM
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
-              
           </div>
         </>
       )}

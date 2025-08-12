@@ -108,7 +108,7 @@ export default function HomePage() {
         {selectedData && (
           <div className="flex items-center gap-2 px-20 text-xxl font-extrabold">
             <span>{selectedData.mainCategory}</span>
-            <span>•</span>
+            <span>•</span> 
             <span>{selectedData.subCategory}</span>
           </div>
         )}

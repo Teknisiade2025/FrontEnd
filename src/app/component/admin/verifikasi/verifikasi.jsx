@@ -2,7 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Edit, Trash2, Plus, User, X, Download } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase'; 
 
-export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
+export default function Verifikasi({ selectedSport, kmhmName, role }) {
+  console.log('Component props:', { selectedSport, kmhmName, role });
+  
   // Tentukan tabel berdasarkan role
   const tableName = role === 'coach' ? 'coaches' : 'athletes';
 
@@ -57,7 +59,12 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
 
   // Load data athletes dari Supabase dengan useCallback untuk stabilitas
   const loadAthletes = useCallback(async () => {
-    if (!selectedSport?.mainCategory || !selectedSport?.subCategory) {
+    if (!selectedSport?.mainCategory || !selectedSport?.subCategory || !kmhmName) {
+      console.log('Missing required data:', { 
+        mainCategory: selectedSport?.mainCategory, 
+        subCategory: selectedSport?.subCategory, 
+        kmhmName 
+      });
       setAthletes([]);
       return;
     }
@@ -67,6 +74,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
       console.log(`Loading ${role} data for:`, {
         cabang: selectedSport.mainCategory,
         kategori: selectedSport.subCategory,
+        asal_pknin: kmhmName,
         tableName
       });
 
@@ -75,6 +83,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
         .select('*')
         .eq('cabang', selectedSport.mainCategory)
         .eq('kategori', selectedSport.subCategory)
+        .eq('asal_pknin', kmhmName) // Added this filter
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -90,7 +99,12 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
     } finally {
       setLoading(false);
     }
-  }, [selectedSport?.mainCategory, selectedSport?.subCategory, tableName, role]);
+  }, [selectedSport?.mainCategory, selectedSport?.subCategory, kmhmName, tableName, role]);
+
+  // Load athletes when dependencies change
+  useEffect(() => {
+    loadAthletes();
+  }, [loadAthletes]);
 
   // Filter otomatis ketika athletes, searchTerm, atau activeTab berubah
   useEffect(() => {
@@ -133,6 +147,11 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
 
   // Export to Excel function
   const exportToExcel = () => {
+    if (!athletes || athletes.length === 0) {
+      alert('No data to export');
+      return;
+    }
+
     // Create CSV content
     const headers = Object.keys(athletes[0] || {}).join(',');
     const rows = athletes.map(athlete => 
@@ -153,6 +172,14 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
     link.click();
     document.body.removeChild(link);
   };
+
+  // Helper function to count athletes by status
+  function countByStatus(status) {
+    if (status === 'TOTAL') {
+      return athletes.length;
+    }
+    return athletes.filter(a => a.status === status).length;
+  }
 
   // 🔹 Blokir jika kmhmName kosong
   if (!kmhmName) {
@@ -208,63 +235,10 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
     );
   }
 
-  // 🔹 Tahan render jika kategori & cabang belum dipilih
-  if (!selectedSport?.mainCategory || !selectedSport?.subCategory) {
-    return (
-      <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-amber-900 rounded-[32px] shadow-lg flex flex-col">
-        {/* Header Section */}
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-10">
-            {/* Status Tabs */}
-            <div className="flex items-center gap-2.5">
-              {['UNVERIFIED', 'REVISION', 'VERIFIED'].map((status) => (
-                <div
-                  key={status}
-                  className={`px-8 py-3 rounded-full shadow-md cursor-pointer transition-colors ${
-                    activeTab === status ? 'bg-teal-600 text-white' : 'bg-amber-200 text-gray-800'
-                  }`}
-                  onClick={() => setActiveTab(status)}
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="font-bold">{status}</span>
-                    <div className="flex items-center gap-2">
-                      <div className="w-px h-4 bg-current opacity-50" />
-                      <span className="text-sm">{countByStatus(status)}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="text-white text-xl font-extrabold">
-              Total {role}: {countByStatus('TOTAL')}
-            </div>
-          </div>
-          {/* Export Button */}
-          <div 
-            className="flex flex-col items-center gap-2 cursor-pointer"
-            onClick={exportToExcel}
-          >
-            <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center">
-              <Download className="w-8 h-8 text-white" />
-            </div>
-            <div className="text-center text-white text-lg font-bold">
-              Export <br/>Excel
-            </div>
-          </div>
-        </div>
 
-        {/* Pesan di tengah */}
-        <div className="flex-1 h-full flex items-center justify-center">
-          <div className="text-lg font-semibold text-white text-center">
-            Silakan pilih kategori dan cabang terlebih dahulu.
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="w-full h-full max-w-7xl mx-auto px-14 bg-amber-900 rounded-[32px] shadow-lg">
+    <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-amber-900 rounded-[32px] shadow-lg">
       {/* Header Section */}
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center gap-10">
@@ -310,6 +284,24 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
       {loading && (
         <div className="flex items-center justify-center py-8">
           <div className="text-white text-lg">Loading {role} data...</div>
+        </div>
+      )}
+
+      {/* No Data Message */}
+      {!loading && athletes.length === 0 && (
+        <div className="flex items-center justify-center py-8">
+          <div className="text-white text-lg">
+            No {role} data found for {selectedSport?.mainCategory} - {selectedSport?.subCategory} in {kmhmName}
+          </div>
+        </div>
+      )}
+
+      {/* Empty Filtered Results */}
+      {!loading && athletes.length > 0 && filteredAthletes.length === 0 && (
+        <div className="flex items-center justify-center py-8">
+          <div className="text-white text-lg">
+            No {role} found with status: {activeTab}
+          </div>
         </div>
       )}
 
@@ -379,7 +371,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
 
       {/* Form Overlay (View Only) */}
       {showForm && selectedSport?.mainCategory && selectedSport?.subCategory && (
-        <div className="fixed inset-0 bg-black bg-opacity-2 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="w-full max-w-6xl bg-neutral-100 rounded-3xl p-4">
             <div className="bg-[#0F6E87] rounded-3xl px-12 py-8 relative">
 
@@ -529,12 +521,4 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
       )}
     </div>
   );
-
-  // Helper function to count athletes by status
-  function countByStatus(status) {
-    if (status === 'TOTAL') {
-      return athletes.length;
-    }
-    return athletes.filter(a => a.status === status).length;
-  }
 }
