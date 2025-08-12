@@ -149,12 +149,12 @@ const CabangDiversifikasi = () => {
                 </div>
               </div>
               <div className="w-8 h-11 flex justify-end items-end gap-2">
-                <div className="w-0 h-11 rounded-[34.46px]  outline-1 outline-offset-[-0.57px] outline-[#FBEBD2]" />
-                <div className="justify-start text-[#FBEBD2] text-3xl font-normal font-['Snowstorm']">
-                  12
+                <div className="w-0 h-11 rounded-[34.46px]  outline-1 outline-offset-[-0.57px] outline-[#98764B]" />
+                   {/*  <div className="justify-start text-[#FBEBD2] text-3xl font-normal font-['Snowstorm']">
+                      12
+                    </div> */}
                 </div>
               </div>
-            </div>
           </div>
         );
       })}

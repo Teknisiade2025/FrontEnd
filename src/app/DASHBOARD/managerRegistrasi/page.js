@@ -5,6 +5,7 @@ import React from 'react';
 import Sidebar from '@/app/component/admin/compNavigasiCabang/cabangNav.jsx';
 import { useSearchParams, useRouter } from 'next/navigation';
 import AthleteRegistration from '@/app/component/manager/registrasi/registv2.jsx';
+import { IoLogOut } from "react-icons/io5";
 
 export default function HomePage() {
   const searchParams = useSearchParams();
@@ -67,13 +68,15 @@ export default function HomePage() {
 
   return (
     <div
-      className="flex flex-col min-h-screen pt-10 gap-1 w-[100vw] bg-[url('/bglogin.svg')]"
+      className="flex flex-col h-[120vh] pt-10 gap-1 w-[100vw] bg-[url('/bglogin.svg')]"
     >
       {/* HEADER */}
-      <div className="flex items-center justify-between px-6 pt-20 w-full">
+      <div className="flex items-center justify-between pl-22 pt-20 w-[100%]">
+
+
         <div className="flex items-center gap-4 pr-5">
           {/* Toggle Role */}
-          <div className="w-80 h-14 px-8 py-2 bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] overflow-hidden">
+          <div className="w-87 h-14 px-8 py-2 bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] overflow-hidden">
             <button
               onClick={() => handleRoleChange('Atlet')}
               className={`flex-1 py-2 px-12 w-full rounded-[37.74px] flex justify-center items-center
@@ -91,7 +94,7 @@ export default function HomePage() {
           </div>
 
           {/* Judul Registrasi */}
-          <h1 className="text-xl px-15 font-extrabold text-neutral-900">
+          <h1 className="text-3xl px-15 font-normal font-snowstorm text-neutral-900">
             Registrasi {selectedRole}
           </h1>
         </div>
@@ -99,24 +102,28 @@ export default function HomePage() {
         {/* Logout */}
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 text-sm font-bold text-neutral-800 hover:text-red-600"
+          className="flex items-center gap-2 text-lg font-bold font-snowstorm text-neutral-800 hover:text-red-600"
         >
           <i className="fas fa-sign-out-alt"></i> Keluar
+          <IoLogOut className = "h-6 w-6"/>
         </button>
 
         {/* Info Cabang */}
         {selectedData && (
-          <div className="flex items-center gap-2 px-20 text-xxl font-extrabold">
+          <div className="flex items-center gap-2 px-20 text-2xl font-normal font-snowstorm">
             <span>{selectedData.mainCategory}</span>
             <span>•</span>
             <span>{selectedData.subCategory}</span>
           </div>
         )}
+
+
+
       </div>
 
       {/* SIDEBAR + FORM */}
-      <div className="flex flex-row gap-10 h-[600px] w-full items-center justify-center">
-        <div className="w-64 px-8 h-full">
+      <div className="flex flex-row gap-50 h-[600px] w-full items-center justify-center">
+        <div className="w-64 px-8 -mt-45 h-full">
           <Sidebar onCategorySelect={handleCategorySelect} />
         </div>
 
@@ -128,6 +135,9 @@ export default function HomePage() {
           />
         </div>
       </div>
+
+
+
     </div>
   );
 }
