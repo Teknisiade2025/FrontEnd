@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Verifikasi from '@/app/component/admin/verifikasi/verifikasi';
-import CabangDiversifikasi from '@/app/component/admin/verifikasi/cabang';
+import CabangDiversifikasi from '@/app/component/admin/verifikasi/revisiFE';
 import KmhmNavigasi from '@/app/component/admin/compNavigasiCabang/kmhmNav';
 import { Suspense } from 'react';
 
@@ -46,7 +46,7 @@ const AdminVerifikasi = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen pt-10 gap-1 w-[100vw] bg-[url('/bglogin.svg')]">
+    <div className="flex flex-col min-h-screen pt-25 gap-1 w-[100vw] bg-[url('/bglogin.svg')]">
       {/* Render pemilihan cabang hanya jika belum pilih category */}
       {!selectedData.mainCategory && (
         <CabangDiversifikasi />

@@ -110,11 +110,11 @@ const CabangDiversifikasi = () => {
 
   return (
     <div className="min-h-screen p-6 max-w-7xl mx-auto  rounded-lg shadow-lg font-sans relative">
-      <h1 className="text-3xl font-extrabold mb-8 text-amber-900 text-center font-pixel">
+      <h1 className="text-3xl font-bold mb-8 text-[#3C3022] text-center font-snowstorm">
         Pilih Cabang Untuk Diversifikasi
       </h1>
-      <p className="text-center mb-12 text-amber-800 font-semibold text-sm">
-        Pilih cabang olahraga atau seni yang ingin kamu diversifikasi
+      <p className="text-center mb-12 text-[#3C3022] font-semibold text-sofia text-md">
+        Angka di bagian kanan menunjukkan jumlah Atlet yang belum terverifikasi
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
