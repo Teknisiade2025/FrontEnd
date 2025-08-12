@@ -13,7 +13,7 @@ const ScoreboardPage = () => {
       </div>
       
       {/* Konten Utama - Scoreboard */}
-      <div className="flex-1 pr-20" fallback={<div>Loading...</div>}>
+      <div className="flex-1 pr-20 pt-18" fallback={<div>Loading...</div>}>
         <Scoreboard />
       </div>
     </div>

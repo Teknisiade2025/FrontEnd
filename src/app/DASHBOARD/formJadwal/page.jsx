@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import CabangNavigasi from '@/app/component/admin/compNavigasiCabang/cabangNav';
 import JadwalPertandingan from '@/app/component/admin/jadwalPertandingan/page';
 import VokalForm from '@/app/component/admin/jadwalPertandingan/vokalForm';
-import DaftarJadwalPertandingan from '@/app/component/admin/jadwalPertandingan/daftarjadwal';
+import DaftarJadwalPertandingan from '@/app/component/admin/jadwalPertandingan/page';
 
 const AdminSchedulePage = () => {
   const [selectedData, setSelectedData] = useState(null);
