@@ -164,18 +164,21 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   };
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  setFormData((prev) => ({
+    ...prev,
+    [e.target.name]: e.target.value,
+    ...(editingAthlete && prev.status !== 'UNVERIFIED' ? { status: 'UNVERIFIED' } : {})
+  }));
+};
 
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      kartu_institusi: e.target.files[0]
-    });
-  };
+const handleFileChange = (e) => {
+  setFormData((prev) => ({
+    ...prev,
+    kartu_institusi: e.target.files[0],
+    ...(editingAthlete && prev.status !== 'UNVERIFIED' ? { status: 'UNVERIFIED' } : {})
+  }));
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -262,14 +265,19 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   };
 
   const handleEdit = (athlete) => {
-    setFormData({
-      ...formData,
-      ...athlete
-    });
-    setEditingAthlete(athlete);
-    setReadMode(false);
-    setShowForm(true);
-  };
+  if (athlete.status?.toUpperCase() === 'VERIFIED') {
+    alert('Data sudah terverifikasi dan tidak dapat diubah.');
+    return;
+  }
+
+  setFormData({
+    ...formData,
+    ...athlete
+  });
+  setEditingAthlete(athlete);
+  setReadMode(false);
+  setShowForm(true);
+};
 
   const handleDelete = async (id) => {
     if (window.confirm(`Yakin ingin menghapus data ${role} ini?`)) {
