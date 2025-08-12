@@ -118,16 +118,6 @@ const CabangDiversifikasi = () => {
                     </div>
                   </div>
                 </div>
-<<<<<<< HEAD
-              </div>
-              <div className="w-8 h-11 flex justify-end items-end gap-2">
-                <div className="w-0 h-11 rounded-[34.46px]  outline-1 outline-offset-[-0.57px] outline-[#98764B]" />
-                   {/*  <div className="justify-start text-[#FBEBD2] text-3xl font-normal font-['Snowstorm']">
-                      12
-                    </div> */}
-                </div>
-              </div>
-=======
 
                 {/* Chevron kanan */}
                 <div className={`flex items-center justify-center text-[#FBEBD2] transition-transform duration-300 ${isOpen ? "rotate-90" : ""}`}>
@@ -153,7 +143,6 @@ const CabangDiversifikasi = () => {
                 </div>
               )}
             </div>
->>>>>>> a3e10f4aa2bb023fd82b6983bdc98cae3f973f43
           </div>
         );
       })}
