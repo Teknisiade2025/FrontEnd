@@ -21,6 +21,28 @@ const CabangNavigasi = ({ onSelect }) => {
     'Cipta Puisi', 'Monolog', 'Poster'
   ];
 
+  const kategoriPerCabang = {
+   'Sepak Bola': ['Putra', 'Putri'],
+  'Voli': ['Putra', 'Putri'],
+  'Basket': ['Putra', 'Putri'],
+  'Badminton': ['Putra', 'Putri'],
+  'Futsal': ['Putra', 'Putri'],
+  'Tenis Meja': ['Putra', 'Putri'],
+  'Atletik': ['Putra', 'Putri'],
+  'Catur': ['Putra', 'Putri'],
+  'PUBG': ['Putra', 'Putri'],
+  'Mobile Legends': ['Putra', 'Putri'],
+  'Valorant': ['Putra', 'Putri'],
+  'FIFA': ['Putra', 'Putri'],
+  'Solo Vokal': ['putra', 'putri'],
+
+  // Seni
+  'Vokal Grup': ['Solo', 'Grup'],
+  
+  'Band': ['Grup'],
+  
+}
+
   const scaleFactor = 0.65; 
 
   // Handle hover untuk menampilkan popup
@@ -31,7 +53,7 @@ const CabangNavigasi = ({ onSelect }) => {
       const rect = itemRefs.current[refKey].getBoundingClientRect();
       const popupHeight = 160;
       setPopupPosition({
-        top: ((rect.top + window.scrollY) + (rect.height / 2) - (popupHeight / 2)) / scaleFactor - 230,
+        top: ((rect.top + window.scrollY) + (rect.height / 2) - (popupHeight / 2)) / scaleFactor - 280,
         left: rect.right - 10 
       });
     }
@@ -48,8 +70,8 @@ const CabangNavigasi = ({ onSelect }) => {
 
   return (
     <div className = "w-[30vw] scale-77">
-      <div className="w-full h-[780px] px-12 pt-9 pb-12 bg-[#806037] rounded-[30px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]  border-[5px] outline-offset-[-3px] border-white">
-        <div className="w-full h-[731px] flex flex-col justify-start items-start gap-2.5 overflow-hidden">
+      <div className="w-full h-[790px] px-12 pt-9 pb-12 bg-[#806037] rounded-[30px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]  border-[5px] outline-offset-[-3px] border-white">
+        <div className="w-full h-[738px] flex flex-col justify-start items-start gap-2.5 overflow-hidden">
           
           {/* Cabang Olahraga */}
           <div className="w-full">
@@ -158,22 +180,31 @@ const CabangNavigasi = ({ onSelect }) => {
             <div className="self-stretch text-center justify-start text-[#FBEBD2] text-[22px] font-normal font-['Snowstorm']">
               Kategori
             </div>
-            <div className="self-stretch flex flex-col justify-start items-center gap-2.5">
-              <div 
-                className="self-stretch text-center justify-start text-[#FBEBD2] text-[20px] font-bold font-sofia cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
-                onClick={() => handleSelectKategori(hoveredCabang, 'Putra')}
-              >
-                Putra
+            {kategoriPerCabang[hoveredCabang]?.map((kategori, i) => 
+              <div
+                 key={i}
+                 className ="self-stretch text-center text-[#FBEBD2] text-[20px] font-bold font-sofia cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
+                 onClick={() => handleSelectKategori(hoveredCabang, kategori)}>
+                  {kategori}
+
               </div>
-            </div>
-            <div className="self-stretch flex flex-col justify-start items-center gap-2.5">
-              <div 
-                className="self-stretch text-center justify-start text-[#FBEBD2] text-[20px] font-bold font-sofia cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
-                onClick={() => handleSelectKategori(hoveredCabang, 'Putri')}
-              >
-                Putri
+            )}
+              {/* <div className="self-stretch flex flex-col justify-start items-center gap-2.5">
+                <div 
+                  className="self-stretch text-center justify-start text-[#FBEBD2] text-[20px] font-bold font-sofia cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
+                  onClick={() => handleSelectKategori(hoveredCabang, 'Putra')}
+                >
+                  Putra
+                </div>
               </div>
-            </div>
+              <div className="self-stretch flex flex-col justify-start items-center gap-2.5">
+                <div 
+                  className="self-stretch text-center justify-start text-[#FBEBD2] text-[20px] font-bold font-sofia cursor-pointer hover:opacity-80 py-2 hover:bg-[#0A7CA0] rounded-md"
+                  onClick={() => handleSelectKategori(hoveredCabang, 'Putri')}
+                >
+                  Putri
+                </div>
+              </div> */}
           </div>
         </div>
       )}

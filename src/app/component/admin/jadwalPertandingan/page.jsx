@@ -1,6 +1,8 @@
+
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { HiChevronRight } from 'react-icons/hi';
 import { BsCalendar2PlusFill, BsXCircleFill } from 'react-icons/bs';
 import { IoSaveSharp } from 'react-icons/io5';
 import Image from 'next/image';
@@ -11,20 +13,95 @@ const JadwalPertandingan = ({ cabang, kategori }) => {
   const [babak, setBabak] = useState('Semi Final');
   const [tanggal, setTanggal] = useState('10/10/2002');
   const [waktu, setWaktu] = useState('19.00');
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTim1Dropdown, setShowTim1Dropdown] = useState(false);
+  const [showTim2Dropdown, setShowTim2Dropdown] = useState(false);
+  const [showBabakDropdown, setShowBabakDropdown] = useState(false);
+  
+  const datePickerRef = useRef(null);
+  const tim1DropdownRef = useRef(null);
+  const tim2DropdownRef = useRef(null);
+  const babakDropdownRef = useRef(null);
+
+  // Data pilihan untuk dropdown
+  const pilihanTim = ['HMTPWK', 'KMTA', 'KMTG', 'KMTETI', 'HMTF', 'HMM', 'HME', 'HIMATIKA', 'HIMAFAR', 'HIMAKOM'];
+  const pilihanBabak = ['Penyisihan', 'Perempat Final', 'Semi Final', 'Final'];
+
+  // Tangkap klik di luar dropdown untuk menutupnya
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (tim1DropdownRef.current && !tim1DropdownRef.current.contains(event.target)) {
+        setShowTim1Dropdown(false);
+      }
+      if (tim2DropdownRef.current && !tim2DropdownRef.current.contains(event.target)) {
+        setShowTim2Dropdown(false);
+      }
+      if (babakDropdownRef.current && !babakDropdownRef.current.contains(event.target)) {
+        setShowBabakDropdown(false);
+      }
+      if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
+        setShowDatePicker(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Handler untuk memilih tim dari dropdown
+  const handleSelectTim = (tim, setTim) => {
+    setTim(tim);
+    setShowTim1Dropdown(false);
+    setShowTim2Dropdown(false);
+  };
+
+  // Handler untuk memilih babak
+  const handleSelectBabak = (selectedBabak) => {
+    setBabak(selectedBabak);
+    setShowBabakDropdown(false);
+  };
+
+  // Handler untuk memilih tanggal
+  const handleDateChange = (e) => {
+    const date = new Date(e.target.value);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    setTanggal(`${day}/${month}/${year}`);
+    setShowDatePicker(false);
+  };
+
+  // Handler untuk menyimpan jadwal
+  const handleSave = () => {
+    alert(`Jadwal berhasil disimpan!\nCabang: ${cabang} - ${kategori}\nTim: ${tim1} vs ${tim2}\nBabak: ${babak}\nTanggal: ${tanggal}\nWaktu: ${waktu}`);
+  };
+
+  // Handler untuk menghapus input
+  const handleDelete = () => {
+    setTim1('HMTPWK');
+    setTim2('KMTETI');
+    setBabak('Semi Final');
+    setTanggal('10/10/2002');
+    setWaktu('19.00');
+    alert('Input berhasil dihapus!');
+  };
 
   return (
-    <div className="flex flex-col w-[60vw] scale-65">
+    
+    <div className="flex flex-col items-center p-10 rounded-[20px]">
       {/* Header Cabang & Kategori */}
-      {/* <div className="mb-4 flex justify-end">
-        <div className="px-4 py-1 bg-[#806037] rounded-full shadow-md">
+      <div className="mb-4 flex justify-end">
+        <div className="px-4 py-1 rounded-full shadow-md bg-[#806037]">
           <h1 className="text-lg font-normal font-['Snowstorm'] text-[#FCFCFC]">
             {cabang} - {kategori}
           </h1>
         </div>
-      </div> */}
+      </div>
 
-      {/* Main Content - Diperkecil */}
-      <div className="w-[100%] h-[120vh] px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex  items-center">
+      {/* Main Content */}
+      <div className="w-[100%] h-[100vh] -mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90">
         <div className="flex-1 self-stretch flex flex-col justify-between items-center gap-8">
           {/* Judul */}
           <div className="self-stretch text-center justify-start text-[#FCFCFC] text-3xl font-normal font-['Snowstorm']">
@@ -34,73 +111,17 @@ const JadwalPertandingan = ({ cabang, kategori }) => {
           {/* Tim 1 vs Tim 2 */}
           <div className="self-stretch inline-flex justify-center items-center gap-6">
             {/* Tim 1 */}
-            <div className="flex-1 h-24 inline-flex flex-col justify-between items-center">
+            <div className="flex-1 h-24 inline-flex flex-col justify-between items-center relative">
               <div className="self-stretch justify-start text-[#FCFCFC] text-3xl font-bold font-['Sofia_Sans_Condensed'] leading-9">
                 TIM 1
               </div>
-              <div className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden">
-                <input
-                  type="text"
-                  value={tim1}
-                  onChange={(e) => setTim1(e.target.value)}
-                  className="flex-1 self-stretch bg-transparent border-none text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] focus:outline-none text-center"
-                />
-                <div className="w-4 h-3  rounded-sm cursor-pointer flex items-center justify-center">
-                  <Image 
-                    src="/dashboard-jadwalPertandingan/dropdown.svg" 
-                    alt="dropdown" 
-                    width={14}
-                    height={14}
-                    className="w-2.8 h-2.8"
-                  />
+              <div 
+                className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden cursor-pointer"
+                onClick={() => setShowTim1Dropdown(!showTim1Dropdown)}
+              >
+                <div className="flex-1 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
+                  {tim1}
                 </div>
-              </div>
-            </div>
-            
-            {/* VS */}
-            <div className="justify-start text-[#FCFCFC] text-2xl font-normal font-['Sofia_Sans_Condensed']">
-              VS
-            </div>
-            
-            {/* Tim 2 */}
-            <div className="flex-1 h-24 inline-flex flex-col justify-between items-center">
-              <div className="self-stretch justify-start text-[#FCFCFC] text-3xl font-bold font-['Sofia_Sans_Condensed'] leading-9">
-                TIM 2
-              </div>
-              <div className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden">
-                <input
-                  type="text"
-                  value={tim2}
-                  onChange={(e) => setTim2(e.target.value)}
-                  className="flex-1 self-stretch bg-transparent border-none text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] focus:outline-none text-center"
-                />
-                <div className="w-4 h-3rounded-sm cursor-pointer flex items-center justify-center">
-                  <Image 
-                    src="/dashboard-jadwalPertandingan/dropdown.svg" 
-                    alt="dropdown" 
-                    width={14}
-                    height={14}
-                    className="w-2.8 h-2.8"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Form Input */}
-          <div className="self-stretch flex flex-col justify-start items-center gap-4">
-            {/* Babak */}
-            <div className="w-full flex flex-col justify-center items-start">
-              <div className="self-stretch justify-start text-[#FCFCFC] text-3xl font-bold font-['Sofia_Sans_Condensed'] leading-9 mb-1">
-                Babak
-              </div>
-              <div className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden">
-                <input
-                  type="text"
-                  value={babak}
-                  onChange={(e) => setBabak(e.target.value)}
-                  className="flex-1 self-stretch bg-transparent border-none text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] focus:outline-none text-center"
-                />
                 <div className="w-4 h-3 rounded-sm cursor-pointer flex items-center justify-center">
                   <Image 
                     src="/dashboard-jadwalPertandingan/dropdown.svg" 
@@ -111,21 +132,162 @@ const JadwalPertandingan = ({ cabang, kategori }) => {
                   />
                 </div>
               </div>
+              
+              {/* Dropdown Tim 1 */}
+              {showTim1Dropdown && (
+                <div 
+                  ref={tim1DropdownRef}
+                  className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-[#FBEBD2] rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]  outline-[3px] outline-offset-[-3px] outline-[#806037] z-50"
+                >
+                  <div className="px-4 py-3 text-center text-[#806037] text-xl font-normal font-['Sofia_Sans_Condensed'] border-b border-[#806037]">
+                    KMHM
+                  </div>
+                  {pilihanTim.map((tim, index) => (
+                    <div 
+                      key={index}
+                      className={`px-4 py-3 text-center text-[#806037] text-lg font-bold font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-[#e6d9c0] ${
+                        tim === tim1 ? 'bg-[#e6d9c0]' : ''
+                      }`}
+                      onClick={() => handleSelectTim(tim, setTim1)}
+                    >
+                      {tim}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* VS */}
+            <div className="justify-start text-[#FCFCFC] text-2xl font-normal font-['Sofia_Sans_Condensed']">
+              VS
+            </div>
+            
+            {/* Tim 2 */}
+            <div className="flex-1 h-24 inline-flex flex-col justify-between items-center relative">
+              <div className="self-stretch justify-start text-[#FCFCFC] text-3xl font-bold font-['Sofia_Sans_Condensed'] leading-9">
+                TIM 2
+              </div>
+              <div 
+                className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden cursor-pointer"
+                onClick={() => setShowTim2Dropdown(!showTim2Dropdown)}
+              >
+                <div className="flex-1 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
+                  {tim2}
+                </div>
+                <div className="w-4 h-3 rounded-sm cursor-pointer flex items-center justify-center">
+                  <Image 
+                    src="/dashboard-jadwalPertandingan/dropdown.svg" 
+                    alt="dropdown" 
+                    width={14}
+                    height={14}
+                    className="w-2.8 h-2.8"
+                  />
+                </div>
+              </div>
+              
+              {/* Dropdown Tim 2 */}
+              {showTim2Dropdown && (
+                <div 
+                  ref={tim2DropdownRef}
+                  className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-[#FBEBD2] rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-[#806037] z-50"
+                >
+                  <div className="px-4 py-3 text-center text-[#806037] text-xl font-normal font-['Sofia_Sans_Condensed'] border-b border-[#806037]">
+                    KMHM
+                  </div>
+                  {pilihanTim.map((tim, index) => (
+                    <div 
+                      key={index}
+                      className={`px-4 py-3 text-center text-[#806037] text-lg font-bold font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-[#e6d9c0] ${
+                        tim === tim2 ? 'bg-[#e6d9c0]' : ''
+                      }`}
+                      onClick={() => handleSelectTim(tim, setTim2)}
+                    >
+                      {tim}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Form Input */}
+          <div className="self-stretch flex flex-col justify-start items-center gap-4">
+            {/* Babak */}
+            <div className="w-full flex flex-col justify-center items-start relative">
+              <div className="self-stretch justify-start text-[#FCFCFC] text-3xl font-bold font-['Sofia_Sans_Condensed'] leading-9 mb-1">
+                Babak
+              </div>
+              <div 
+                className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden cursor-pointer"
+                onClick={() => setShowBabakDropdown(!showBabakDropdown)}
+              >
+                <div className="flex-1 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
+                  {babak}
+                </div>
+                <div className="w-4 h-3 rounded-sm cursor-pointer flex items-center justify-center">
+                  <Image 
+                    src="/dashboard-jadwalPertandingan/dropdown.svg" 
+                    alt="dropdown" 
+                    width={14}
+                    height={14}
+                    className="w-2.8 h-2.8"
+                  />
+                </div>
+              </div>
+              
+              {/* Dropdown Babak */}
+              {showBabakDropdown && (
+                <div 
+                  ref={babakDropdownRef}
+                  className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-[#FBEBD2] rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]  outline-[3px] outline-offset-[-3px] outline-[#806037] z-50"
+                >
+                  <div className="px-4 py-3 text-center text-[#806037] text-xl font-normal font-['Sofia_Sans_Condensed'] border-b border-[#806037]">
+                    Babak
+                  </div>
+                  {pilihanBabak.map((babakOption, index) => (
+                    <div 
+                      key={index}
+                      className={`px-4 py-3 text-center text-[#806037] text-lg font-bold font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-[#e6d9c0] ${
+                        babakOption === babak ? 'bg-[#e6d9c0]' : ''
+                      }`}
+                      onClick={() => handleSelectBabak(babakOption)}
+                    >
+                      {babakOption}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             
             {/* Tanggal */}
-            <div className="w-full flex flex-col justify-center items-start">
+            <div className="w-full flex flex-col justify-center items-start relative">
               <div className="self-stretch justify-start text-[#FCFCFC] text-3xl font-bold font-['Sofia_Sans_Condensed'] leading-9 mb-1">
                 Tanggal
               </div>
-              <div className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden">
-                <input
-                  type="text"
-                  value={tanggal}
-                  onChange={(e) => setTanggal(e.target.value)}
-                  className="w-48 self-stretch bg-transparent border-none text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] focus:outline-none text-center"
-                />
-                <BsCalendar2PlusFill className="w-6 h-6 text-[#806037]" />
+              <div className="relative">
+                <div 
+                  className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden"
+                  onClick={() => setShowDatePicker(!showDatePicker)}
+                >
+                  <div className="w-150 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
+                    {tanggal}
+                  </div>
+                  <BsCalendar2PlusFill className="w-6 h-6 text-[#806037] cursor-pointer" />
+                </div>
+                
+                {/* Date Picker */}
+                {showDatePicker && (
+                  <div 
+                    ref={datePickerRef}
+                    className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-lg z-50 p-4"
+                  >
+                    <input
+                      type="date"
+                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#806037]"
+                      onChange={handleDateChange}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             
@@ -136,19 +298,23 @@ const JadwalPertandingan = ({ cabang, kategori }) => {
               </div>
               <div className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden">
                 <input
-                  type="text"
+                  type="time"
                   value={waktu}
                   onChange={(e) => setWaktu(e.target.value)}
                   className="flex-1 self-stretch bg-transparent border-none text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] focus:outline-none text-center"
+                  placeholder="HH.MM"
                 />
               </div>
             </div>
           </div>
           
           {/* Tombol Aksi */}
-          <div className="self-stretch h-14 inline-flex justify-center items-start gap-6 mt-4">
+          <div className="self-stretch h-14 inline-flex mx-auto justify-center items-center gap-6 mt-4 w-[60%]">
             {/* Tombol Simpan */}
-            <button className="flex-1 self-stretch px-8 py-2 bg-[#065D79] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center gap-2 overflow-hidden hover:bg-[#0a7a9a] transition-colors">
+            <button 
+              className="flex-1 self-stretch px-8 py-2 bg-[#065D79] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center gap-2 overflow-hidden hover:bg-[#0a7a9a] transition-colors"
+              onClick={handleSave}
+            >
               <div className="justify-start text-[#F0EED7] text-2xl font-bold font-['Sofia_Sans_Condensed']">
                 Simpan
               </div>
@@ -156,7 +322,10 @@ const JadwalPertandingan = ({ cabang, kategori }) => {
             </button>
             
             {/* Tombol Hapus */}
-            <button className="flex-1 self-stretch px-8 py-2 bg-[#806037] rounded-full outline outline-[1.5px] outline-offset-[-1.5px] outline-[#F0EED7] flex justify-center items-center gap-2 overflow-hidden hover:bg-[#9a7b5e] transition-colors">
+            <button 
+              className="flex-1 self-stretch px-8 py-2 bg-[#806037] rounded-full outline-[1.5px] outline-offset-[-1.5px] outline-[#F0EED7] flex justify-center items-center gap-2 overflow-hidden hover:bg-[#9a7b5e] transition-colors"
+              onClick={handleDelete}
+            >
               <div className="justify-start text-[#F0EED7] text-2xl font-bold font-['Sofia_Sans_Condensed']">
                 Hapus
               </div>
