@@ -29,7 +29,7 @@ export default function Dashboard() {
         <div className="space-y-5">
           {/* Verifikasi Registrasi Atlet */}
           <div 
-            onClick={() => handleNavigation('/verifikasi-atlet')}
+            onClick={() => handleNavigation('/DASHBOARD/adminVerifikasi')}
             className="w-full bg-amber-800 hover:bg-amber-700 transition-colors duration-300 rounded-full px-14 py-6 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-8">
@@ -50,7 +50,7 @@ export default function Dashboard() {
 
           {/* Schedule Pertandingan */}
           <div 
-            onClick={() => handleNavigation('/schedule-pertandingan')}
+            onClick={() => handleNavigation('/DASHBOARD/formJadwal')}
             className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-14 py-7 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
@@ -69,7 +69,7 @@ export default function Dashboard() {
 
           {/* Update Skor */}
           <div 
-            onClick={() => handleNavigation('/adminScoreboard')}
+            onClick={() => handleNavigation('/DASHBOARD/adminScoreboard')}
             className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-14 py-8 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
