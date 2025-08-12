@@ -33,7 +33,7 @@ export default function SignIn() {
     } else {
       setError('');
       // kirim kmhm_name via router state
-      const target = role === 'page-a' ? '/DASHBOARD/adminDashboard' : '/DASHBOARD/adminDashboard';
+      const target = role === 'page-a' ? '/DASHBOARD/managerDashboard' : '/DASHBOARD/adminDashboard';
       router.push(`${target}?kmhm=${encodeURIComponent(kmhm_name ?? '')}`);
     }
   };

@@ -91,12 +91,13 @@ const CabangNavigasi = ({ onCategorySelect, onClose }) => {
   const scaleFactor = 0.77; // sesuai scale-77
   
   const handleMouseEnter = (cabang, index, section) => {
+    setHoveredCabang(cabang);
     // Kalau tidak ada atau cuma 1 subkategori → tidak tampilkan popup
     if (!subCategories[cabang] || subCategories[cabang].length <= 1) {
-      setHoveredCabang(null);
+      //setHoveredCabang(null);
       return;
     }
-    setHoveredCabang(cabang);
+    
     const refKey = `${section}-${index}`;
     if (itemRefs.current[refKey]) {
       const rect = itemRefs.current[refKey].getBoundingClientRect();

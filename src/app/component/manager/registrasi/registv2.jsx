@@ -269,7 +269,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   // 🔹 Blokir jika kmhmName kosong
   if (!kmhmName) {
     return (
-      <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-amber-900 rounded-[32px] shadow-lg">
+      <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-[#806037] rounded-[32px] shadow-lg">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-10">
@@ -311,7 +311,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
           </div>
         </div>
               
-        <div className="flex-1 h-full flex items-center justify-center">
+        <div className="flex-1 h-[60%] flex items-center justify-center">
           <div className="text-lg font-semibold text-white text-center">
             Nama KMHM tidak ditemukan. Harap login atau pilih KMHM terlebih dahulu.
           </div>

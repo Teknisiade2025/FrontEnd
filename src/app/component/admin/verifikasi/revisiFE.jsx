@@ -94,16 +94,16 @@ const CabangDiversifikasi = () => {
         const isOpen = selectedCabang?.name === cabang.name;
 
         return (
-          <div key={idx} className="relative">
+          <div key={idx} className="relative mb-4">
             {/* Card utama */}
             <div
-              className="relative group cursor-pointer scale-70"
+              className="relative group cursor-pointer "
               onClick={() => handleCabangClick(cabang, kategoriLabel)}
             >
-              <div className="w-[26vw] h-20 px-9 py-6 bg-[#98764B] rounded-[51.89px] shadow-md outline-[3px] outline-offset-[-3px] outline-white flex justify-between items-center gap-8 transition-all hover:bg-[#065D79]">
+              <div className="w-[20vw] h-10 px-9 py-6 bg-[#98764B] rounded-[51.89px] shadow-md outline-[3px] outline-offset-[-3px] outline-white flex justify-between items-center gap-8 transition-all hover:bg-[#065D79]">
                 <div className="flex items-center gap-8">
                   {iconPath && (
-                    <div className="relative w-10 h-10">
+                    <div className="relative w-7 h-7">
                       <Image
                         src={iconPath}
                         alt={cabang.name}
@@ -112,8 +112,8 @@ const CabangDiversifikasi = () => {
                       />
                     </div>
                   )}
-                  <div className="flex-1 flex flex-col justify-center items-center">
-                    <div className="text-[#FBEBD2] text-2xl font-bold font-['Sofia_Sans_Condensed']">
+                  <div className="flex-1 flex flex-col  justify-center items-center">
+                    <div className="text-[#FBEBD2] text-[1vw] font-bold font-['Sofia_Sans_Condensed']">
                       {cabang.name}
                     </div>
                   </div>
@@ -127,7 +127,7 @@ const CabangDiversifikasi = () => {
 
               {/* Dropdown kategori */}
               {isOpen && cabang.kategori.length > 1 && (
-                <div className="absolute left-0 top-full mt-2 w-[26vw] bg-[#065D79] rounded-xl p-3 shadow-lg z-[9999px]">
+                <div className="absolute left-0 top-full mt-2 w-[20vw] bg-[#065D79] rounded-xl p-3 shadow-lg z-[9999]">
                   {cabang.kategori.map((kat, i) => (
                     <button
                       key={i}
@@ -160,14 +160,14 @@ const CabangDiversifikasi = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
         {/* Olahraga */}
         <div>
           <h2 className="text-Color-8 text-3xl font-normal font-['Snowstorm'] mb-6 border-b border-[#3C3022] pb-2">
             Olahraga
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 overflow-visibl">
-            <div>{renderCabangList(cabangOlahraga1, 'olahraga')}</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10  overflow-visible relative">
+            <div >{renderCabangList(cabangOlahraga1, 'olahraga')}</div>
             <div>{renderCabangList(cabangOlahraga2, 'olahraga')}</div>
           </div>
         </div>

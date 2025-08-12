@@ -16,10 +16,10 @@ export default function Dashboard() {
       <div className="w-full max-w-4xl">
         {/* Header */}
         <div className="text-center mb-7 flex flex-col items-center">
-          <h1 className="text-6xl font-bold text-gray-800 mb-6" style={{fontFamily: 'serif'}}>
+          <h1 className="text-6xl font-bold font-snowstorm text-gray-800 mb-6" style={{fontFamily: 'serif'}}>
             Selamat Datang, Admin!
           </h1>
-          <p className="text-xl text-gray-700 font-semibold max-w-2xl leading-8">
+          <p className="text-xl text-gray-700 font-sofia font-semibold max-w-2xl leading-8">
             Selamat datang di menu utama. Dari sini, Anda bisa memulai untuk memverifikasi atlet, 
             mengatur jadwal pertandingan, mengatur timeline event, atau mengupdate skor.
           </p>
@@ -30,7 +30,7 @@ export default function Dashboard() {
           {/* Verifikasi Registrasi Atlet */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminVerifikasi')}
-            className="w-full bg-amber-800 hover:bg-amber-700 transition-colors duration-300 rounded-full px-14 py-6 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-[#876146] hover:bg-amber-900 transition-colors duration-300 rounded-full px-14 py-6 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-8">
               <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">

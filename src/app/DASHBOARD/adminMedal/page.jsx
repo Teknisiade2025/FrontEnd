@@ -9,7 +9,11 @@ const MedalPage = () => {
   const [activeKmhm, setActiveKmhm] = useState(null);
 
   return (
-    <div className="flex flex-row max-h-screen pt-10 gap-1 w-[100vw] bg-[url('/admin/bg-medal.svg')]">
+    <div className="flex flex-row h-[120vh] pt-10 pl-10 gap-1 w-[100vw] bg-[url('/admin/bg-medal.svg')]">
+      
+      
+      
+
       <div className="flex items-center">
         {/* Navigasi KMHM */}
         <div>
@@ -20,11 +24,11 @@ const MedalPage = () => {
         </div>
  
         {/* Konten Kanan */}
-        <div className="ml-2 h-full w-full">
+        <div className="ml-2 pt-12 h-full w-full">
           {activeKmhm ? (
             <MedalManage kmhm={activeKmhm} />
           ) : (
-                  <div className="w-full h-full pt-12 max-w-7xl mx-auto px-25 py-9  rounded-[32px] shadow-lg"
+                  <div className="w-full h-full pt-10 mt-10 max-w-7xl mx-auto px-25 py-9  rounded-[32px] shadow-lg"
                   style={{
           width: "900px",
           height: "600px",

@@ -62,7 +62,7 @@ const Navbar = () => {
           </div>
 
           {/* Login (Desktop) */}
-          <Link href="/comingsoon" passHref>
+          <Link href="/DASHBOARD/login" passHref>
             <div className="hidden md:flex items-center gap-2 text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] cursor-pointer hover:bg-amber-100 transition-colors duration-200 p-2 px-7 rounded-4xl">
               <span>Keluar</span>
               <IoLogInOutline size={24} />
