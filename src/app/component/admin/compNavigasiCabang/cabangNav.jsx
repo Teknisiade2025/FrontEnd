@@ -37,7 +37,7 @@ const CabangNavigasi = ({ onCategorySelect, onClose }) => {
     "Seni Lukis",
     "Cipta Puisi",
     "Monolog",
-    "Desain  Poster",
+    "Desain Poster",
   ];
 
   const subCategories = {
@@ -82,7 +82,8 @@ const CabangNavigasi = ({ onCategorySelect, onClose }) => {
   "Seni Lukis": [" "],
   "Cipta Puisi": [" "],
   "Monolog": [" "],
-  "Desain Poster": [" "]
+  "Desain Poster": [" "],
+  "Vokal Grup": [" "],
 
     
   };

@@ -5,7 +5,7 @@ import { Save, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { supabase } from "@/app/lib/supabase";
 
-// Data KMHM
+// Data KMHM 
 const daftarKmhm = {
   hmtpwk: { nama: "HMTPWK", logo: "/logoKMHM/HMTPWK.svg" },
   kmta: { nama: "KMTA", logo: "/logoKMHM/KMTA.svg" },

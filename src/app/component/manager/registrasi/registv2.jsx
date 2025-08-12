@@ -16,16 +16,6 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   const [readMode, setReadMode] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleRead = (athlete) => {
-    setFormData({
-      ...formData,
-      ...athlete
-    });
-    setEditingAthlete(athlete); 
-    setReadMode(true);
-    setShowForm(true);
-  };
-
   const [formData, setFormData] = useState({
     nama: '',
     kategori: selectedSport?.subCategory || '',
@@ -56,7 +46,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
     }
   }, [selectedSport, kmhmName]);
 
-  // Load data athletes dari Supabase dengan useCallback untuk stabilitas
+  // Load data athletes
   const loadAthletes = useCallback(async () => {
     if (!selectedSport?.mainCategory || !selectedSport?.subCategory) {
       setAthletes([]);
@@ -65,35 +55,25 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
 
     try {
       setLoading(true);
-      console.log(`Loading ${role} data for:`, {
-        cabang: selectedSport.mainCategory,
-        kategori: selectedSport.subCategory,
-        tableName
-      });
-
       const { data, error } = await supabase
         .from(tableName)
         .select('*')
         .eq('cabang', selectedSport.mainCategory)
         .eq('kategori', selectedSport.subCategory)
+        .eq('asal_pknin', kmhmName)
         .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error(`Error loading ${role}:`, error);
-        throw error;
-      }
-
-      console.log(`Loaded ${role} data:`, data);
+      if (error) throw error;
       setAthletes(data || []);
     } catch (error) {
-      console.error(`Error loading ${role}:`, error);
+      console.error(`Error loading ${role}:`, error.message);
       setAthletes([]);
     } finally {
       setLoading(false);
     }
   }, [selectedSport?.mainCategory, selectedSport?.subCategory, tableName, role]);
 
-  // Filter otomatis ketika athletes, searchTerm, atau activeTab berubah
+  // Filter otomatis
   useEffect(() => {
     if (!athletes || athletes.length === 0) {
       setFilteredAthletes([]);
@@ -120,65 +100,29 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
 
   const deleteAthlete = async (id) => {
     try {
-      const { error } = await supabase
-        .from(tableName)
-        .delete()
-        .eq('id', id);
-
+      const { error } = await supabase.from(tableName).delete().eq('id', id);
       if (error) throw error;
       loadAthletes();
     } catch (error) {
-      console.error(`Error deleting ${role}:`, error);
-    }
-  };
-
-  const updateAthlete = async (id, athleteData) => {
-    try {
-      const { data, error } = await supabase
-        .from(tableName)
-        .update(athleteData)
-        .eq('id', id)
-        .select();
-
-      if (error) throw error;
-      loadAthletes();
-      return data[0];
-    } catch (error) {
-      console.error(`Error updating ${role}:`, error);
-    }
-  };
-
-  const addAthlete = async (athleteData) => {
-    try {
-      const { data, error } = await supabase
-        .from(tableName)
-        .insert([athleteData])
-        .select();
-
-      if (error) throw error;
-      loadAthletes();
-      return data[0];
-    } catch (error) {
-      console.error(`Error adding ${role}:`, error);
+      console.error(`Error deleting ${role}:`, error.message);
     }
   };
 
   const handleInputChange = (e) => {
-  setFormData((prev) => ({
-    ...prev,
-    [e.target.name]: e.target.value,
-    ...(editingAthlete && prev.status !== 'UNVERIFIED' ? { status: 'UNVERIFIED' } : {})
-  }));
-};
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+      ...(editingAthlete && prev.status !== 'UNVERIFIED' ? { status: 'UNVERIFIED' } : {})
+    }));
+  };
 
-const handleFileChange = (e) => {
-  setFormData((prev) => ({
-    ...prev,
-    kartu_institusi: e.target.files[0],
-    ...(editingAthlete && prev.status !== 'UNVERIFIED' ? { status: 'UNVERIFIED' } : {})
-  }));
-};
-
+  const handleFileChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      kartu_institusi: e.target.files[0],
+      ...(editingAthlete && prev.status !== 'UNVERIFIED' ? { status: 'UNVERIFIED' } : {})
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -191,40 +135,55 @@ const handleFileChange = (e) => {
     try {
       const dataToSend = {
         ...formData,
-        role,
         kategori: selectedSport.subCategory,
         cabang: selectedSport.mainCategory
       };
 
+      // Upload file ke Supabase Storage
       if (formData.kartu_institusi instanceof File) {
-        dataToSend.kartu_institusi = await formData.kartu_institusi.arrayBuffer();
+        const fileName = `${Date.now()}_${formData.kartu_institusi.name}`;
+        const { data: fileData, error: fileError } = await supabase.storage
+          .from('kartu_institusi') // pastikan bucket ini ada
+          .upload(fileName, formData.kartu_institusi);
+
+        if (fileError) throw fileError;
+
+        // Ambil URL file
+        const { data: publicUrlData } = supabase
+          .storage
+          .from('kartu_institusi')
+          .getPublicUrl(fileName);
+
+        dataToSend.kartu_institusi = publicUrlData.publicUrl;
       }
 
       if (editingAthlete) {
-        await supabase
+        const { error } = await supabase
           .from(tableName)
           .update(dataToSend)
           .eq('id', editingAthlete.id);
+
+        if (error) throw error;
       } else {
-        await supabase
+        const { error } = await supabase
           .from(tableName)
           .insert([dataToSend]);
+
+        if (error) throw error;
       }
 
       await loadAthletes();
       resetForm();
     } catch (error) {
-      console.error(error);
-      alert('Terjadi kesalahan saat menyimpan data');
+      console.error('Save error:', error.message, error);
+      alert(`Terjadi kesalahan saat menyimpan data: ${error.message}`);
     }
   };
 
-  // Load data saat selectedSport atau role berubah
   useEffect(() => {
     loadAthletes();
   }, [loadAthletes]);
 
-  // Subscribe to realtime changes
   useEffect(() => {
     const subscription = supabase
       .channel(`${tableName}_channel`)
@@ -265,19 +224,29 @@ const handleFileChange = (e) => {
   };
 
   const handleEdit = (athlete) => {
-  if (athlete.status?.toUpperCase() === 'VERIFIED') {
-    alert('Data sudah terverifikasi dan tidak dapat diubah.');
-    return;
-  }
+    if (athlete.status?.toUpperCase() === 'VERIFIED') {
+      alert('Data sudah terverifikasi dan tidak dapat diubah.');
+      return;
+    }
 
-  setFormData({
-    ...formData,
-    ...athlete
-  });
-  setEditingAthlete(athlete);
-  setReadMode(false);
-  setShowForm(true);
-};
+    setFormData({
+      ...formData,
+      ...athlete
+    });
+    setEditingAthlete(athlete);
+    setReadMode(false);
+    setShowForm(true);
+  };
+
+  const handleRead = (athlete) => {
+    setFormData({
+      ...formData,
+      ...athlete
+    });
+    setEditingAthlete(athlete);
+    setReadMode(true);
+    setShowForm(true);
+  };
 
   const handleDelete = async (id) => {
     if (window.confirm(`Yakin ingin menghapus data ${role} ini?`)) {
@@ -295,6 +264,7 @@ const handleFileChange = (e) => {
     }
     return athletes.filter(a => a.status === status).length;
   };
+
 
   // 🔹 Blokir jika kmhmName kosong
   if (!kmhmName) {

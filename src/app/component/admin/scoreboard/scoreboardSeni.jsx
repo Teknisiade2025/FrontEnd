@@ -1,25 +1,51 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Save, Trash2 } from 'lucide-react';
+import { supabase } from '@/app/lib/supabase'; 
 
-const Scoreboard = () => {
-  // Data dummy untuk tabel
-  const initialScores = [
-    { id: 1, kmhm: 'HMTPWK', skor: 0 },
-    { id: 2, kmhm: 'KMTA', skor: 100 },
-    { id: 3, kmhm: 'KMTG', skor: 100 },
-    { id: 4, kmhm: 'KMTSL', skor: 100 },
-    { id: 5, kmhm: 'HMTG', skor: 100 },
-    { id: 6, kmhm: 'HMTI', skor: 100 },
-    { id: 7, kmhm: 'KMTETI', skor: 100 },
-    { id: 8, kmhm: 'KMTNTF', skor: 100 },
-    { id: 9, kmhm: 'KMTM', skor: 100 },
-    { id: 10, kmhm: 'KMTK', skor: 24.87 },
-  ];
+const ScoreboardSeni = ({ cabang, kategori }) => {
+  const [scores, setScores] = useState([]);
+  const [savedScores, setSavedScores] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const [scores, setScores] = useState(initialScores);
-  const [savedScores, setSavedScores] = useState([...initialScores]);
+  useEffect(() => {
+    const fetchScores = async () => {
+      if (!cabang) {
+        setScores([]);
+        setSavedScores([]);
+        return;
+      }
+      setLoading(true);
+      let query = supabase
+        .from('jadwal_seni')
+        .select('id, tim, skor, cabang, kategori')
+        .eq('cabang', cabang);
+
+      if (kategori) {
+        query = query.eq('kategori', kategori);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error('Error fetching scores:', error);
+        setScores([]);
+        setSavedScores([]);
+      } else {
+        const mapped = data.map(item => ({
+          id: item.id,
+          kmhm: item.tim,
+          skor: item.skor ?? 0,
+        }));
+        setScores(mapped);
+        setSavedScores(mapped);
+      }
+      setLoading(false);
+    };
+
+    fetchScores();
+  }, [cabang, kategori]);
 
   const handleScoreChange = (id, value) => {
     const updatedScores = scores.map(item =>
@@ -28,15 +54,32 @@ const Scoreboard = () => {
     setScores(updatedScores);
   };
 
-  const saveScores = () => {
-    setSavedScores([...scores]);
+  const saveScores = async () => {
+    setLoading(true);
+    try {
+      for (const item of scores) {
+        const { error } = await supabase
+          .from('jadwal_seni')
+          .update({ skor: item.skor })
+          .eq('id', item.id);
+        if (error) throw error;
+      }
+      setSavedScores([...scores]);
+      alert('Skor berhasil disimpan!');
+    } catch (error) {
+      console.error('Error updating scores:', error);
+      alert('Gagal menyimpan skor.');
+    }
+    setLoading(false);
   };
 
   const resetScores = () => {
     if (window.confirm('Apakah Anda yakin ingin mereset skor?')) {
-      setScores([...initialScores]);
+      setScores([...savedScores]);
     }
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="hidden lg:flex items-center justify-center min-h-screen">
@@ -111,4 +154,4 @@ const Scoreboard = () => {
   );
 };
 
-export default Scoreboard;
+export default ScoreboardSeni;

@@ -1,33 +1,25 @@
-
 "use client";
-
 import React, { useState, useRef, useEffect } from "react";
-import { supabase } from "@/app/lib/supabase";
+import Image from "next/image";
 import { BsCalendar2PlusFill, BsXCircleFill } from "react-icons/bs";
 import { IoSaveSharp } from "react-icons/io5";
-import Image from "next/image";
 
-
-
-const JadwalPertandingan = ({ selectedSport }) => {
-  const [cabang, setCabang] = useState("Sepak Bola");
-  const [kategori, setKategori] = useState("Putra");
-  const [tim1, setTim1] = useState("HMTPWK");
-  const [tim2, setTim2] = useState("KMTETI");
-  const [babak, setBabak] = useState("Semi Final");
-  const [tanggal, setTanggal] = useState("10/10/2002");
-  const [waktu, setWaktu] = useState("19:00");
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTim1Dropdown, setShowTim1Dropdown] = useState(false);
-  const [showTim2Dropdown, setShowTim2Dropdown] = useState(false);
-  const [showBabakDropdown, setShowBabakDropdown] = useState(false);
-
-  const datePickerRef = useRef(null);
-  const tim1DropdownRef = useRef(null);
-  const tim2DropdownRef = useRef(null);
-  const babakDropdownRef = useRef(null);
-
-  const pilihanTim = [
+const InputJadwalOlahraga = ({
+  cabang,
+  kategori,
+  tim1,
+  setTim1,
+  tim2,
+  setTim2,
+  babak,
+  setBabak,
+  tanggal,
+  setTanggal,
+  waktu,
+  setWaktu,
+  handleSave,
+  handleCancel,
+  pilihanTim = [
     "HMTPWK",
     "KMTA",
     "KMTG",
@@ -38,8 +30,19 @@ const JadwalPertandingan = ({ selectedSport }) => {
     "HIMATIKA",
     "HIMAFAR",
     "HIMAKOM"
-  ];
-  const pilihanBabak = ["Penyisihan", "Perempat Final", "Semi Final", "Final"];
+  ],
+  pilihanBabak = ["Penyisihan", "Perempat Final", "Semi Final", "Final"]
+}) => {
+  // local UI state
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTim1Dropdown, setShowTim1Dropdown] = useState(false);
+  const [showTim2Dropdown, setShowTim2Dropdown] = useState(false);
+  const [showBabakDropdown, setShowBabakDropdown] = useState(false);
+
+  const datePickerRef = useRef(null);
+  const tim1DropdownRef = useRef(null);
+  const tim2DropdownRef = useRef(null);
+  const babakDropdownRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -62,8 +65,8 @@ const JadwalPertandingan = ({ selectedSport }) => {
     };
   }, []);
 
-  const handleSelectTim = (tim, setTim) => {
-    setTim(tim);
+  const handleSelectTim = (tim, setter) => {
+    setter(tim);
     setShowTim1Dropdown(false);
     setShowTim2Dropdown(false);
   };
@@ -74,7 +77,10 @@ const JadwalPertandingan = ({ selectedSport }) => {
   };
 
   const handleDateChange = (e) => {
+    if (!e.target.value) return;
+    // e.target.value format: "YYYY-MM-DD"
     const date = new Date(e.target.value);
+    if (isNaN(date.getTime())) return;
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear();
@@ -82,40 +88,18 @@ const JadwalPertandingan = ({ selectedSport }) => {
     setShowDatePicker(false);
   };
 
-  // SIMPAN LANGSUNG KE SUPABASE
-  const handleSave = async () => {
-    const { error } = await supabase.from("jadwal_pertandingan").insert([
-      {
-        cabang,
-        kategori,
-        tim1,
-        tim2,
-        babak,
-        tanggal: tanggal.split("/").reverse().join("-"), // YYYY-MM-DD
-        waktu,
-        skor_tim1: 0,
-        skor_tim2: 0
-      }
-    ]);
-    if (error) {
-      alert("Gagal menyimpan jadwal!");
-      console.error(error);
-    } else {
-      alert("Jadwal berhasil disimpan!");
-    }
-  };
-
   const handleDelete = () => {
+    // reset ke default (sesuaikan bila ingin berbeda)
     setTim1("HMTPWK");
     setTim2("KMTETI");
     setBabak("Semi Final");
     setTanggal("10/10/2002");
     setWaktu("19:00");
+    // notifikasi sederhana
     alert("Input berhasil dihapus!");
   };
 
   return (
-    
     <div className="flex flex-col items-center p-14 rounded-[20px]">
       {/* Header Cabang & Kategori */}
       <div className="mb-1 flex justify-end">
@@ -394,4 +378,4 @@ const JadwalPertandingan = ({ selectedSport }) => {
   );
 };
 
-export default JadwalPertandingan;
+export default InputJadwalOlahraga;

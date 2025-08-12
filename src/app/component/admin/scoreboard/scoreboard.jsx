@@ -2,57 +2,70 @@
 
 import React, { useState, useEffect } from 'react';
 import { Save, Trash2, ChevronDown } from 'lucide-react';
+import { supabase } from '@/app/lib/supabase'; 
 
-const Scoreboard = () => {
-  // Sample match data
-  const [matches] = useState([
-    {
-      id: 1,
-      team1: 'HMTPWK',
-      team2: 'KMTETI',
-      date: '20 Sept 2025',
-      time: '18.00',
-      day: 'Senin'
-    },
-    {
-      id: 2,
-      team1: 'HMTPWK',
-      team2: 'KMFKG',
-      date: '22 Sept 2025',
-      time: '19.00',
-      day: 'Rabu'
-    },
-    {
-      id: 3,
-      team1: 'KMTETI',
-      team2: 'KMFKG',
-      date: '25 Sept 2025',
-      time: '20.00',
-      day: 'Sabtu'
-    }
-  ]);
-
-  const [selectedMatch, setSelectedMatch] = useState(matches[0]);
+const ScoreboardOlahraga = ({ cabang, kategori }) => {
+  const [matches, setMatches] = useState([]);
+  const [selectedMatch, setSelectedMatch] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
+
   const [scores, setScores] = useState({
-    team1: 10,
-    team2: 10
+    team1: 0,
+    team2: 0
   });
 
   const [savedScores, setSavedScores] = useState({
-    team1: 10,
-    team2: 10
+    team1: 0,
+    team2: 0
   });
 
-  // Load scores when match changes
+  // Ambil data pertandingan dari Supabase saat komponen mount dan saat cabang/kategori berubah
   useEffect(() => {
-    const loadedScores = {
-      team1: 10,
-      team2: 10
+    const fetchMatches = async () => {
+      const { data, error } = await supabase
+        .from('jadwal_pertandingan') // Ganti 'nama_tabel' dengan nama tabel kamu
+        .select('*')
+        .eq('cabang', cabang)
+        .eq('kategori', kategori)
+        .order('tanggal', { ascending: true })
+        .order('waktu', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching matches:', error);
+        setMatches([]);
+      } else {
+        // Mapping data ke format yang cocok dengan UI
+        const formattedMatches = data.map(item => ({
+          id: item.id,
+          team1: item.tim1,
+          team2: item.tim2,
+          date: new Date(item.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
+          time: item.waktu.slice(0,5).replace(':', '.'), // format 'HH.mm'
+          day: new Date(item.tanggal).toLocaleDateString('id-ID', { weekday: 'long' }),
+          skor_tim1: item.skor_tim1 ?? 0,
+          skor_tim2: item.skor_tim2 ?? 0,
+          babak: item.babak
+        }));
+        setMatches(formattedMatches);
+        setSelectedMatch(formattedMatches[0] || null);
+      }
     };
-    setScores(loadedScores);
-    setSavedScores(loadedScores);
+
+    fetchMatches();
+  }, [cabang, kategori]);
+
+  // Update skor saat match berubah
+  useEffect(() => {
+    if (selectedMatch) {
+      setScores({
+        team1: selectedMatch.skor_tim1,
+        team2: selectedMatch.skor_tim2
+      });
+      setSavedScores({
+        team1: selectedMatch.skor_tim1,
+        team2: selectedMatch.skor_tim2
+      });
+    }
   }, [selectedMatch]);
 
   const updateScore = (team, increment) => {
@@ -62,18 +75,47 @@ const Scoreboard = () => {
     }));
   };
 
-  const saveScores = () => {
-    setSavedScores({...scores});
+  const saveScores = async () => {
+  if (!selectedMatch) return;
+
+  const { error } = await supabase
+    .from('jadwal_pertandingan')
+    .update({
+      skor_tim1: scores.team1,
+      skor_tim2: scores.team2,
+    })
+    .eq('id', selectedMatch.id);
+
+  if (error) {
+    console.error('Error saving scores:', error);
+  } else {
+    // Update savedScores
+    setSavedScores({ ...scores });
     console.log('Scores saved:', scores);
-  };
+
+    // Update matches local state supaya skor terbaru tersimpan juga di matches
+    setMatches(prevMatches => {
+      return prevMatches.map(m => {
+        if (m.id === selectedMatch.id) {
+          return { ...m, skor_tim1: scores.team1, skor_tim2: scores.team2 };
+        }
+        return m;
+      });
+    });
+
+    // Update selectedMatch juga supaya useEffect update skor gak aneh
+    setSelectedMatch(prev => ({
+      ...prev,
+      skor_tim1: scores.team1,
+      skor_tim2: scores.team2
+    }));
+  }
+};
+
 
   const resetScores = () => {
     if (window.confirm('Apakah Anda yakin ingin mereset skor?')) {
-      const resetValues = {
-        team1: 0,
-        team2: 0
-      };
-      setScores(resetValues);
+      setScores({ team1: 0, team2: 0 });
       console.log('Scores reset');
     }
   };
@@ -83,22 +125,40 @@ const Scoreboard = () => {
     setIsDropdownOpen(false);
   };
 
-  const TeamScoreCard = ({ teamName, score, isSupreme, onIncrement, onDecrement }) => (
+  if (!selectedMatch) {
+    return <div>Tidak ada pertandingan untuk cabang dan kategori ini.</div>;
+  }
+  const daftarKmhm = {
+  hmtpwk: { nama: "HMTPWK", logo: "/logoKMHM/HMTPWK.svg" },
+  kmta: { nama: "KMTA", logo: "/logoKMHM/KMTA.svg" },
+  kmtg: { nama: "KMTG", logo: "/logoKMHM/KMTG.svg" },
+  kmtsl: { nama: "KMTSL", logo: "/logoKMHM/KMTSL.svg" },
+  hmtg: { nama: "HMTG", logo: "/logoKMHM/HMTG.svg" },
+  hmti: { nama: "HMTI", logo: "/logoKMHM/HMTI.svg" },
+  kmteti: { nama: "KMTETI", logo: "/logoKMHM/KMTETI.svg" },
+  kmtntf: { nama: "KMTNTF", logo: "/logoKMHM/KMTNTF.svg" },
+  kmtm: { nama: "KMTM", logo: "/logoKMHM/KMTM.svg" },
+  kmtk: { nama: "KMTK", logo: "/logoKMHM/KMTK.svg" },
+};
+
+  const TeamScoreCard = ({ teamName, score, isSupreme, onIncrement, onDecrement }) => {
+  const key = teamName.toLowerCase();
+  const teamData = daftarKmhm[key] || { nama: teamName, logo: null };
+
+  return (
     <div className="flex flex-col items-center space-y-4">
-      <h3 className="text-[#FBEBD2] text-[30px] font-semibold uppercase">
-        {teamName}
-      </h3>
-      
-      {/* Team Logo */}
+      <h3 className="text-[#FBEBD2] text-[30px] font-semibold uppercase">{teamName}</h3>
       <div className={`w-24 h-24 rounded-full flex items-center justify-center border-4 ${isSupreme ? 'border-yellow-400' : 'border-blue-400'}`}>
-        <div className={`w-20 h-20 rounded-full flex items-center justify-center ${isSupreme ? 'bg-gradient-to-br from-yellow-600 to-orange-700' : 'bg-gradient-to-br from-blue-600 to-blue-800'}`}>
-          <div className="text-white text-xs font-bold text-center leading-tight">
-            {isSupreme ? 'SUPREME\nPLANNER' : 'SUTETI'}
-          </div>
+        <div className={`w-20 h-20 rounded-full flex items-center justify-center overflow-hidden ${isSupreme ? 'bg-gradient-to-br from-yellow-600 to-orange-700' : 'bg-gradient-to-br from-blue-600 to-blue-800'}`}>
+          {teamData.logo ? (
+            <img src={teamData.logo} alt={teamData.nama} className="w-full h-full object-contain" />
+          ) : (
+            <div className="text-white text-xs font-bold text-center leading-tight">
+              {teamData.nama}
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Score Controls */}
       <div className="flex items-center bg-transparent rounded-lg overflow-hidden border-[2px] border-[#FBEBD2]">
         <button
           onClick={onDecrement}
@@ -119,6 +179,47 @@ const Scoreboard = () => {
       </div>
     </div>
   );
+};
+
+if (!matches.length) {
+  return (
+    <div className="hidden lg:flex items-center justify-center min-h-screen">
+      <div
+        className="flex flex-col items-center p-8 rounded-[20px]"
+        style={{
+          width: "900px",
+          height: "600px",
+          backgroundColor: "#B1844D",
+          border: "3px solid #FFFFFF",
+        }}
+      >
+        <h1 className="text-white text-5xl font-snowstorm font-medium text-center">
+          Tidak ditemukan jadwal pertandingan
+        </h1>
+      </div>
+    </div>
+  );
+}
+
+if (!selectedMatch) {
+  return (
+    <div className="hidden lg:flex items-center justify-center min-h-screen">
+      <div
+        className="flex flex-col items-center p-8 rounded-[20px]"
+        style={{
+          width: "900px",
+          height: "600px",
+          backgroundColor: "#B1844D",
+          border: "3px solid #FFFFFF",
+        }}
+      >
+        <h1 className="text-white text-5xl font-snowstorm font-medium text-center">
+          Tidak ada pertandingan yang dipilih
+        </h1>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="hidden lg:flex items-center justify-center min-h-screen">
@@ -234,4 +335,4 @@ const Scoreboard = () => {
   );
 };
 
-export default Scoreboard;
+export default ScoreboardOlahraga;
