@@ -23,14 +23,14 @@ const InputJadwalOlahraga = ({
     "HMTPWK",
     "KMTA",
     "KMTG",
+    "KMTSL",
+    "HMTG",
+    "HMTI",
     "KMTETI",
-    "HMTF",
-    "HMM",
-    "HME",
-    "HIMATIKA",
-    "HIMAFAR",
-    "HIMAKOM"
-  ],
+    "KMTNTF",
+    "KMTM",
+    "KMTK"
+    ],
   pilihanBabak = ["Penyisihan", "Perempat Final", "Semi Final", "Final"]
 }) => {
   // local UI state
@@ -83,7 +83,7 @@ const InputJadwalOlahraga = ({
     if (isNaN(date.getTime())) return;
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
+    const year = date.getFullYear(4, "0");
     setTanggal(`${day}/${month}/${year}`);
     setShowDatePicker(false);
   };
@@ -275,6 +275,9 @@ const InputJadwalOlahraga = ({
                 </div>
               )}
             </div>
+
+
+
             
             {/* Tanggal */}
             <div className="w-full flex flex-col justify-center items-start relative">
@@ -286,7 +289,7 @@ const InputJadwalOlahraga = ({
                   className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden"
                   onClick={() => setShowDatePicker(!showDatePicker)}
                 >
-                  <div className="w-150 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
+                  <div className="w-190 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
                     {tanggal}
                   </div>
                   <BsCalendar2PlusFill className="w-6 h-6 text-[#806037] cursor-pointer" />
@@ -307,6 +310,10 @@ const InputJadwalOlahraga = ({
                 )}
               </div>
             </div>
+
+
+
+            
             
             {/* Waktu */}
             <div className="w-full flex flex-col justify-center items-start">

@@ -241,7 +241,7 @@ const InputJadwalSeni = ({
                   className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden cursor-pointer"
                   onClick={() => setShowDatePicker(!showDatePicker)}
                 >
-                  <div className="w-150 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
+                  <div className="w-190 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
                     {tanggal}
                   </div>
                   <BsCalendar2PlusFill className="w-6 h-6 text-[#806037] cursor-pointer" />
