@@ -26,81 +26,81 @@ export default function Dashboard() {
         </div>
 
         {/* Menu Cards */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           {/* Verifikasi Registrasi Atlet */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminVerifikasi')}
-            className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-10 py-5 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-amber-100 hover:bg-[#876146] hover:text-amber-100  transition-colors duration-300 rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
           >
-            <div className="flex items-center gap-10">
-              <UserCheck className="w-10 h-10 text-slate-700" />
+            <div className="flex items-center gap-10 ">
+              <UserCheck className="w-10 h-10 text-[#355665] group-hover:text-amber-100" />
               <div className="flex flex-col gap-0.5">
-                <h3 className="text-xl font-bold text-slate-700 mb-0">
+                <h3 className="text-[1.5vw] font-bold  text-[#355665] font-sofia group-hover:text-amber-100 mb-0">
                   Verifikasi Registrasi Atlet
                 </h3>
-                <p className="text-slate-700 text-base font-semibold">
+                <p className="text-[#355665] group-hover:text-amber-100 font-sofia text-base font-semibold">
                   Verifikasi atlet berdasarkan cabang lomba.
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-5 h-11 text-slate-700 group-hover:text-slate-800 transition-colors duration-300" strokeWidth={6} />
+            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100  transition-colors duration-300" strokeWidth={6} />
           </div>
 
           {/* Schedule Pertandingan */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminJadwal')}
-            className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-10 py-5 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors duration-300 rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
-              <Calendar className="w-10 h-10 text-slate-700" />
+              <Calendar className="w-10 h-10 text-[#355665] group-hover:text-amber-100" />
               <div className="flex flex-col gap-0.5">
-                <h3 className="text-xl font-bold text-slate-700 mb-0">
+                <h3 className="text-[1.5vw] font-bold font-sofia text-[#355665] group-hover:text-amber-100 mb-0">
                   Schedule Pertandingan
                 </h3>
-                <p className="text-slate-700 text-base font-semibold">
+                <p className="text-[#355665] group-hover:text-amber-100 font-sofia text-base font-semibold">
                   Tambah, edit, atau atur pertandingan.
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-5 h-11 text-slate-700 group-hover:text-slate-800 transition-colors duration-300" strokeWidth={6} />
+            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors duration-300" strokeWidth={6} />
           </div>
 
           {/* Update Skor */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminScoreboard')}
-            className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-10 py-5 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors duration-300 rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
-              <Trophy className="w-10 h-10 text-slate-700" />
+              <Trophy className="w-10 h-10 text-[#065D79] group-hover:text-amber-100" />
               <div className="flex flex-col">
-                <h3 className="text-xl font-bold text-slate-700 mb-0">
+                <h3 className="text-[1.5vw] font-bold font-sofia text-[#355665] group-hover:text-amber-100 mb-0">
                   Update Skor
                 </h3>
-                <p className="text-slate-700 text-base font-semibold">
+                <p className="text-[#355665] group-hover:text-amber-100 font-sofia text-base font-semibold">
                   Tambah dan edit perolehan nilai akhir.
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-5 h-11 text-slate-700 group-hover:text-slate-800 transition-colors duration-300" strokeWidth={6} />
+            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors duration-300" strokeWidth={6} />
           </div>
 
           {/* Update Klasemen */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminMedal')}
-            className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-10 py-5 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors duration-300 rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
-              <Award className="w-10 h-10 text-slate-700" />
-              <div className="flex flex-col">
-                <h3 className="text-xl font-bold text-slate-700 mb-0">
+              <Award className="w-10 h-10 text-[#355665] group-hover:text-amber-100" />
+              <div className="flex flex-col gap-1">
+                <h3 className="text-[1.5vw] font-bold font-sofia text-[#355665] group-hover:text-amber-100 mb-0">
                   Update Klasemen
                 </h3>
-                <p className="text-slate-700 text-base font-semibold">
+                <p className="text-[#355665] group-hover:text-amber-100 font-sofia text-base font-semibold">
                   Tambah dan edit perolehan medali.
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-5 h-11 text-slate-700 group-hover:text-slate-800 transition-colors duration-300" strokeWidth={6} />
+            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors duration-300" strokeWidth={6} />
           </div>
         </div>
       </div>

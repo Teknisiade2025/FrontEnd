@@ -150,7 +150,7 @@ const CabangDiversifikasi = () => {
   );
 
   return (
-    <div className="max-h-screen p-6 max-w-7xl mx-auto font-sofia relative">
+    <div className="max-h-screen p-6 pt-20 max-w-7xl mx-auto font-sofia relative">
       <div>
         <h1 className="text-3xl font-normal mb-2 text-[#3C3022] text-center font-snowstorm">
           Pilih Cabang Untuk Diverifikasi
