@@ -29,7 +29,7 @@ export default function Dashboard() {
         <div className="space-y-3">
           {/* Verifikasi Registrasi Atlet */}
           <div 
-            onClick={() => handleNavigation('/DASHBOARD/formJadwal')}
+            onClick={() => handleNavigation('/DASHBOARD/adminVerifikasi')}
             className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-10 py-5 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
@@ -48,7 +48,7 @@ export default function Dashboard() {
 
           {/* Schedule Pertandingan */}
           <div 
-            onClick={() => handleNavigation('/DASHBOARD/formJadwal')}
+            onClick={() => handleNavigation('/DASHBOARD/adminJadwal')}
             className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-10 py-5 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">

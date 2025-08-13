@@ -33,7 +33,7 @@ export default function SignIn() {
     } else {
       setError('');
       // kirim kmhm_name via router state
-      const target = role === 'page-a' ? '/DASHBOARD/managerDashboard' : '/DASHBOARD/adminDashboard';
+      const target = role === 'page-a' ? '/managerDashboard' : '/DASHBOARD/adminDashboard';
       router.push(`${target}?kmhm=${encodeURIComponent(kmhm_name ?? '')}`);
     }
   };
@@ -90,7 +90,7 @@ export default function SignIn() {
 
         <button
           onClick={handleLogin}
-          className="mt-2 w-full bg-[#806037] text-[#FBEBD2] rounded-[32px] py-2 text-[20px] font-semibold shadow-md hover:opacity-90 transition-all"
+          className="mt-2 w-full bg-[#806037] text-[#FBEBD2] rounded-[32px] py-2 text-[20px] font-semibold shadow-md hover:opacity-70 transition-all"
         >
           Sign In
         </button>

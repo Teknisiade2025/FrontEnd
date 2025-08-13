@@ -18,7 +18,7 @@ export default function Dashboard() {
         {/* Header */}
         <div className="text-center mb-4 flex flex-col items-center">
           <h1 className="font-snowstorm text-6xl font-normal text-[#1D2225] text-center mb-2">
-            Selamat Datang, Admin!
+            Selamat Datang, Manager!
           </h1>
           <p className="font-sofia text-xl text-[#1D2225] font-bold text-center max-w-[739px] leading-8">
             Selamat datang di menu utama. Dari sini, Anda bisa memulai untuk mendaftarkan atlet atau coach serta melihat status verifikasi.
@@ -29,7 +29,7 @@ export default function Dashboard() {
         <div className="space-y-3">
           {/* Verifikasi Registrasi Atlet */}
           <div 
-            onClick={() => handleNavigation('/DASHBOARD/formJadwal')}
+            onClick={() => handleNavigation('/managerRegistrasi')}
             className="w-full bg-amber-100 hover:bg-amber-50 transition-colors duration-300 rounded-full px-10 py-5 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">

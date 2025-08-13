@@ -13,7 +13,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="flex flex-row min-h-screen pt-10 gap-1 w-screen bg-[url('/bglogin.svg')] bg-cover bg-no-repeat bg-center">
+      className="flex flex-row min-h-screen pt-10 gap-1 w-screen bg-[url('/bglogin.svg')] pb-20 bg-cover bg-no-repeat bg-center">
       <SignIn/>
       </div>
 
