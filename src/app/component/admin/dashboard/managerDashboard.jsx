@@ -5,12 +5,14 @@ import React from 'react';
 import { UserCheck, ChevronRight } from 'lucide-react';
 import { HiPencilAlt } from "react-icons/hi";
 
-export default function Dashboard() {
+export default function Dashboard({ kmhmName }) {
   const router = useRouter();
-
-  const handleNavigation = (path) => {
-    router.push(path);
+  const goToReports = () => {
+    router.push(`/managerRegistrasi?kmhm=${encodeURIComponent(kmhmName)}`);
   };
+
+
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-35 px-4">
@@ -29,7 +31,7 @@ export default function Dashboard() {
         <div className="space-y-3">
           {/* Verifikasi Registrasi Atlet */}
           <div 
-            onClick={() => handleNavigation('/managerRegistrasi')}
+            onClick={goToReports} 
             className="w-full bg-amber-100 hover:bg-[#98764B] hover:text-amber-100 transition-colors duration-300 rounded-full px-10 py-4 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">

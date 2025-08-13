@@ -4,8 +4,12 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { UserCheck, Calendar, Trophy, Award, ChevronRight } from 'lucide-react';
 
-export default function Dashboard() {
+export default function Dashboard({ kmhmName }) {
   const router = useRouter();
+  
+  const goToReports = () => {
+    router.push(`/DASHBOARD/managerRegistrasi?kmhm=${encodeURIComponent(kmhmName)}`);
+  };
 
   const handleNavigation = (path) => {
     router.push(path);
@@ -29,7 +33,7 @@ export default function Dashboard() {
         <div className="space-y-5">
           {/* Daftar Atlet/Coach */}
           <div 
-            onClick={() => handleNavigation('/DASHBOARD/managerRegistrasi')}
+            onClick={goToReports} 
             className="w-full bg-amber-800 hover:bg-amber-700 transition-colors duration-300 rounded-full px-14 py-6 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-8">
