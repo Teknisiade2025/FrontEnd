@@ -156,10 +156,20 @@ const MedalManage = ({ kmhm }) => {
           border: "3px solid #FFFFFF",
         }}
       >
+        <div className="pb-4">
+
+            <h1 className="text-white text-3xl font-snowstorm font-normal tracking-wider">
+              atur perolehan medali
+            </h1>
+        </div>
+  
+
         {/* Header */}
-        <div className="flex items-center justify-center mb-12">
+        <div className="flex items-center justify-center mb-8">
+          
           <div className="flex items-center space-x-6">
-            <h1 className="text-white text-5xl font-bold tracking-wider">
+            
+            <h1 className="text-white text-5xl font-snowstorm font-normal tracking-wider">
               {kmhmData.nama}
             </h1>
             <div className="w-20 h-20 rounded-full flex items-center justify-center border-4 border-yellow-400 overflow-hidden bg-white">
