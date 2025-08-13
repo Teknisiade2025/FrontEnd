@@ -4,114 +4,88 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Verifikasi from '@/app/component/admin/verifikasi/verifikasi';
 import CabangDiversifikasi from '@/app/component/admin/verifikasi/revisiFE';
 import KmhmNavigasi from '@/app/component/admin/compNavigasiCabang/kmhmNav';
-import { Suspense } from 'react';
-
 
 const AdminVerifikasi = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [activeKmhm, setActiveKmhm] = useState(null);
-
-  const [selectedRole, setSelectedRole] = useState(() => searchParams.get('role') || 'Atlet');
   const [selectedData, setSelectedData] = useState({
     mainCategory: searchParams.get('category') || null,
     subCategory: searchParams.get('subcategory') || null,
   });
 
-  console.log('AdminVerifikasi state:', {
-    selectedRole,
-    selectedData,
-    activeKmhm
-  });
-
-  // Sinkronisasi state selectedRole dengan URL query
-  useEffect(() => {
-    if (searchParams.get('role') !== selectedRole) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('role', selectedRole);
-      router.push(`?${params.toString()}`);
-    }
-  }, [selectedRole, router, searchParams]);
-
-  const handleExport = () => {
-    console.log('Exporting data for', selectedRole, 'in', activeKmhm);
-  };
-
-  // Sinkronisasi state selectedData dengan URL query
   useEffect(() => {
     const category = searchParams.get('category');
     const subcategory = searchParams.get('subcategory');
-
     setSelectedData({
       mainCategory: category,
       subCategory: subcategory,
     });
   }, [searchParams]);
 
-  const handleRoleChange = (role) => {
-    setSelectedRole(role);
+  const handleExport = () => {
+    console.log('Exporting data for', activeKmhm);
   };
 
   return (
-    <div className="flex flex-col min-h-screen pl-10 pt-25 gap-1 w-[100vw] bg-[url('/bglogin.svg')]">
-      {/* Render pemilihan cabang hanya jika belum pilih category */}
+    <div className={`flex flex-col h-screen w-screen pt-10 gap-1 bg-[url('/bgadminverif.svg')] bg-center bg-contain overflow-hidden font-sofia`}>
       {!selectedData.mainCategory && (
         <CabangDiversifikasi />
       )}
 
-      {/* Render konten jika sudah pilih */}
       {selectedData.mainCategory && (
         <>
           <header className="flex items-center justify-between pl-13 px-6 pt-14 w-[95%]">
             <div className="flex items-center gap-4 pr-5">
-              {/* Toggle Role */}
-              <div className="relative z-2 w-88 h-14 px-8 py-2 bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] overflow-hidden">
-                {['Atlet', 'Coach'].map((role) => (
-                  <button
-                    key={role}
-                    onClick={() => handleRoleChange(role)}
-                    className={`flex-1 py-2 px-12 w-full rounded-[37.74px] flex justify-center items-center
-                      ${selectedRole === role ? 'bg-[#F8E7C1]' : 'bg-[#BFA78A]'}`}
-                  >
-                    <span className="text-neutral-800 text-sm font-extrabold">{role}</span>
-                  </button>
-                ))}
-              </div>
-
-              <h1 className="text-3xl px-15 font-normal font-snowstorm text-neutral-900">
-                Registrasi {selectedRole}
-              </h1>
+              <button 
+                onClick={() => {
+                  setSelectedData({ mainCategory: null, subCategory: null });
+                  setActiveKmhm(null);
+                }}
+                className="flex items-center gap-2 text-amber-900 font-bold"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 18L9 12L15 6" stroke="#876146" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Kembali ke Pemilihan Cabang
+              </button>
             </div>
 
-            <div className="flex items-center gap-2 px-20 text-3xl font-normal font-snowstorm">
-              <span>{selectedData.mainCategory}</span>
-              <span>•</span>
-              <span>{selectedData.subCategory || '-'}</span>
+            <div className="flex items-center gap-2 px-20">
+              <span className="text-xl font-bold text-amber-900">
+                {selectedData.mainCategory}
+              </span>
+              {selectedData.subCategory && (
+                <>
+                  <span className="text-xl font-bold text-amber-900">•</span>
+                  <span className="text-xl font-bold text-amber-900">
+                    {selectedData.subCategory}
+                  </span>
+                </>
+              )}
             </div>
           </header>
 
-          {/* Navigasi dan Konten Kanan */}
-          <div className="flex items-center relative z-1 -mt-20">
-            {/* Navigasi KMHM */}
-            <KmhmNavigasi
-              activeKmhm={activeKmhm}
-              setActiveKmhm={setActiveKmhm}
-            />
-
-            {/* Konten Verifikasi atau pesan pilih KMHM */}
-            <div className="ml-4 w-[60vw] h-[90vh] relative">
+          <div className="overflow-y-hidden overflow-x-hidden flex flex-row max-h-screen items-center pl-5 pr-20 gap-1">
+            <div>
+              <KmhmNavigasi
+                activeKmhm={activeKmhm}
+                setActiveKmhm={setActiveKmhm}
+              />
+            </div>
+            
+            <div className="ml-2 h-full w-full">
               {activeKmhm ? (
                 <Verifikasi
                   kmhmName={activeKmhm}
-                  role={selectedRole.toLowerCase()}
-                  selectedSport={selectedData} // Pass selectedData instead of dataTerpilih
+                  selectedSport={selectedData}
                   onExport={handleExport}
                 />
               ) : (
-                <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-amber-900 rounded-[32px] shadow-lg">
-                  <div className="flex items-center justify-center h-64">
-                    <div className="text-white text-lg font-semibold">
-                      Silahkan pilih KMHM
+                <div className="w-full h-full max-w-7xl mx-auto px-10 bg-amber-900 rounded-[32px] shadow-lg">
+                  <div className="flex-1 h-full flex items-center justify-center">
+                    <div className="text-lg font-semibold text-white text-center">
+                      Silahkan pilih nama KMHM terlebih dahulu.
                     </div>
                   </div>
                 </div>

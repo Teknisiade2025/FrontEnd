@@ -200,7 +200,7 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
                   onClick={() => setActiveTab(status)}
                 >
                   <div className="flex items-center justify-between gap-4">
-                    <span className="font-bold">{status}</span>
+                    <span className="font-sofia font-bold">{status}</span>
                     <div className="flex items-center gap-2">
                       <div className="w-px h-4 bg-current opacity-50" />
                       <span className="text-sm">{countByStatus(status)}</span>
@@ -209,7 +209,7 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
                 </div>
               ))}
             </div>
-            <div className="text-white text-xl font-extrabold">
+            <div className="text-white text-xl font-bold">
               Total {role}: {countByStatus('TOTAL')}
             </div>
           </div>
@@ -227,8 +227,8 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
           </div>
         </div>
               
-        <div className="flex-1 h-full flex items-center justify-center">
-          <div className="text-lg font-semibold text-white text-center">
+        <div className="font-sofia flex-1 h-full flex items-center justify-center">
+          <div className="font-sofia text-lg font-semibold text-white text-center">
             Nama KMHM tidak ditemukan. Harap login atau pilih KMHM terlebih dahulu.
           </div>
         </div>
@@ -236,10 +236,8 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
     );
   }
 
-
-
   return (
-    <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-amber-900 rounded-[32px] shadow-lg">
+    <div className="w-full h-full max-w-7xl mx-auto px-12 py-9 bg-amber-900 rounded-[32px] shadow-lg">
       {/* Header Section */}
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center gap-10">
@@ -254,16 +252,16 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
                 onClick={() => setActiveTab(status)}
               >
                 <div className="flex items-center justify-between gap-4">
-                  <span className="font-bold">{status}</span>
+                  <span className="font-sofia font-bold">{status}</span>
                   <div className="flex items-center gap-2">
                     <div className="w-px h-4 bg-current opacity-50" />
-                    <span className="text-sm">{countByStatus(status)}</span>
+                    <span className="font-sofia text-sm">{countByStatus(status)}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="text-white text-xl font-extrabold">
+          <div className="font-sofia text-white text-xl font-extrabold">
             Total {role}: {countByStatus('TOTAL')}
           </div>
         </div>
@@ -275,21 +273,23 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
           <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center">
             <Download className="w-8 h-8 text-white" />
           </div>
-          
+          <div className="font-sofia text-center text-white text-lg font-bold">
+            Export <br/>Excel
+          </div>
         </div>
       </div>
 
       {/* Loading State */}
       {loading && (
         <div className="flex items-center justify-center py-8">
-          <div className="text-white text-lg">Loading {role} data...</div>
+          <div className="font-sofia text-white text-lg">Loading {role} data...</div>
         </div>
       )}
 
       {/* No Data Message */}
       {!loading && athletes.length === 0 && (
         <div className="flex items-center justify-center py-8">
-          <div className="text-white text-lg">
+          <div className="font-sofia text-white text-lg">
             No {role} data found for {selectedSport?.mainCategory} - {selectedSport?.subCategory} in {kmhmName}
           </div>
         </div>
@@ -298,7 +298,7 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
       {/* Empty Filtered Results */}
       {!loading && athletes.length > 0 && filteredAthletes.length === 0 && (
         <div className="flex items-center justify-center py-8">
-          <div className="text-white text-lg">
+          <div className="font-sofia text-white text-lg">
             No {role} found with status: {activeTab}
           </div>
         </div>

@@ -94,14 +94,14 @@ const CabangDiversifikasi = () => {
         const isOpen = selectedCabang?.name === cabang.name;
 
         return (
-          <div key={idx} className="relative mb-4">
+          <div key={idx} className="relative mb-3">
             {/* Card utama */}
             <div
               className="relative group cursor-pointer "
               onClick={() => handleCabangClick(cabang, kategoriLabel)}
             >
-              <div className="w-[20vw] h-10 px-9 py-6 bg-[#98764B] rounded-[51.89px] shadow-md outline-[3px] outline-offset-[-3px] outline-white flex justify-between items-center gap-8 transition-all hover:bg-[#065D79]">
-                <div className="flex items-center gap-8">
+              <div className="w-full h-10 px-9 py-7 bg-[#98764B] rounded-[51.89px] shadow-md outline outline-2 outline-offset-[-0.57px] outline-white flex justify-between items-center gap-5 transition-all hover:bg-[#065D79]">
+                <div className="flex items-center gap-5">
                   {iconPath && (
                     <div className="relative w-7 h-7">
                       <Image
@@ -150,21 +150,23 @@ const CabangDiversifikasi = () => {
   );
 
   return (
-    <div className="max-h-screen p-6 max-w-7xl mx-auto font-sans relative">
+    <div className="max-h-screen p-6 max-w-7xl mx-auto font-sofia relative">
       <div>
-        <h1 className="text-3xl font-bold mb-2 text-[#3C3022] text-center font-snowstorm">
-          Pilih Cabang Untuk Diversifikasi
+        <h1 className="text-3xl font-normal mb-2 text-[#3C3022] text-center font-snowstorm">
+          Pilih Cabang Untuk Diverifikasi
         </h1>
-        <p className="text-center mb-2 text-[#3C3022] font-semibold text-sofia text-md">
-          Angka di bagian kanan menunjukkan jumlah Atlet yang belum terverifikasi
+        <p className="text-sofia text-center mb-2 text-[#3C3022] font-bold text-md">
+          Pilih cabang olahraga atau seni yang ingin Anda diversifikasi. Klik pada nama cabang untuk memilih kategori yang sesuai.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
         {/* Olahraga */}
         <div>
-          <h2 className="text-Color-8 text-3xl font-normal font-['Snowstorm'] mb-6 border-b border-[#3C3022] pb-2">
+          <h2 className="text-Color-8 text-3xl font-normal font-['Snowstorm'] mb-6 pb-2 relative">
             Olahraga
+            <div className="border-b-2 border-[#3C3022]"></div>
+            <div className="border-b-2 border-[#3C3022] mt-1"></div>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10  overflow-visible relative">
             <div >{renderCabangList(cabangOlahraga1, 'olahraga')}</div>
@@ -174,10 +176,12 @@ const CabangDiversifikasi = () => {
 
         {/* Seni */}
         <div>
-          <h2 className="text-Color-8 text-3xl font-normal font-['Snowstorm'] mb-6 border-b border-[#3C3022] pb-2">
+          <h2 className="text-Color-8 text-3xl font-normal font-['Snowstorm'] mb-6 pb-2 relative">
             Seni
+            <div className="border-b-2 border-[#3C3022]"></div>
+            <div className="border-b-2 border-[#3C3022] mt-1"></div>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10  overflow-visible relative">
             <div>{renderCabangList(cabangSeni1, 'seni')}</div>
             <div>{renderCabangList(cabangSeni2, 'seni')}</div>
           </div>

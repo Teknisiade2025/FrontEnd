@@ -5,8 +5,8 @@ import React from 'react';
 export default function HomePage() {
   return (
     <div
-      className="min-h-screen pt-10 gap-1 w-screen bg-[url('/bgdashboard.svg')] bg-cover bg-no-repeat bg-center">
-        <div className="flex-1 pt-20">
+      className="h-screen w-screen bg-[url('/bgdashboard.svg')] bg-cover bg-no-repeat bg-center overflow-hidden">
+        <div className="h-full flex items-center justify-center p-8">
           <Dashboard />
         </div>
     </div>
