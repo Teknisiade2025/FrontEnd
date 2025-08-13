@@ -59,6 +59,7 @@ const Navbar = () => {
             <a href="/DASHBOARD/formJadwal" className="hover:underline whitespace-nowrap">Schedule Pertandingan</a>
 
             <a href="/DASHBOARD/adminScoreboard" className="hover:underline whitespace-nowrap">Update Skor</a>
+            <Link href="/DASHBOARD/adminMedal" className="hover:underline whitespace-nowrap">Update Klasmen</Link>
           </div>
 
           {/* Login (Desktop) */}
