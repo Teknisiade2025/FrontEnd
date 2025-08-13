@@ -185,7 +185,7 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
   // 🔹 Blokir jika kmhmName kosong
   if (!kmhmName) {
     return (
-      <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-amber-900 rounded-[32px] shadow-lg">
+      <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 bg-[#806037] rounded-[32px] shadow-lg">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-10">
@@ -237,7 +237,7 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
   }
 
   return (
-    <div className="w-full h-full max-w-7xl mx-auto px-12 py-9 bg-amber-900 rounded-[32px] shadow-lg">
+    <div className="w-full h-full max-w-7xl mx-auto px-12 py-9 bg-[#806037] border-4 border-white rounded-[32px] shadow-lg">
       {/* Header Section */}
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center gap-10">

@@ -28,37 +28,38 @@ const AdminVerifikasi = () => {
   };
 
   return (
-    <div className={`flex flex-col h-[120vh] w-screen pt-10 gap-1 bg-[url('/bgadminverif.svg')] bg-center bg-contain overflow-hidden font-sofia`}>
+    <div className={`flex flex-col h-[110vh] w-screen pt-1 gap-1 bg-[url('/bgadminverif.svg')] bg-center bg-contain overflow-hidden font-sofia`}>
       {!selectedData.mainCategory && (
         <CabangDiversifikasi />
       )}
 
       {selectedData.mainCategory && (
         <>
-          <header className="flex items-center justify-between pl-13 px-6 pt-14 w-[95%]">
+        <div className="scale-85 ">
+          <header className="relative z-30 flex items-center justify-between mx-auto px-6 pt-14 w-[95%]">
             <div className="flex items-center gap-4 pr-5">
               <button 
                 onClick={() => {
                   setSelectedData({ mainCategory: null, subCategory: null });
                   setActiveKmhm(null);
                 }}
-                className="flex items-center gap-2 text-amber-900 font-bold"
+                className="flex items-center gap-2 text-[2vw] text-[#3C3022] font-snowstorm font-normal"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 18L9 12L15 6" stroke="#876146" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M15 18L9 12L15 6" stroke="#3C3022" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                Kembali ke Pemilihan Cabang
+                Cabang
               </button>
             </div>
 
             <div className="flex items-center gap-2 px-20">
-              <span className="text-xl font-bold text-amber-900">
+              <span className="text-[2vw] font-snowstorm font-normal text-[#3C3022]">
                 {selectedData.mainCategory}
               </span>
               {selectedData.subCategory && (
                 <>
-                  <span className="text-xl font-bold text-amber-900">•</span>
-                  <span className="text-xl font-bold text-amber-900">
+                  <span className="text-3xl font-bold text-[#3C3022]">•</span>
+                  <span className="text-[1.3vw] font-snowstorm font-normal text-[#3C3022]">
                     {selectedData.subCategory}
                   </span>
                 </>
@@ -66,7 +67,7 @@ const AdminVerifikasi = () => {
             </div>
           </header>
 
-          <div className="overflow-y-hidden overflow-x-hidden flex flex-row max-h-screen items-center pl-5 pr-20 gap-1">
+          <div className="overflow-y-hidden overflow-x-hidden flex flex-row max-h-screen h-[90vh] items-center pl-5 pr-20 gap-1">
             <div>
               <KmhmNavigasi
                 activeKmhm={activeKmhm}
@@ -74,7 +75,7 @@ const AdminVerifikasi = () => {
               />
             </div>
             
-            <div className="ml-2 h-full w-full">
+            <div className="ml-2 h-[90vh] w-full ">
               {activeKmhm ? (
                 <Verifikasi
                   kmhmName={activeKmhm}
@@ -82,7 +83,7 @@ const AdminVerifikasi = () => {
                   onExport={handleExport}
                 />
               ) : (
-                <div className="w-full h-full max-w-7xl mx-auto px-10 bg-amber-900 rounded-[32px] shadow-lg">
+                <div className="w-full h-full max-w-7xl mx-auto px-10 bg-[#806037] border-4 border-white rounded-[32px] shadow-lg">
                   <div className="flex-1 h-full flex items-center justify-center">
                     <div className="text-lg font-semibold text-white text-center">
                       Silahkan pilih nama KMHM terlebih dahulu.
@@ -91,6 +92,8 @@ const AdminVerifikasi = () => {
                 </div>
               )}
             </div>
+          </div>
+
           </div>
         </>
       )}

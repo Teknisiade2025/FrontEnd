@@ -1,10 +1,12 @@
 'use client';
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import {usePathname} from "next/navigation"
 import Link from "next/link";
 
 export default function NotFound() {
     const [isMobile, setIsMobile] = useState(false);
+     const pathname = usePathname(); 
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -12,6 +14,16 @@ export default function NotFound() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+
+   const getHomeLink = () => {
+        // Jika path saat ini mengandung '/DASHBOARD/', arahkan ke dashboard
+        if (pathname?.includes('/DASHBOARD')) {
+            return '/DASHBOARD/adminDashboard';
+        }
+        // Jika tidak, arahkan ke beranda utama
+        return '/mainPage';
+    };
     return (
 
     <div
@@ -60,7 +72,7 @@ export default function NotFound() {
                                 </div>
         
                                 <div className="w-full sm:w-auto relative z-100">
-                                    <Link href="/mainPage"
+                                    <Link href={getHomeLink()}
                                         className="flex items-center justify-center gap-2 sm:gap-3 bg-[#B1844D] text-[#1D2225] font-sofia font-bold text-base sm:text-2xl px-4 sm:px-10 py-2 sm:py-4 rounded-[20px] sm:rounded-[25px] shadow-md hover:bg-[#9c6f3c] transition whitespace-nowrap">
                                         Ke Beranda
                                         <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6" />

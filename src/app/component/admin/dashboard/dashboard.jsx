@@ -30,7 +30,7 @@ export default function Dashboard() {
           {/* Verifikasi Registrasi Atlet */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminVerifikasi')}
-            className="w-full bg-amber-100 hover:bg-[#876146] hover:text-amber-100  transition-colors duration-300 rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-amber-100 hover:bg-[#876146] hover:text-amber-100  transition-colors  rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10 ">
               <UserCheck className="w-10 h-10 text-[#355665] group-hover:text-amber-100" />
@@ -43,13 +43,13 @@ export default function Dashboard() {
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100  transition-colors duration-300" strokeWidth={6} />
+            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100  transition-colors " strokeWidth={6} />
           </div>
 
           {/* Schedule Pertandingan */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminJadwal')}
-            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors duration-300 rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors  rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
               <Calendar className="w-10 h-10 text-[#355665] group-hover:text-amber-100" />
@@ -62,13 +62,13 @@ export default function Dashboard() {
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors duration-300" strokeWidth={6} />
+            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors " strokeWidth={6} />
           </div>
 
           {/* Update Skor */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminScoreboard')}
-            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors duration-300 rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors  rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
               <Trophy className="w-10 h-10 text-[#065D79] group-hover:text-amber-100" />
@@ -81,13 +81,13 @@ export default function Dashboard() {
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors duration-300" strokeWidth={6} />
+            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors " strokeWidth={6} />
           </div>
 
           {/* Update Klasemen */}
           <div 
             onClick={() => handleNavigation('/DASHBOARD/adminMedal')}
-            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors duration-300 rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
+            className="w-full bg-amber-100 hover:bg-[#876146] transition-colors rounded-full px-10 py-2 flex items-center justify-between cursor-pointer shadow-lg group"
           >
             <div className="flex items-center gap-10">
               <Award className="w-10 h-10 text-[#355665] group-hover:text-amber-100" />
@@ -100,7 +100,7 @@ export default function Dashboard() {
                 </p>
               </div>
             </div>
-            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors duration-300" strokeWidth={6} />
+            <ChevronRight className="w-5 h-11 text-[#355665] group-hover:text-amber-100 transition-colors " strokeWidth={6} />
           </div>
         </div>
       </div>

@@ -100,7 +100,7 @@ const CabangDiversifikasi = () => {
               className="relative group cursor-pointer "
               onClick={() => handleCabangClick(cabang, kategoriLabel)}
             >
-              <div className="w-full h-10 px-9 py-7 bg-[#98764B] rounded-[51.89px] shadow-md outline outline-2 outline-offset-[-0.57px] outline-white flex justify-between items-center gap-5 transition-all hover:bg-[#065D79]">
+              <div className="w-full h-10 px-9 py-7 bg-[#98764B] rounded-[51.89px] shadow-md outline-2 outline-offset-[-0.57px] outline-white flex justify-between items-center gap-5 transition-all hover:bg-[#065D79]">
                 <div className="flex items-center gap-5">
                   {iconPath && (
                     <div className="relative w-7 h-7">
@@ -156,7 +156,7 @@ const CabangDiversifikasi = () => {
           Pilih Cabang Untuk Diverifikasi
         </h1>
         <p className="text-sofia text-center mb-2 text-[#3C3022] font-bold text-md">
-          Pilih cabang olahraga atau seni yang ingin Anda diversifikasi. Klik pada nama cabang untuk memilih kategori yang sesuai.
+          Pilih cabang olahraga atau seni yang ingin Anda diverifikasi. Klik pada nama cabang untuk memilih kategori yang sesuai.
         </p>
       </div>
 
