@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Edit, Trash2, Plus, User, X, Download } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase'; 
+import ReactDOM from 'react-dom';
 
 export default function Verifikasi({ selectedSport, kmhmName, role }) {
   console.log('Component props:', { selectedSport, kmhmName, role });
@@ -274,9 +275,7 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
           <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center">
             <Download className="w-8 h-8 text-white" />
           </div>
-          <div className="text-center text-white text-lg font-bold">
-            Export <br/>Excel
-          </div>
+          
         </div>
       </div>
 
@@ -306,10 +305,18 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
       )}
 
       {/* Athletes List */}
-      <div className="space-y-4">
+      <div 
+        className="space-y-4 "
+        style={{ 
+          maxHeight: '400px',
+          overflowY: 'auto',
+          paddingTop: '12px',
+          paddingRight: '12px' // Sesuaikan dengan lebar scrollbar
+        }}
+      >
         {filteredAthletes.map((athlete) => (
           <div key={athlete.id} className="flex gap-4">
-            <div className="flex-1 bg-amber-100 rounded-3xl p-8 flex justify-between items-center">
+            <div className="flex-1 bg-amber-100 rounded-3xl p-8 flex justify-between items-center" >
               <div className="flex items-center gap-8">
                 <div className="w-24 h-24 bg-teal-600 rounded-xl flex items-center justify-center">
                   <User className="w-12 h-12 text-amber-100" />
@@ -335,13 +342,14 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
                 </button>
               </div>
             </div>
-            <div className="w-60 bg-teal-800 rounded-3xl p-6 flex flex-col justify-between items-center">
-              <div className="text-white text-sm font-bold">Status Verifikasi</div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-4">
+            <div className="w-60 bg-teal-800 rounded-3xl p-6 flex flex-col justify-between  items-center">
+              <div className="text-white font-snowstorm text-xl font-bold">Status Verifikasi</div>
+              <div className="text-center items-start ">
+                <div className="w-20 h-20 text-[3vw] bg-amber-100 -pt-3 rounded-full flex items-center justify-center mb-4">
+                 
                   {athlete.status === 'VERIFIED' ? '✓' : '⚠'}
                 </div>
-                <div className="text-white text-sm font-bold mb-4">
+                <div className="text-white text-lg font-sofia font-bold mb-4">
                   {athlete.status === 'VERIFIED' ? 'Sudah diverifikasi' : 
                    athlete.status === 'REVISION' ? 'Perlu revisi' : 'Belum diverifikasi'}
                 </div>
@@ -371,9 +379,10 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
 
       {/* Form Overlay (View Only) */}
       {showForm && selectedSport?.mainCategory && selectedSport?.subCategory && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="w-full max-w-6xl bg-neutral-100 rounded-3xl p-4">
-            <div className="bg-[#0F6E87] rounded-3xl px-12 py-8 relative">
+        ReactDOM.createPortal(
+        <div className="fixed inset-0 z-[9999]  top-20 flex items-center justify-center p-4 ">
+          <div className="w-full max-w-6xl bg-neutral-100 rounded-3xl  p-4 relative z-50 scale-75">
+            <div className="bg-[#0F6E87] rounded-3xl px-12 py-8 ">
 
               {/* Close Button */}
               <button 
@@ -517,7 +526,9 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
               </form>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
+  )
       )}
     </div>
   );

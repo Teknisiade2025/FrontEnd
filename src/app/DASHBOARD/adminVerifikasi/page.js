@@ -6,6 +6,7 @@ import CabangDiversifikasi from '@/app/component/admin/verifikasi/revisiFE';
 import KmhmNavigasi from '@/app/component/admin/compNavigasiCabang/kmhmNav';
 import { Suspense } from 'react';
 
+
 const AdminVerifikasi = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -52,7 +53,7 @@ const AdminVerifikasi = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen pt-25 gap-1 w-[100vw] bg-[url('/bglogin.svg')]">
+    <div className="flex flex-col min-h-screen pl-10 pt-25 gap-1 w-[100vw] bg-[url('/bglogin.svg')]">
       {/* Render pemilihan cabang hanya jika belum pilih category */}
       {!selectedData.mainCategory && (
         <CabangDiversifikasi />
@@ -61,10 +62,10 @@ const AdminVerifikasi = () => {
       {/* Render konten jika sudah pilih */}
       {selectedData.mainCategory && (
         <>
-          <header className="flex items-center justify-between px-6 pt-20 w-full">
+          <header className="flex items-center justify-between pl-13 px-6 pt-14 w-[95%]">
             <div className="flex items-center gap-4 pr-5">
               {/* Toggle Role */}
-              <div className="w-80 h-14 px-8 py-2 bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] overflow-hidden">
+              <div className="relative z-2 w-88 h-14 px-8 py-2 bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] overflow-hidden">
                 {['Atlet', 'Coach'].map((role) => (
                   <button
                     key={role}
@@ -77,12 +78,12 @@ const AdminVerifikasi = () => {
                 ))}
               </div>
 
-              <h1 className="text-xl px-15 font-extrabold text-neutral-900">
+              <h1 className="text-3xl px-15 font-normal font-snowstorm text-neutral-900">
                 Registrasi {selectedRole}
               </h1>
             </div>
 
-            <div className="flex items-center gap-2 px-20 text-xxl font-extrabold">
+            <div className="flex items-center gap-2 px-20 text-3xl font-normal font-snowstorm">
               <span>{selectedData.mainCategory}</span>
               <span>•</span>
               <span>{selectedData.subCategory || '-'}</span>
@@ -90,7 +91,7 @@ const AdminVerifikasi = () => {
           </header>
 
           {/* Navigasi dan Konten Kanan */}
-          <div className="flex items-center">
+          <div className="flex items-center relative z-1 -mt-20">
             {/* Navigasi KMHM */}
             <KmhmNavigasi
               activeKmhm={activeKmhm}
@@ -98,7 +99,7 @@ const AdminVerifikasi = () => {
             />
 
             {/* Konten Verifikasi atau pesan pilih KMHM */}
-            <div className="ml-4">
+            <div className="ml-4 w-[60vw] h-[90vh] relative">
               {activeKmhm ? (
                 <Verifikasi
                   kmhmName={activeKmhm}
