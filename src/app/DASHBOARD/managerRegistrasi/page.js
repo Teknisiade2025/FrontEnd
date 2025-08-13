@@ -68,10 +68,10 @@ export default function HomePage() {
 
   return (
     <div
-      className="flex flex-col h-[120vh] pt-10 gap-1 w-[100vw] bg-[url('/bglogin.svg')]"
+      className="flex flex-col h-[120vh] pt-30 gap-1 w-[100vw] bg-[url('/bglogin.svg')]"
     >
       {/* HEADER */}
-      <div className="flex items-center justify-between pl-22 pt-20 w-[100%]">
+      <div className="relative z-50 flex items-center justify-between pl-22 pt-0 w-[100%]">
 
 
         <div className="flex items-center gap-4 pr-5">
@@ -116,7 +116,7 @@ export default function HomePage() {
 
       {/* SIDEBAR + FORM */}
       <div className="flex flex-row gap-50 h-[600px] w-full items-center justify-center">
-        <div className="w-64 px-8 -mt-45 h-full">
+        <div className="w-64 px-8 -mt-40 h-full">
           <Sidebar onCategorySelect={handleCategorySelect} />
         </div>
 
