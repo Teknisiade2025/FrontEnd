@@ -69,25 +69,25 @@ export default function HomePage() {
 
   return (
     <div
-      className="flex flex-col h-[120vh] pt-20 gap-1 w-[100vw] bg-[url('/bglogin.svg')]"
+      className="flex flex-col min-h-screen max-w-screen pt-20 gap-1 w-[100vw]  bg-[url('/bglogin.svg')] bg-no-repeat bg-cover"
     >
       {/* HEADER */}
-      <div className="relative z-50 flex items-center justify-between pl-22 pt-0 w-[97%]">
+      <div className="relative z-50 flex items-center  justify-between pl-13 pt-0 w-[100%]">
 
 
-        <div className="flex items-center gap-4 pr-5">
+        <div className="flex items-center gap-4 ">
           {/* Toggle Role */}
-          <div className="w-87 h-14 px-8 py-2 bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] overflow-hidden">
+          <div className="flex w-71 h-14 px-8 py-2 justify-center bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] ">
             <button
               onClick={() => handleRoleChange('Atlet')}
-              className={`flex-1 py-2 px-12 w-full rounded-[37.74px] flex justify-center items-center
+              className={`flex-1 py-2 px-8 mx-1 w-full rounded-[37.74px] flex justify-center items-center
                 ${selectedRole === 'Atlet' ? 'bg-[#F8E7C1]' : 'bg-[#BFA78A]'}`}
             >
               <span className="text-neutral-800 text-sm font-extrabold">Atlet</span>
             </button>
             <button
               onClick={() => handleRoleChange('Coach')}
-              className={`flex-1 py-2 px-12 w-full rounded-[37.74px] flex justify-center items-center
+              className={`flex-1 py-2 px-8 mx-1 w-full rounded-[37.74px] flex justify-center items-center
                 ${selectedRole === 'Coach' ? 'bg-[#F8E7C1]' : 'bg-[#BFA78A]'}`}
             >
               <span className="text-neutral-800 text-sm font-extrabold">Coach</span>
@@ -100,7 +100,17 @@ export default function HomePage() {
           </h1>
         </div>
 
-        \
+        {/* Logout Button */}
+            <div
+              className="flex flex-row items-center gap-2 cursor-pointer"
+              onClick={handleLogout} // bikin fungsi handleLogout sesuai kebutuhan
+            >
+                <IoLogOut className="w-8 h-8 " />
+              <div className="text-center  text-3xl  font-snowstorm font-normal">
+                Keluar
+              </div>
+            </div>
+        
 
         {/* Info Cabang */}
         {selectedData && (
@@ -117,7 +127,7 @@ export default function HomePage() {
 
       {/* SIDEBAR + FORM */}
 
-      <div className="flex flex-row pr-15 gap-50 h-[600px] w-full items-center justify-center">
+      <div className="flex flex-row pr-15 pl-5 gap-28 h-[600px] w-full items-center justify-center">
         
         <div className="w-64 px-8 -mt-40 h-full">
       
@@ -125,7 +135,7 @@ export default function HomePage() {
    
         </div>
 
-        <div className="flex-1 px-8 h-full pt-3">
+        <div className="flex-1 px-3 h-full pt-3">
         
                 <AthleteRegistration 
                     selectedSport={selectedData} 

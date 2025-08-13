@@ -8,7 +8,7 @@ import AthleteRegistration from '@/app/component/manager/registrasi/registv2.jsx
 import { IoLogOut } from "react-icons/io5";
 
 export default function HomePage() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); 
   const router = useRouter();
   
   // Inisialisasi selectedRole sekali saja
@@ -99,7 +99,18 @@ export default function HomePage() {
           </h1>
         </div>
 
-        \
+        {/* Logout Button */}
+    <div
+      className="flex flex-col items-center gap-2 cursor-pointer"
+      onClick={handleLogout} // bikin fungsi handleLogout sesuai kebutuhan
+    >
+      <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+        <IoLogOut className="w-8 h-8 text-white" />
+      </div>
+      <div className="text-center text-white text-lg text-snowstorm font-bold">
+        Keluar
+      </div>
+    </div>
 
         {/* Info Cabang */}
         {selectedData && (
@@ -115,12 +126,12 @@ export default function HomePage() {
       </div>
 
       {/* SIDEBAR + FORM */}
-      <div className="flex flex-row gap-50 h-[600px] w-full items-center justify-center">
-        <div className="w-64 px-8 -mt-40 h-full">
+      <div className="flex flex-row gap-10 h-[600px] w-full items-center justify-center">
+        <div className="w-64 -mt-40 h-full">
           <Sidebar onCategorySelect={handleCategorySelect} />
         </div>
 
-        <div className="flex-1 px-8 h-full">
+        <div className="flex-1 h-full">
           <AthleteRegistration 
             selectedSport={selectedData} 
             kmhmName={kmhmName} 
