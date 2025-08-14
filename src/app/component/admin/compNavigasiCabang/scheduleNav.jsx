@@ -103,7 +103,7 @@ const CabangNavigasi = ({ onCategorySelect, onClose }) => {
       const rect = itemRefs.current[refKey].getBoundingClientRect();
       const popupHeight = 160;
       setPopupPosition({
-        top: ((rect.top + window.scrollY) + (rect.height / 2) - (popupHeight / 2)) / scaleFactor - 40,
+        top: ((rect.top + window.scrollY) + (rect.height / 2) - (popupHeight / 2)) / scaleFactor - 100,
         left: rect.right - 20
       });
     }
