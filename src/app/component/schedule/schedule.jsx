@@ -4,12 +4,12 @@ import { HiArrowRight } from "react-icons/hi";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { supabase } from '@/app/lib/supabase'; 
 
-
 const Jadwal = () => {
   const [selectedDropdown, setSelectedDropdown] = useState("Semua");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [scheduleData, setScheduleData] = useState([]);
   const dropdownRef = useRef(null);
+  const [seniData, setSeniData] = useState([]);
 
   const dropdownOptions = {
     Olahraga: ["Semua", "Sepak Bola", "Futsal", "Mobile Legends", "Valorant",
@@ -20,89 +20,178 @@ const Jadwal = () => {
             "Solo Vokal", "Monolog" ],
   };
 
-  // Ambil tanggal hari ini
-const today = new Date();
-const todayMatches = scheduleData.filter((match) => {
-  const matchDate = new Date(match.date); // parse ISO string
-  return (
-    matchDate.getFullYear() === today.getFullYear() &&
-    matchDate.getMonth() === today.getMonth() &&
-    matchDate.getDate() === today.getDate()
-  );
-});
+  // Mapping cabang ke kategori
+  const cabangOlahraga = [
+    "Sepak Bola", "Futsal", "Mobile Legends", "Valorant",
+    "Voli", "Tenis Meja", "FIFA", "Atletik",
+    "Badminton", "Basket", "Catur", "PUBG"
+  ];
 
+  const cabangSeni = [
+    "Band", "Tari Tradisional", "Cipta Puisi", "Fotografi",
+    "Vokal Grup", "Dance", "Poster", "Seni Lukis", 
+    "Solo Vokal", "Monolog"
+  ];
 
-// Filter berdasarkan dropdown
-const filteredSchedule = todayMatches.filter((match) => {
-  if (selectedDropdown.toUpperCase() === "SEMUA") return true;
-
-  return (
-    match.sport?.toUpperCase() === selectedDropdown.toUpperCase() ||
-    match.category?.toUpperCase() === selectedDropdown.toUpperCase()
-  );
-});
-
-
-const displayedMatches = filteredSchedule;
-
-  // Ambil data dari Supabase
-  useEffect(() => {
-  const fetchData = async () => {
-    const { data, error } = await supabase
-      .from("jadwal_pertandingan")
-      .select("*")
-      .order("tanggal", { ascending: true })
-      .order("waktu", { ascending: true });
-
-    console.log("Data Supabase:", data, "Error:", error); // Debug
-
-    if (error) {
-      console.warn("Tidak bisa ambil data:", error.message || error);
-      setScheduleData([]);
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      console.warn("Data kosong dari Supabase");
-      setScheduleData([]);
-      return;
-    }
-
-    // Mapping agar sesuai struktur MatchCard
-    const mappedMatches = data.map((match) => ({
-      id: match.id || `${match.tim1}-${match.tim2}-${match.tanggal}-${match.waktu}`, // pastikan ada key unik
-      sport: match.cabang,
-      category: match.kategori,
-      stage: match.babak,
-      date: `${match.tanggal}T${match.waktu}`,
-      venue: match.venue || "",
-      teamA: {
-        name: match.tim1.toUpperCase(),
-        logo: `/logoKMHM/${match.tim1.toUpperCase()}.svg`
-      },
-      teamB: {
-        name: match.tim2.toUpperCase(),
-        logo: `/logoKMHM/${match.tim2.toUpperCase()}.svg`
-      }
-    }));
-
-    console.log("Mapped Matches:", mappedMatches); // Debug
-
-    setScheduleData(mappedMatches);
+  // Fungsi untuk mengecek apakah dropdown adalah kategori seni
+  const isSeniCategory = (category) => {
+    return dropdownOptions.Seni.includes(category);
   };
 
-  fetchData();
-}, []);
+  // Fungsi untuk mengecek apakah cabang termasuk seni
+  const isCabangSeni = (cabang) => {
+    return cabangSeni.some(seni => seni.toLowerCase() === cabang?.toLowerCase());
+  };
 
-
-
-
-
-
-
-
+  // Ambil tanggal hari ini
+  const today = new Date();
+  
+  // Filter data olahraga untuk hari ini
+  const todayMatches = scheduleData.filter((match) => {
+    const matchDate = new Date(match.date);
+    return (
+      matchDate.getFullYear() === today.getFullYear() &&
+      matchDate.getMonth() === today.getMonth() &&
+      matchDate.getDate() === today.getDate()
+    );
+  });
 
   
+
+
+  // Filter data seni untuk hari ini
+  const todaySeniMatches = seniData.filter((match) => {
+    const matchDate = new Date(match.date);
+    return (
+      matchDate.getFullYear() === today.getFullYear() &&
+      matchDate.getMonth() === today.getMonth() &&
+      matchDate.getDate() === today.getDate()
+    );
+  });
+
+  // Gabungkan semua data dan pisahkan berdasarkan kategori
+  const allTodayData = [
+    ...todayMatches.map(match => ({ ...match, type: 'olahraga' })),
+    ...todaySeniMatches.map(match => ({ ...match, type: 'seni' }))
+  ];
+
+  // Filter berdasarkan dropdown
+  const getFilteredData = () => {
+  if (selectedDropdown === "Semua") return allTodayData;
+
+  const dataSource = isSeniCategory(selectedDropdown) ? todaySeniMatches : todayMatches;
+  return dataSource.filter(match => match.sport?.toLowerCase() === selectedDropdown.toLowerCase());
+};
+
+
+  const filteredData = getFilteredData();
+  const uniqueData = filteredData.map((match, index) => ({
+  ...match,
+  id: `${match.id}-${index}`, // adds uniqueness if IDs might repeat
+}));
+
+  // Ambil data olahraga dari Supabase
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("jadwal_pertandingan")
+          .select("*")
+          .order("tanggal", { ascending: true })
+          .order("waktu", { ascending: true });
+
+        console.log("Data Olahraga Supabase:", data, "Error:", error);
+
+        if (error) {
+          console.warn("Tidak bisa ambil data olahraga:", error.message || error);
+          setScheduleData([]);
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          console.warn("Data olahraga kosong dari Supabase");
+          setScheduleData([]);
+          return;
+        }
+
+        // Mapping agar sesuai struktur MatchCard
+        const mappedMatches = data.map((match) => ({
+          id: match.id || `${match.tim1}-${match.tim2}-${match.tanggal}-${match.waktu}`,
+          sport: match.cabang,
+          category: match.kategori,
+          stage: match.babak,
+          date: `${match.tanggal}T${match.waktu}`,
+          venue: match.venue || "",
+          teamA: {
+            name: match.tim1.toUpperCase(),
+            logo: `/logoKMHM/${match.tim1.toUpperCase()}.svg`
+          },
+          teamB: {
+            name: match.tim2.toUpperCase(),
+            logo: `/logoKMHM/${match.tim2.toUpperCase()}.svg`
+          }
+        }));
+
+        console.log("Mapped Olahraga Matches:", mappedMatches);
+        setScheduleData(mappedMatches);
+      } catch (err) {
+        console.error("Error fetching olahraga data:", err);
+        setScheduleData([]);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Ambil data seni dari Supabase
+  useEffect(() => {
+    const fetchDataSeni = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("jadwal_seni")
+          .select("*")
+          .order("tanggal", { ascending: true })
+          .order("waktu", { ascending: true });
+
+        console.log("Data Seni Supabase:", data, "Error:", error);
+
+        if (error) {
+          console.warn("Tidak bisa ambil data seni:", error.message || error);
+          setSeniData([]);
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          console.warn("Data seni kosong dari Supabase");
+          setSeniData([]);
+          return;
+        }
+        
+        const mapped = data.map((match, index) => ({
+  id: match.id || `seni-${index}-${match.tanggal}`, // unique
+  sport: match.cabang,
+  category: match.kategori || "",
+  stage: match.babak,
+  date: `${match.tanggal}T${match.waktu}`,
+  venue: match.venue || "",
+  teamA: {
+    name: match.tim.toUpperCase(),
+    logo: `/logoKMHM/${match.tim.toUpperCase()}.svg`
+  },
+  type: "seni" // tambahan supaya gampang filter
+}));
+
+        
+        console.log("Mapped Seni Matches:", mapped);
+        setSeniData(mapped);
+      } catch (err) {
+        console.error("Error fetching seni data:", err);
+        setSeniData([]);
+      }
+    };
+
+    fetchDataSeni();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -116,7 +205,7 @@ const displayedMatches = filteredSchedule;
 
   return (
     <div className="w-full px-3 py-8 overflow-x-hidden">
-      <div className="w-full  mx-auto flex flex-col items-center">
+      <div className="w-full mx-auto flex flex-col items-center">
         {/* Schedule Image */}
         <div className="mb-8">
           <img
@@ -212,18 +301,35 @@ const displayedMatches = filteredSchedule;
             </div>
           </div>
 
+
           {/* Matches */}
-          <div
-            className="flex flex-col gap-4 overflow-y-auto matches-scrollbar pr-2"
-            style={{ maxHeight: "420px" }}
-          >
-            {displayedMatches.length > 0 ? (
-              displayedMatches.map((match) => <MatchCard key={match.id} match={match} />)
+          <div className="flex flex-col gap-4 overflow-y-auto matches-scrollbar pr-2">
+            {filteredData.length > 0 ? (
+              filteredData.map((match, index) => {
+                if (match.type === 'seni' || isCabangSeni(match.sport)) {
+                 return <SeniCard key={`${match.id}-${index}`} match={match} />;
+                } else {
+                return <MatchCard key={`${match.id}-${index}`} match={match} />;
+                }
+              })
             ) : (
-              <div className="h-screen flex items-center justify-center">
-                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg">
-                  Tidak ada jadwal pertandingan untuk hari ini.
-                </div>
+              <div className="text-center text-[#1D2225] font-bold">
+                {selectedDropdown === "Semua" 
+                  ? (allTodayData.length === 0 ? "Tidak ada jadwal hari ini." : "Tidak ada data yang sesuai filter.")
+                  : isSeniCategory(selectedDropdown)
+                  ? (seniData.length === 0 
+                      ? "Tidak ada data seni tersedia." 
+                      : todaySeniMatches.length === 0
+                      ? "Tidak ada jadwal seni hari ini."
+                      : `Tidak ada jadwal ${selectedDropdown} hari ini.`
+                    )
+                  : (scheduleData.length === 0 
+                      ? "Tidak ada data olahraga tersedia." 
+                      : todayMatches.length === 0
+                      ? "Tidak ada jadwal olahraga hari ini."
+                      : `Tidak ada jadwal ${selectedDropdown} hari ini.`
+                    )
+                }
               </div>
             )}
           </div>
@@ -247,7 +353,7 @@ const MatchCard = ({ match }) => {
       {/* Baris 2 */}
       <div className="flex flex-row items-center justify-between gap-3 sm:gap-6">
         {/* Team A */}
-        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
+        <div className="flex flex-col items-center ml-12 gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
           <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
             <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" />
           </div>
@@ -284,7 +390,7 @@ const MatchCard = ({ match }) => {
         </div>
 
         {/* Team B */}
-        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
+        <div className="flex flex-col items-center gap-1 mr-12 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
           <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
             <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" />
           </div>
@@ -296,5 +402,45 @@ const MatchCard = ({ match }) => {
     </div>
   );
 };
+
+const SeniCard = ({ match }) => {
+  return (
+    <div className="w-full p-5 md:p-6 bg-[#5F56487F] shadow-md rounded-[42px] flex flex-row ">
+      
+      {/* Kolom Logo + Nama Tim */}
+      <div className="flex flex-col items-center justify-end w-full gap-2">
+        <div className="w-25 h-25 rounded-full bg-white flex items-center justify-end overflow-hidden shadow-sm">
+          <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" />
+        </div>
+        <span className="text-[#1D2225] font-bold font-[Snowstorm] text-base">{match.teamA.name}</span>
+      </div>
+
+      {/* Kolom Info Cabang + Babak + Tanggal + Venue */}
+      <div className="flex flex-col   w-full gap-1">
+        <span className="text-[#1D2225] text-base md:text-lg font-[Snowstorm] font-bold leading-[135%]">
+          {match.sport?.toUpperCase()}
+        </span>
+        <span className="text-[#1D2225] text-base md:text-lg font-[Snowstorm] font-bold leading-[135%]">
+          {match.stage?.toUpperCase()}
+        </span>
+        <p className="text-[#1D2225] font-sofia text-sm md:text-base">
+          {new Date(match.date).toLocaleString("id-ID", { weekday:"short", day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"})} WIB
+        </p>
+        <a
+            href="https://youtube.com/@teknisiadeugm?si=OTakLii6k8IdSqua"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center mt-5 gap-1 sm:gap-2 text-[#1D2225] text-sm sm:text-base font-sofia font-bold hover:underline"
+          >
+            <span>Tonton Live</span>
+            <HiArrowRight className="text-[#1D2225]" />
+          </a>
+      </div>
+
+    </div>
+  );
+};
+
+
 
 export default Jadwal;
