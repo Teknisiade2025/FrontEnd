@@ -3,59 +3,115 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HiArrowRight } from "react-icons/hi";
 import { IoChevronDownSharp } from "react-icons/io5";
+import { useSearchParams } from 'next/navigation';
+import { supabase } from "@/app/lib/supabase";
 
 const Jadwal = () => {
+  const searchParams = useSearchParams();
+  const nama = searchParams.get("nama")?.toUpperCase() || "";
+
   const [selectedDropdown, setSelectedDropdown] = useState("Semua");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Mendatang");
+  const [scheduleData, setScheduleData] = useState([]);
+  const [dropdownOptions, setDropdownOptions] = useState(["Semua"]);
   const dropdownRef = useRef(null);
 
-  const dropdownOptions = ["Semua", "HMTPWK", "KMTA", "KMTG", "KMTSL", "HMTG", "HMTI", "KMTETI", "KMTNTF", "KMTM", "KMTK"];
+  const [matchData, setMatchData] = useState(null);
 
+  // Fetch data dari Supabase
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase.from("jadwal").select("*");
+      if (error) {
+        console.error("Supabase error:", error);
+      } else {
+        // Filter berdasarkan cabang
+        const filteredByCabang = (data || []).filter(
+          (item) => item.cabang?.toUpperCase().trim() === nama.trim()
+        );
 
-  const scheduleData = [
-  //   {
-  //     id: 1,
-  //     date: "2025-08-01T19:00:00",
-  //     venue: "Gor Kridosono",
-  //     teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
-  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-  //   },
-  //   {
-  //     id: 2,
-  //     date: "2025-07-01T20:00:00",
-  //     venue: "Gor Amongrogo",
-  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-  //   },
-  //   {
-  //     id: 3,
-  //     date: "2025-07-01T20:00:00",
-  //     venue: "Gor Amongrogo",
-  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-  //   },
-  //   {
-  //     id: 4,
-  //     date: "2025-07-01T20:00:00",
-  //     venue: "Gor Amongrogo",
-  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-  //   },
-  ];
+        setScheduleData(filteredByCabang);
 
+        // Buat dropdown tim unik
+        const teams = new Set();
+        filteredByCabang.forEach(
+          (item) => item.tim1 && teams.add(item.tim1.toUpperCase())
+        );
+        filteredByCabang.forEach(
+          (item) => item.tim2 && teams.add(item.tim2.toUpperCase())
+        );
+
+        setDropdownOptions(["Semua", ...Array.from(teams)]);
+      }
+    };
+
+    fetchData();
+  }, [nama]);
+
+  // Tentukan match hari ini
+  useEffect(() => {
+    if (!scheduleData || scheduleData.length === 0) return;
+
+    const today = new Date();
+    const todayMatches = scheduleData.filter((m) => {
+      const matchDate = new Date(`${m.tanggal}T${m.waktu}`);
+      return (
+        matchDate.getFullYear() === today.getFullYear() &&
+        matchDate.getMonth() === today.getMonth() &&
+        matchDate.getDate() === today.getDate()
+      );
+    });
+
+    if (todayMatches.length > 0) {
+      const m = todayMatches[0];
+      setMatchData({
+        date: new Date(`${m.tanggal}T${m.waktu}`).toLocaleString("id-ID", {
+          weekday: "long",
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }) + " WIB",
+        teamA: {
+          name: m.tim1?.toUpperCase() ?? "TEAM A",
+          logo: `/logoKMHM/${m.tim1?.toUpperCase() ?? "default"}.svg`,
+        },
+        teamB: {
+          name: m.tim2?.toUpperCase() ?? "TEAM B",
+          logo: `/logoKMHM/${m.tim2?.toUpperCase() ?? "default"}.svg`,
+        },
+        scoreA: m.skor_tim1 ?? 0,
+        scoreB: m.skor_tim2 ?? 0,
+        babak: m.babak ?? "",
+        kategori: m.kategori ?? "",
+      });
+    } else {
+      setMatchData(null);
+    }
+  }, [scheduleData]);
+
+  // Filter schedule berdasarkan dropdown tim
   const filteredSchedule = scheduleData.filter((match) => {
     if (selectedDropdown === "Semua") return true;
-    return match.teamA.name === selectedDropdown || match.teamB.name === selectedDropdown;
+    return (
+      match.tim1?.toUpperCase() === selectedDropdown ||
+      match.tim2?.toUpperCase() === selectedDropdown
+    );
   });
 
   const now = new Date();
-  const isUpcoming = (date) => new Date(date) > now;
+  const isUpcoming = (match) => {
+    const matchDate = new Date(`${match.tanggal}T${match.waktu}`);
+    return matchDate >= now;
+  };
 
   const displayedMatches = filteredSchedule.filter((match) =>
-    selectedTab === "Mendatang" ? isUpcoming(match.date) : !isUpcoming(match.date)
+    selectedTab === "Mendatang" ? isUpcoming(match) : !isUpcoming(match)
   );
 
+  // Click outside dropdown
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -119,7 +175,9 @@ const Jadwal = () => {
               </button>
               <div
                 className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out z-10 ${
-                  isDropdownOpen ? "max-h-[350px] opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
+                  isDropdownOpen
+                    ? "max-h-[350px] opacity-100 translate-y-1"
+                    : "max-h-0 opacity-0 -translate-y-2"
                 }`}
               >
                 <ul className="font-sofia text-base font-extrabold flex flex-col px-4 py-3 text-[#1D2225] ">
@@ -146,7 +204,9 @@ const Jadwal = () => {
                   key={tab}
                   onClick={() => setSelectedTab(tab)}
                   className={`w-[150px] py-2.5 font-sofia font-extrabold text-base rounded-full transition-all duration-200 ${
-                    selectedTab === tab ? "bg-[#806037] text-[#FBEBD2]" : "bg-[#1D2225] text-[#FBEBD2] hover:bg-[#2a2f33]"
+                    selectedTab === tab
+                      ? "bg-[#806037] text-[#FBEBD2]"
+                      : "bg-[#1D2225] text-[#FBEBD2] hover:bg-[#2a2f33]"
                   }`}
                 >
                   {tab}
@@ -161,11 +221,13 @@ const Jadwal = () => {
             style={{ maxHeight: "380px" }}
           >
             {displayedMatches.length > 0 ? (
-              displayedMatches.map((match) => <MatchCard key={match.id} match={match} />)
+              displayedMatches.map((match) => (
+                <MatchCard key={match.id} match={match} />
+              ))
             ) : (
-              <div className="flex items-center justify-center h-screen">
+              <div className="flex items-center justify-center h-40">
                 <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
-                Tidak ada jadwal untuk pertandingan ini.
+                  Tidak ada jadwal untuk pertandingan ini.
                 </div>
               </div>
             )}
@@ -184,53 +246,59 @@ const MatchCard = ({ match }) => {
         <div className="text-[#1D2225] font-[Snowstorm] self-stretch h-5 text-sm sm:text-base md:text-xl font-bold">
           SEPAK BOLA - PUTRI
         </div>
-        <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-xl font-bold">
-          BABAK PENYISIHAN
+        <div className="text-[#1D2225] font-[Snowstorm] text-xs sm:text-sm font-semibold">
+          {match.babak}
         </div>
       </div>
-      {/* Baris 2: Logo A | Info Tengah | Logo B */}
-      <div className="flex flex-row justify-between items-center gap-2 sm:gap-4">
+
+      {/* Tim & Skor */}
+      <div className="flex items-center justify-between gap-5 sm:gap-10 py-2 sm:py-4">
         {/* Team A */}
-        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
-          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
-            <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" />
-          </div>
-          <span className="text-[#1D2225] font-bold font-snowstorm text-sm sm:text-base md:text-xl text-center">
+        <div className="flex flex-col items-center justify-center gap-2 sm:gap-3">
+          <img
+            src={match.teamA.logo}
+            alt={match.teamA.name}
+            className="w-10 sm:w-14 h-10 sm:h-14 object-contain"
+          />
+          <p className="text-[#1D2225] font-sofia font-extrabold text-sm sm:text-lg">
             {match.teamA.name}
-          </span>
+          </p>
         </div>
 
-        {/* Info Tengah */}
-        <div className="flex flex-col items-center text-center gap-3 sm:gap-6 mx-auto flex-1 min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
-          <div  className="flex flex-col items-center text-center ">
-          <p className="text-[#1D2225] self-stretch h-5 text-sm sm:text-lg font-sofia font-extrabold">
-            {new Date(match.date).toLocaleString("id-ID", {
-              weekday: "short",
-              day: "numeric",
-              month: "short",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}{" "}
-            WIB
+        {/* Skor */}
+        <div className="flex flex-col items-center justify-center gap-1 sm:gap-2">
+          <p className="text-[#1D2225] font-sofia font-extrabold text-base sm:text-xl">
+            {match.scoreA} - {match.scoreB}
           </p>
-          <p className="text-[#1D2225] font-sofia font-extrabold text-sm sm:text-lg">{match.venue}</p>
-          </div>
-          <div className="text-[#1D2225] font-extrabold text-lg sm:text-4xl lg:text-5xl font-snowstorm">V/S</div>
-          <div className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:underline">
-            <span className="flex items-center gap-1 text-[#1D2225] font-sofia font-bold text-sm sm:text-lg cursor-pointer hover:underline">Tonton Live</span>
-            <HiArrowRight className="text-[#1D2225] text-xs sm:text-sm" />
-          </div>
+          <p className="text-[#1D2225] font-sofia font-medium text-xs sm:text-sm">
+            {match.kategori}
+          </p>
         </div>
 
         {/* Team B */}
-        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
-          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
-            <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" />
-          </div>
-          <span className="text-[#1D2225] font-bold font-snowstorm text-sm sm:text-base md:text-xl text-center">
+        <div className="flex flex-col items-center justify-center gap-2 sm:gap-3">
+          <img
+            src={match.teamB.logo}
+            alt={match.teamB.name}
+            className="w-10 sm:w-14 h-10 sm:h-14 object-contain"
+          />
+          <p className="text-[#1D2225] font-sofia font-extrabold text-sm sm:text-lg">
             {match.teamB.name}
-          </span>
+          </p>
         </div>
+      </div>
+
+      {/* Tanggal & Waktu */}
+      <div className="flex justify-center items-center gap-2 sm:gap-3">
+        <p className="text-[#1D2225] font-sofia font-extrabold text-xs sm:text-sm">
+          {new Date(match.date).toLocaleString("id-ID", {
+            day: "numeric",
+            month: "long",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}{" "}
+          WIB
+        </p>
       </div>
     </div>
   );
