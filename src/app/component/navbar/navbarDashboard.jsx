@@ -42,7 +42,7 @@ const Navbar = () => {
       <div className="p-4 sm:p-4 md:p-7">
         <div className="rounded-[40px] shadow-md bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] flex items-center justify-between px-6 py-1 md:py-2 relative z-40">
           {/* Logo */}
-          <Link href="/mainPage">
+          <Link href="/DASHBOARD/adminDashboard">
           <Image
             src="/logoTeksid.png"
             alt="Logo"
