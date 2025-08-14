@@ -111,12 +111,12 @@ const InputJadwalSeni = ({
   };
 
   return (
-    <div className="flex flex-col items-center p-10 rounded-[20px] w-full relative">
+    <div className="flex flex-col items-center rounded-[20px] w-full relative">
 
       
 
       {/* Main Content */}
-      <div className="w-[100%] mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center">
+      <div className="w-[100%] mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-90">
         <div className="flex-1 self-stretch flex flex-col justify-between items-center gap-8">
           <div className="flex justify-between items-center w-full">
           {/* Judul */}
@@ -126,14 +126,7 @@ const InputJadwalSeni = ({
           </div>
 
           {/* Tombol Cancel (X) pojok kanan atas */}
-        <button
-        onClick={onCancel}
-        className="absolute top-4 right-4 text-bold text-snowtorm text-white text-3xl hover:text-red-400"
-        aria-label="Cancel"
-        type="button"
-        >
-        X
-        </button>
+       
         </div>
 
 
@@ -241,7 +234,7 @@ const InputJadwalSeni = ({
                   className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden cursor-pointer"
                   onClick={() => setShowDatePicker(!showDatePicker)}
                 >
-                  <div className="w-190 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
+                  <div className="w-210 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
                     {tanggal}
                   </div>
                   <BsCalendar2PlusFill className="w-6 h-6 text-[#806037] cursor-pointer" />

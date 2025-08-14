@@ -6,6 +6,8 @@ import { IoChevronDownSharp } from "react-icons/io5";
 import { useSearchParams } from 'next/navigation';
 import { supabase } from "@/app/lib/supabase";
 
+
+
 const Jadwal = () => {
   const searchParams = useSearchParams();
   const nama = searchParams.get("nama")?.toUpperCase() || "";
@@ -18,49 +20,137 @@ const Jadwal = () => {
   const dropdownRef = useRef(null);
 
   // Fetch data dari Supabase
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const { data, error } = await supabase.from("jadwal_pertandingan").select("*");
+  //       if (error) {
+  //         console.error("Supabase error:", error);
+  //         return;
+  //       }
+
+  //       // Filter berdasarkan cabang
+  //       const namaUpper = nama.toUpperCase().trim();
+  //       const filteredByCabang = (data || []).filter(
+  //         (item) => (item.cabang || "").toUpperCase().trim() === namaUpper
+  //       );
+
+  //       setScheduleData(filteredByCabang);
+
+  //       // Buat dropdown tim unik
+  //       const teams = new Set();
+  //       filteredByCabang.forEach((item) => {
+  //         if (item.tim1) teams.add(item.tim1.toUpperCase());
+  //         if (item.tim2) teams.add(item.tim2.toUpperCase());
+  //       });
+
+  //       setDropdownOptions(["Semua", ...Array.from(teams).sort()]);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   if (nama) {
+  //     fetchData();
+  //   }
+  // }, [nama]);
+
+  // Tetap taruh di atas, jangan double declare
+
+
+const cabangSeni = [
+    "Band", "Tari Tradisional", "Cipta Puisi", "Fotografi",
+    "Vokal Grup", "Dance", "Poster", "Seni Lukis", 
+    "Solo Vokal", "Monolog"
+  ];
+
+  // DIDEKLARASIKAN DI SINI
+  const namaUpper = (nama || "").toUpperCase().trim();
+  const isSeni = cabangSeni.map(c => c.toUpperCase()).includes(namaUpper);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, error } = await supabase.from("jadwal_pertandingan").select("*");
-        if (error) {
-          console.error("Supabase error:", error);
-          return;
-        }
+  const fetchData = async () => {
+    try {
+      let data, error;
 
-        // Filter berdasarkan cabang
-        const namaUpper = nama.toUpperCase().trim();
-        const filteredByCabang = (data || []).filter(
-          (item) => (item.cabang || "").toUpperCase().trim() === namaUpper
-        );
+      if (isSeni) {
+        ({ data, error } = await supabase
+          .from("jadwal_seni")
+          .select("*")
+          .ilike("cabang", nama)); // case-insensitive
+      } else {
+        ({ data, error } = await supabase
+          .from("jadwal_pertandingan")
+          .select("*")
+          .ilike("cabang", nama)); // case-insensitive
+      }
 
-        setScheduleData(filteredByCabang);
+      if (error) {
+        console.error("Supabase error:", error);
+        return;
+      }
 
-        // Buat dropdown tim unik
+      setScheduleData(data || []);
+
+      // Buat dropdown kalau olahraga
+      if (!isSeni) {
         const teams = new Set();
-        filteredByCabang.forEach((item) => {
+        (data || []).forEach((item) => {
           if (item.tim1) teams.add(item.tim1.toUpperCase());
           if (item.tim2) teams.add(item.tim2.toUpperCase());
         });
-
         setDropdownOptions(["Semua", ...Array.from(teams).sort()]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      } else {
+        // Seni hanya punya tim tunggal
+        const teams = new Set();
+        (data || []).forEach((item) => {
+          if (item.tim) teams.add(item.tim.toUpperCase());
+        });
+        setDropdownOptions(["Semua", ...Array.from(teams).sort()]);
       }
-    };
 
-    if (nama) {
-      fetchData();
+    } catch (err) {
+      console.error("Error fetching data:", err);
     }
-  }, [nama]);
+  };
+
+  if (nama) fetchData();
+}, [nama, isSeni]);
+
+
+
 
   // Filter schedule berdasarkan dropdown tim
   const filteredSchedule = scheduleData.filter((match) => {
-    if (selectedDropdown === "Semua") return true;
+  if (selectedDropdown === "Semua") return true;
+
+  const sel = selectedDropdown.toUpperCase().trim();
+
+  // Opsi khusus KMHM
+  if (sel.includes("KMHM")) {
+    if (match.tim1 || match.tim2) {
+      return (
+        match.tim1?.toUpperCase().includes("KMHM") ||
+        match.tim2?.toUpperCase().includes("KMHM")
+      );
+    } else {
+      return match.tim?.toUpperCase().includes("KMHM");
+    }
+  }
+
+  // Olahraga
+  if (match.tim1 || match.tim2) {
     return (
-      match.tim1?.toUpperCase() === selectedDropdown ||
-      match.tim2?.toUpperCase() === selectedDropdown
+      match.tim1?.toUpperCase().trim() === sel ||
+      match.tim2?.toUpperCase().trim() === sel
     );
-  });
+  }
+
+  // Seni
+  return match.tim?.toUpperCase().trim() === sel;
+});
+
+
 
   // Tentukan apakah pertandingan mendatang atau selesai
   const now = new Date();
@@ -86,6 +176,10 @@ const Jadwal = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+
+
+
 
   return (
     <div className="w-full">
@@ -186,16 +280,23 @@ const Jadwal = () => {
             style={{ maxHeight: "380px" }}
           >
             {displayedMatches.length > 0 ? (
-              displayedMatches.map((match) => (
-                <MatchCard key={match.id || match.idx} match={match} selectedTab={selectedTab} />
-              ))
-            ) : (
-              <div className="flex items-center justify-center h-40">
-                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
-                  {nama ? `Tidak ada jadwal ${selectedTab.toLowerCase()} untuk ${nama}.` : "Pilih cabang olahraga terlebih dahulu."}
-                </div>
-              </div>
-            )}
+ displayedMatches.map((match) => (
+  isSeni ? (
+    <SeniCard key={match.id || match.idx} match={match} selectedTab={selectedTab} />
+  ) : (
+    <MatchCard key={match.id || match.idx} match={match} selectedTab={selectedTab} />
+  )
+))
+
+
+) : (
+  <div className="flex items-center justify-center h-40">
+    <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
+      {nama ? `Tidak ada jadwal ${selectedTab.toLowerCase()} untuk ${nama}.` : "Pilih cabang terlebih dahulu."}
+    </div>
+  </div>
+)}
+
           </div>
         </div>
       </div>
@@ -237,7 +338,7 @@ const MatchCard = ({ match, selectedTab }) => {
   };
 
   return (
-    <div className="w-full max-h-[300px] rounded-[20px] sm:rounded-[38px] bg-[#5F56487F] shadow-md  px-6 sm:px-14 py-5 flex flex-col ">
+    <div className="w-full h-[300px] rounded-[20px] sm:rounded-[38px] bg-[#5F56487F] shadow-md  px-6 sm:px-14 py-5 flex flex-col ">
       {/* Judul Pertandingan */}
       <div className="text-center">
         <div className="text-[#1D2225] font-[Snowstorm] self-stretch text-sm sm:text-base md:text-xl font-bold">
@@ -305,5 +406,51 @@ const MatchCard = ({ match, selectedTab }) => {
     </div>
   );
 };
+
+const SeniCard = ({ match,selectedTab }) => {
+  const matchDate = new Date(`${match.tanggal}T${match.waktu}`);
+
+  return (
+   <div className="w-full h-full rounded-[20px] sm:rounded-[38px] bg-[#5F56487F] shadow-md item-center justify-center px-6 sm:px-14 py-5 flex  ">
+      
+      {/* Kolom Logo + Nama Peserta */}
+      <div className="flex flex-col mt-8 mb-8 items-center justify-end w-full gap-2">
+        <div className="w-30 h-30 md:w-24 md:h-24 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
+          <img
+            src={`/logoKMHM/${match.tim?.toUpperCase() || "DEFAULT"}.svg`}
+            alt={match.tim?.toUpperCase() || "PESERTA"}
+            className="w-full h-full object-contain"
+            onError={(e) => e.target.src = "/logoKMHM/DEFAULT.svg"}
+          />
+        </div>
+        <span className="text-[#1D2225]  font-bold font-[Snowstorm] text-sm md:text-[20px]">
+          {match.tim?.toUpperCase() || "PESERTA"}
+        </span>
+      </div>
+
+      {/* Kolom Info Cabang + Babak + Tanggal */}
+      <div className="flex flex-col w-full gap-1 justify-center text-center md:text-left">
+        <span className="text-[#1D2225]  text-base md:text-[30px] font-[Snowstorm] font-bold leading-[135%]">
+          {match.cabang?.toUpperCase()}
+        </span>
+        {match.babak && (
+          <span className="text-[#1D2225] text-base md:text-lg font-[Snowstorm] font-bold leading-[135%]">
+            {match.babak.toUpperCase()}
+          </span>
+        )}
+        <p className="text-[#1D2225] font-sofia text-sm md:text-base">
+          {matchDate.toLocaleString("id-ID", {
+            weekday:"short", day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"
+          })} WIB
+        </p>
+
+        
+        
+      </div>
+    </div>
+  );
+};
+
+
 
 export default Jadwal;

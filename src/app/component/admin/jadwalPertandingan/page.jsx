@@ -98,26 +98,12 @@ const InputJadwalOlahraga = ({
 
 
   return (
-    <div className="flex flex-col items-center p-14 rounded-[20px]">
+    <div className="flex flex-col items-center  rounded-[20px]">
       {/* Header Cabang & Kategori */}
-      <div className="mb-1 flex justify-end">
-        <div className="px-4 py-1 rounded-full shadow-md bg-[#806037]">
-          <h1 className="text-lg font-normal font-['Snowstorm'] text-[#FCFCFC]">
-            {cabang} - {kategori}
-          </h1>
-        </div>
-      </div>
+     
 
       {/* Main Content */}
-      <div className="w-[100%] h-[100vh] -mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90 relative">
-        <button
-    onClick={handleCancel}
-    className="absolute top-4 right-4 text-white hover:text-red-500 transition-colors text-3xl font-bold"
-    aria-label="Cancel"
-    type="button"
-  >
-    ×
-  </button>
+      <div className="w-[100%] h-[100vh]  px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90 scale-85 relative">
         
         <div className="flex-1 self-stretch flex flex-col justify-between items-center gap-8">
           {/* Judul */}
@@ -289,7 +275,7 @@ const InputJadwalOlahraga = ({
                   className="self-stretch h-14 px-6 bg-[#FBEBD2] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] inline-flex justify-between items-center overflow-hidden"
                   onClick={() => setShowDatePicker(!showDatePicker)}
                 >
-                  <div className="w-190 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
+                  <div className="w-210 self-stretch text-[#806037] text-lg font-normal font-['Sofia_Sans_Condensed'] flex items-center justify-center">
                     {tanggal}
                   </div>
                   <BsCalendar2PlusFill className="w-6 h-6 text-[#806037] cursor-pointer" />
@@ -348,7 +334,8 @@ const InputJadwalOlahraga = ({
             {/* Tombol Hapus */}
             <button 
               className="flex-1 self-stretch px-8 py-2 bg-[#806037] rounded-full outline-[1.5px] outline-offset-[-1.5px] outline-[#F0EED7] flex justify-center items-center gap-2 overflow-hidden hover:bg-[#9a7b5e] transition-colors"
-              onClick={handleDelete}
+              //onClick={handleDelete}
+              onClick ={handleCancel}
             >
               <div className="justify-start text-[#F0EED7] text-2xl font-bold font-['Sofia_Sans_Condensed']">
                 Hapus

@@ -22,6 +22,7 @@ const AdminSchedulePage = () => {
 
     <div className="scale-88 pt-30">
      {/* HEADER */}
+<<<<<<< HEAD
       <div className="flex items-center justify-end pl-22 mx-15 w-[100%] h-[50px]">
         <div className="flex items-center gap-2 mr-10 px-20 text-2xl font-normal font-snowstorm relative -top-10">
         {/* Info Cabang */}
@@ -30,6 +31,18 @@ const AdminSchedulePage = () => {
             <span className="text-[2vw] font-snowstorm font-normal text-[#3C3022]">{selectedData.mainCategory}</span>
             <span>•</span> 
             <span className="text-[1.3vw] font-snowstorm font-normal text-[#3C3022]">{selectedData.subCategory}</span>
+=======
+      <div className="flex items-center justify-end pl-22 mx-15 w-[97%]">
+        <div className="flex items-center gap-2 mr-10 px-20  font-normal font-snowstorm relative -top-15">
+        {/* Info Cabang */}
+        {selectedData && (
+          <div>
+            <span className="text-4xl">{selectedData.mainCategory}</span>
+            
+            <span className="text-2.3xl">      •      </span> 
+            
+            <span className="text-2xl">{selectedData.subCategory}</span>
+>>>>>>> 5a949298fa6e3e9c21c49d2cb6b3337864c51969
           </div>
         )}
       </div>
