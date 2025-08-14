@@ -1,61 +1,51 @@
-"use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
-
+import { useSearchParams } from "next/navigation";
+import { supabase } from "@/app/lib/supabase";
 
 const Atlet = () => {
   const [selectedTab, setSelectedTab] = useState("Semua");
   const [selectedDropdown, setSelectedDropdown] = useState("Semua");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [atletData, setAtletData] = useState([]);
   const dropdownRef = useRef(null);
+
+  const searchParams = useSearchParams();
+  const nama = searchParams.get("nama")?.toUpperCase() || "";
 
   const dropdownOptions = ["HMTPWK", "KMTA", "KMTG", "KMTSL", "HMTG", "HMTI", "KMTETI", "KMTNTF", "KMTM", "KMTK"];
 
-  const atletData = [
-    // {
-    //   id: 1,
-    //   nama: "John Doe",
-    //   cabang: "Basket Putra",
-    //   asalKMHM: "KMTETI",
-    //   jurusan: "Teknik Elektro",
-    //   angkatan: "2022",
-    //   email: "JohnDoe@gmail.com",
-    //   noHP: "08123456789",
-    //   tempatTanggalLahir: "Jakarta, 25 April 2022",
-    //   asalKota: "DKI Jakarta",
-    // },
-    // {
-    //   id: 2,
-    //   nama: "Jane Smith",
-    //   cabang: "Futsal Putri",
-    //   asalKMHM: "KMKMTG",
-    //   jurusan: "Teknik Geologi",
-    //   angkatan: "2021",
-    //   email: "JaneSmith@gmail.com",
-    //   noHP: "08129876543",
-    //   tempatTanggalLahir: "Bandung, 10 Mei 2001",
-    //   asalKota: "Bandung",
-    // },
-    // {
-    //   id: 3,
-    //   nama: "Ahmad Yani",
-    //   cabang: "Pencak Silat",
-    //   asalKMHM: "KMFT",
-    //   jurusan: "Teknik Mesin",
-    //   angkatan: "2020",
-    //   email: "AhmadYani@gmail.com",
-    //   noHP: "08125551234",
-    //   tempatTanggalLahir: "Yogyakarta, 7 Agustus 2000",
-    //   asalKota: "Yogyakarta",
-    // },
-  ];
+  // Ambil data dari Supabase
+  useEffect(() => {
+    const fetchData = async () => {
+      let { data, error } = await supabase
+        .from("athletes")
+        .select("*")
+        .order("cabang", { ascending: true }); // sortir berdasarkan cabang
 
-  const filteredAtlet =
-    selectedTab === "Semua"
-      ? atletData
-      : atletData.filter((a) => a.asalKMHM === selectedDropdown);
+      if (error) {
+        console.error("Error fetching athletes:", error);
+      } else {
+        setAtletData(data);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const filteredAtlet = atletData.filter((a) => {
+    // Filter nama sesuai query param
+    const matchNama = nama ? a.cabang.toUpperCase().includes(nama) : true;
+
+    // Filter tab & dropdown
+    if (selectedTab === "Semua") return matchNama;
+    if (selectedTab === "KMHM") {
+      if (selectedDropdown === "Semua") return matchNama;
+      return a.asal_pknin === selectedDropdown && matchNama;
+    }
+    return matchNama;
+  });
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -73,32 +63,27 @@ const Atlet = () => {
         .atlet-scrollbar::-webkit-scrollbar {
           width: 14px;
         }
-
         .atlet-scrollbar::-webkit-scrollbar-track {
           background: transparent;
           border-radius: 20px;
           margin: 10px 0;
         }
-
         .atlet-scrollbar::-webkit-scrollbar-thumb {
           background-color: #a68458;
           border-radius: 20px;
           border: 2px solid #3c3022;
           min-height: 40px;
         }
-
         .atlet-scrollbar::-webkit-scrollbar-thumb:hover {
           background-color: #8b6f42;
         }
-
         .atlet-scrollbar {
           scrollbar-color: #a68458 #3c3022;
           scrollbar-width: thin;
         }
       `}</style>
 
-      {/* Judul */}
-      <h1 className="font-snowstorm text-center text-[#1D2225] text-4xl sm:text-5xl md:text-7xl font-bold font-['Snowstorm_Bold'] drop-shadow-md">
+      <h1 className="font-snowstorm text-center text-[#1D2225] text-4xl sm:text-5xl md:text-7xl font-bold drop-shadow-md">
         ATLET/SENIMAN
       </h1>
 
@@ -115,7 +100,7 @@ const Atlet = () => {
               setSelectedDropdown("Semua");
               setIsDropdownOpen(false);
             }}
-            className="font-sofia text-center text-[#FBEBD2] text-[16px] sm:text-[18px] font-['Sofia_Sans'] font-extrabold"
+            className="font-sofia text-center text-[#FBEBD2] text-[16px] sm:text-[18px] font-extrabold"
           >
             Semua
           </button>
@@ -168,44 +153,40 @@ const Atlet = () => {
 
       {/* Kartu Atlet */}
       <div className="w-full h-[400px] pr-2 atlet-scrollbar max-w-full">
-      {filteredAtlet.length > 0 ? (
-      <div className="w-full h-[400px] overflow-y-scroll pr-2 atlet-scrollbar max-w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[1600px] mx-auto pb-8">
-          {filteredAtlet.map((a) => (
-            <div
-              key={a.id}
-              className="flex flex-col md:flex-row items-start gap-6 p-6 rounded-2xl hover:bg-[#806037] bg-[#F0EED7] transition-colors duration-300 shadow-lg hover:text-[#F0EED7] text-[#806037] min-h-[300px] w-full"
-            >
-              {/* Avatar */}
-              <div className="w-[100px] h-[120px] bg-[#806037] rounded-xl flex items-center justify-center shrink-0 group-hover:bg-[#F0EED7] transition-colors duration-300">
-                <FaUserCircle className="w-[70px] h-[70px] text-[#F0EED7] group-hover:text-[#806037] transition-colors duration-300" />
-              </div>
-
-              {/* Info */}
-              <div className="flex flex-col gap-1 text-base leading-snug break-words">
-                <Info label="Nama" value={a.nama} />
-                <Info label="Cabang" value={a.cabang} />
-                <Info label="Asal KMHM" value={a.asalKMHM} />
-                <Info label="Jurusan" value={a.jurusan} />
-                <Info label="Angkatan" value={a.angkatan} />
-                <Info label="Email" value={a.email} />
-                <Info label="No. HP" value={a.noHP} />
-                <Info label="Tempat, Tgl Lahir" value={a.tempatTanggalLahir} />
-                <Info label="Asal Kota" value={a.asalKota} />
-              </div>
-            </div>
-          ))}
-        </div>
-        </div>
-          ) : (
-        <div className="flex items-top justify-center h-screen">
-                <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
-                Tidak ada atlet/seniman untuk ditampilkan.
+        {filteredAtlet.length > 0 ? (
+          <div className="w-full h-[400px] overflow-y-scroll pr-2 atlet-scrollbar max-w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[1600px] mx-auto pb-8">
+              {filteredAtlet.map((a) => (
+                <div
+                  key={a.id}
+                  className="flex flex-col md:flex-row items-start gap-6 p-6 rounded-2xl hover:bg-[#806037] bg-[#F0EED7] transition-colors duration-300 shadow-lg hover:text-[#F0EED7] text-[#806037] min-h-[300px] w-full"
+                >
+                  <div className="w-[100px] h-[120px] bg-[#806037] rounded-xl flex items-center justify-center shrink-0 group-hover:bg-[#F0EED7] transition-colors duration-300">
+                    <FaUserCircle className="w-[70px] h-[70px] text-[#F0EED7] group-hover:text-[#806037] transition-colors duration-300" />
+                  </div>
+                  <div className="flex flex-col gap-1 text-base leading-snug break-words">
+                    <Info label="Nama" value={a.nama} />
+                    <Info label="Kategori" value={a.kategori} />
+                    <Info label="Asal KMHM" value={a.asal_pknin} />
+                    <Info label="Jurusan" value={a.jerasam} />
+                    <Info label="Angkatan" value={a.angkatan} />
+                    <Info label="Email" value={a.email} />
+                    <Info label="No. HP" value={a.telp} />
+                    <Info label="Tempat, Tgl Lahir" value={a.tanggal_lahir} />
+                    <Info label="Asal Kota" value={a.asal_provinsi} />
+                  </div>
                 </div>
-              </div>
-                )}
-      
-    </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-top justify-center h-screen">
+            <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
+              Tidak ada atlet/seniman untuk ditampilkan.
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

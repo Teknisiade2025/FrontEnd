@@ -1,44 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
 import Image from 'next/image';
-
-const events = [
-  // { title: 'Upacara Pembukaan', date: '29 Agustus' },
-  // { title: 'Bulu Tangkis', date: '1 September' },
-  // { title: 'Softball', date: '3 September' },
-  // { title: 'Basket', date: '5 September' },
-  // { title: 'Futsal', date: '7 September' },
-  // { title: 'Softball', date: '3 September' },
-  // { title: 'Basket', date: '5 September' },
-  // { title: 'Futsal', date: '7 September' },
-  { title: 'Voli', date: '1–2 September' },
-  { title: 'PUBG', date: '5-6 September' },
-  { title: 'Basket + Dance', date: '6-10 September' },
-  { title: 'Pingpong', date: '11-12 September' },
-  { title: 'Valorant', date: '11-12 September' },
-  { title: 'FIFA', date: '13 September' },
-  { title: 'Catur', date: '13 September' },
-  { title: 'Mobile Legends', date: '15–16 September' },
-  { title: 'Seni', date: '20 dan 27 September' },
-  { title: 'Sepak Bola', date: '15–19 September' },
-  { title: 'Atletik', date: '20 September' },
-  { title: 'Badminton', date: '22–23 September' },
-  { title: 'Futsal', date: '23–26 September' }
-];
+import { supabase } from '@/app/lib/supabase'; 
 
 const CalendarCarousel = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [mobileItemsToShow, setMobileItemsToShow] = useState(2); // Default 2 item
-  
-  // Hitung jumlah slide untuk dot navigasi
-  const totalSlides = isMobile 
-    ? Math.max(1, events.length - mobileItemsToShow + 1) 
+  const [mobileItemsToShow, setMobileItemsToShow] = useState(2);
+  const [events, setEvents] = useState([]);
+
+  // Ambil data dari Supabase
+  useEffect(() => {
+  const fetchEvents = async () => {
+    const now = new Date();
+
+    // Ambil jadwal pertandingan
+    const { data: pertandingan, error: err1 } = await supabase
+      .from("jadwal_pertandingan")
+      .select("*");
+
+    // Ambil jadwal seni
+    const { data: seni, error: err2 } = await supabase
+      .from("jadwal_seni")
+      .select("*");
+
+    if (err1) console.error(err1);
+    if (err2) console.error(err2);
+
+    const pertandinganEvents = (pertandingan || []).map((row) => {
+      const rawDate = new Date(`${row.tanggal}T${row.waktu}`);
+      return {
+        title: `${row.cabang} - ${row.kategori} )`,
+        date: formatDate(row.tanggal),
+        rawDate,
+      };
+    });
+
+    const seniEvents = (seni || []).map((row) => {
+      const rawDate = new Date(`${row.tanggal}T${row.waktu}`);
+      return {
+        title: `${row.cabang} - ${row.kategori} (${row.tim})`,
+        date: formatDate(row.tanggal),
+        rawDate,
+      };
+    });
+
+    // Gabungkan → filter jadwal mendatang → urutkan
+    const allEvents = [...pertandinganEvents, ...seniEvents]
+      .filter((event) => event.rawDate > now)
+      .sort((a, b) => a.rawDate - b.rawDate);
+
+    setEvents(allEvents);
+  };
+
+  fetchEvents();
+}, []);
+
+
+  // Format tanggal jadi "1 September"
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+    });
+  };
+
+  // Hitung jumlah slide
+  const totalSlides = isMobile
+    ? Math.max(1, events.length - mobileItemsToShow + 1)
     : Math.max(1, events.length - 3);
-  
-  // Status tombol navigasi
+
   const isPrevDisabled = startIndex === 0;
-  const isNextDisabled = isMobile 
+  const isNextDisabled = isMobile
     ? startIndex >= events.length - mobileItemsToShow
     : startIndex >= events.length - 3;
 
@@ -46,46 +80,60 @@ const CalendarCarousel = () => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      
-      // Sesuaikan jumlah item berdasarkan tinggi layar
+
       if (mobile) {
         const screenHeight = window.innerHeight;
         if (screenHeight < 600) {
-          setMobileItemsToShow(1); // Layar kecil: tampilkan 1 item
+          setMobileItemsToShow(1);
         } else if (screenHeight < 700) {
-          setMobileItemsToShow(2); // Layar sedang: tampilkan 2 item
+          setMobileItemsToShow(2);
         } else {
-          setMobileItemsToShow(3); // Layar besar: tampilkan 3 item
+          setMobileItemsToShow(3);
         }
       }
     };
-    
+
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handlePrev = () => {
-    if (!isPrevDisabled) {
-      setStartIndex(prev => prev - 1);
-    }
-  };
+  const handlePrev = () => !isPrevDisabled && setStartIndex((p) => p - 1);
+  const handleNext = () => !isNextDisabled && setStartIndex((p) => p + 1);
 
-  const handleNext = () => {
-    if (!isNextDisabled) {
-      setStartIndex(prev => prev + 1);
-    }
-  };
+  // Handle resize untuk mode mobile
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+
+      if (mobile) {
+        const screenHeight = window.innerHeight;
+        if (screenHeight < 600) {
+          setMobileItemsToShow(1);
+        } else if (screenHeight < 700) {
+          setMobileItemsToShow(2);
+        } else {
+          setMobileItemsToShow(3);
+        }
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   const handlePrevMobile = () => {
     if (!isPrevDisabled) {
-      setStartIndex(prev => prev - 1);
+      setStartIndex((prev) => prev - 1);
     }
   };
 
   const handleNextMobile = () => {
     if (!isNextDisabled) {
-      setStartIndex(prev => prev + 1);
+      setStartIndex((prev) => prev + 1);
     }
   };
 

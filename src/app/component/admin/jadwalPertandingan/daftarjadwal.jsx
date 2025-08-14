@@ -66,7 +66,7 @@ const MatchCard = ({ match, onEdit, onDelete }) => {
   return (
     <div className="w-full p-5 md:p-6 bg-[#FBEBD2] shadow-md rounded-[42px] flex flex-col gap-2 relative">
       {/* Action Buttons */}
-      <div className="absolute top-4 right-4 flex gap-2">
+      <div className="absolute top-8 right-7 flex gap-2">
         <button 
           onClick={() => onEdit(match)}
           className="p-2 bg-[#065D79] rounded-full hover:bg-[#0a7a9a] transition-colors"
@@ -90,11 +90,11 @@ const MatchCard = ({ match, onEdit, onDelete }) => {
       </div>
 
       {/* Baris Logo & Info */}
-      <div className="flex flex-row items-center justify-between gap-3 sm:gap-6">
+      <div className="flex flex-row items-center justify-center gap-3 sm:gap-6">
         {renderTeam(match.tim1)}
 
         {/* Info Tengah */}
-        <div className="flex flex-col items-center text-center gap-3 sm:gap-6 mx-1 flex-1 min-w-[140px] sm:min-w-[200px] lg:w-[240px]">
+        <div className="flex flex-col items-center text-center justify-center gap-3 sm:gap-6 mx-1 w-[200px]">
           <div className="flex flex-col items-center text-center">
             <p className="text-[#1D2225] font-['Sofia_Sans_Condensed'] text-sm md:text-base font-normal">
               {formatDate(match.tanggal)}, {match.waktu} WIB

@@ -107,9 +107,9 @@ const JadwalSeni = ({ cabang, kategori }) => {
         </button>
       </div>
           <div className="w-full bg-[#FBEBD2] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] p-8">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto"/*  style={{ maxHeight: '400px', overflowY: 'auto' }} */>
               <table className="w-full text-gray-900 font-['Sofia_Sans_Condensed']">
-                <thead>
+                <thead style={{ display: 'block' }}>
                   <tr className="border-b-2 border-[#B1844D]">
                     <th className="pb-4 text-left text-xl font-bold">Tim</th>
                     <th className="pb-4 text-left text-xl font-bold">Babak</th>
@@ -118,7 +118,14 @@ const JadwalSeni = ({ cabang, kategori }) => {
                     <th className="pb-4 text-right text-xl font-bold">Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className ="w-[100%]"
+                 style={{ 
+                    display: 'block',
+                    maxHeight: '370px',
+                    overflowY: 'auto', 
+                  }}
+
+                >
                   {jadwalList.length > 0 ? (
                     jadwalList.map((jadwal) => (
                       <tr key={jadwal.id} className="border-b border-[#FBEBD2]/50">
