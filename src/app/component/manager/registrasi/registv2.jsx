@@ -503,7 +503,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
 
       {/* Form Overlay */}
       {showForm && selectedSport?.mainCategory && selectedSport?.subCategory && (
-        <div className="fixed inset-0 bg-black bg-opacity-2 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-opacity-2 flex items-center justify-center z-50 p-4 scale-80">
           <div className="w-full max-w-6xl bg-neutral-100 rounded-3xl p-4">
             <div className="bg-[#0F6E87] rounded-3xl px-12 py-8 relative">
 

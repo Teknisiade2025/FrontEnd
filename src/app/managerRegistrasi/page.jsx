@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 import React from 'react';
-import Sidebar from '@/app/component/admin/compNavigasiCabang/cabangNav.jsx';
+import Sidebar from '@/app/component/admin/compNavigasiCabang/scheduleNav.jsx';
 import { useSearchParams, useRouter } from 'next/navigation';
 import AthleteRegistration from '@/app/component/manager/registrasi/registv2.jsx';
 import { IoLogOut } from "react-icons/io5";
@@ -69,15 +69,15 @@ export default function HomePage() {
 
   return (
     <div
-      className="flex flex-col min-h-screen max-w-screen pt-20 gap-1 w-[100vw]  bg-[url('/bglogin.svg')] bg-no-repeat bg-cover"
+      className="flex flex-col h-[110vh] max-w-screen pt-10 gap-1 w-[100vw]  bg-[url('/bglogin.svg')] bg-no-repeat bg-cover"
     >
       {/* HEADER */}
-      <div className="relative z-50 flex items-center  justify-between pl-13 pt-0 w-[100%]">
+      <div className="relative z-50 flex items-center  justify-between pl-20 pt-0 w-[95%]">
 
 
         <div className="flex items-center gap-4 ">
           {/* Toggle Role */}
-          <div className="flex w-71 h-14 px-8 py-2 justify-center bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] ">
+          <div className="flex w-71 h-14 px-8 py-2 justify-center bg-[#8B5E3C] rounded-[44.15px]  gap-[5px] ">
             <button
               onClick={() => handleRoleChange('Atlet')}
               className={`flex-1 py-2 px-8 mx-1 w-full rounded-[37.74px] flex justify-center items-center
@@ -127,9 +127,9 @@ export default function HomePage() {
 
       {/* SIDEBAR + FORM */}
 
-      <div className="flex flex-row pr-15 pl-5 gap-28 h-[600px] w-full items-center justify-center">
+      <div className="flex flex-row pr-15 pl-5 gap-45 h-[600px] w-full items-center justify-center">
         
-        <div className="w-64 px-8 -mt-40 h-full">
+        <div className="w-64 px-2 -mt-40 h-full">
       
             <Sidebar onCategorySelect={handleCategorySelect} />
    

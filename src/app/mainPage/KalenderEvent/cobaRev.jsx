@@ -11,6 +11,19 @@ const events = [
   // { title: 'Softball', date: '3 September' },
   // { title: 'Basket', date: '5 September' },
   // { title: 'Futsal', date: '7 September' },
+  { title: 'Voli', date: '1–2 September' },
+  { title: 'PUBG', date: '5-6 September' },
+  { title: 'Basket + Dance', date: '6-10 September' },
+  { title: 'Pingpong', date: '11-12 September' },
+  { title: 'Valorant', date: '11-12 September' },
+  { title: 'FIFA', date: '13 September' },
+  { title: 'Catur', date: '13 September' },
+  { title: 'Mobile Legends', date: '15–16 September' },
+  { title: 'Seni', date: '20 dan 27 September' },
+  { title: 'Sepak Bola', date: '15–19 September' },
+  { title: 'Atletik', date: '20 September' },
+  { title: 'Badminton', date: '22–23 September' },
+  { title: 'Futsal', date: '23–26 September' }
 ];
 
 const CalendarCarousel = () => {
