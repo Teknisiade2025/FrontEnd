@@ -3,59 +3,80 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HiArrowRight } from "react-icons/hi";
 import { IoChevronDownSharp } from "react-icons/io5";
+import { useSearchParams } from 'next/navigation';
+import { supabase } from "@/app/lib/supabase";
 
 const Jadwal = () => {
+  const searchParams = useSearchParams();
+  const nama = searchParams.get("nama")?.toUpperCase() || "";
+
   const [selectedDropdown, setSelectedDropdown] = useState("Semua");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Mendatang");
+  const [scheduleData, setScheduleData] = useState([]);
+  const [dropdownOptions, setDropdownOptions] = useState(["Semua"]);
   const dropdownRef = useRef(null);
 
-  const dropdownOptions = ["Semua", "HMTPWK", "KMTA", "KMTG", "KMTSL", "HMTG", "HMTI", "KMTETI", "KMTNTF", "KMTM", "KMTK"];
+  // Fetch data dari Supabase
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, error } = await supabase.from("jadwal_pertandingan").select("*");
+        if (error) {
+          console.error("Supabase error:", error);
+          return;
+        }
 
+        // Filter berdasarkan cabang
+        const namaUpper = nama.toUpperCase().trim();
+        const filteredByCabang = (data || []).filter(
+          (item) => (item.cabang || "").toUpperCase().trim() === namaUpper
+        );
 
-  const scheduleData = [
-  //   {
-  //     id: 1,
-  //     date: "2025-08-01T19:00:00",
-  //     venue: "Gor Kridosono",
-  //     teamA: { name: "KMHM", logo: "https://placehold.co/80x80" },
-  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-  //   },
-  //   {
-  //     id: 2,
-  //     date: "2025-07-01T20:00:00",
-  //     venue: "Gor Amongrogo",
-  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-  //     teamB: { name: "KMTETI", logo: "https://placehold.co/80x80" },
-  //   },
-  //   {
-  //     id: 3,
-  //     date: "2025-07-01T20:00:00",
-  //     venue: "Gor Amongrogo",
-  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-  //   },
-  //   {
-  //     id: 4,
-  //     date: "2025-07-01T20:00:00",
-  //     venue: "Gor Amongrogo",
-  //     teamA: { name: "KMFT", logo: "https://placehold.co/80x80" },
-  //     teamB: { name: "KMHM", logo: "https://placehold.co/80x80" },
-  //   },
-  ];
+        setScheduleData(filteredByCabang);
 
+        // Buat dropdown tim unik
+        const teams = new Set();
+        filteredByCabang.forEach((item) => {
+          if (item.tim1) teams.add(item.tim1.toUpperCase());
+          if (item.tim2) teams.add(item.tim2.toUpperCase());
+        });
+
+        setDropdownOptions(["Semua", ...Array.from(teams).sort()]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    if (nama) {
+      fetchData();
+    }
+  }, [nama]);
+
+  // Filter schedule berdasarkan dropdown tim
   const filteredSchedule = scheduleData.filter((match) => {
     if (selectedDropdown === "Semua") return true;
-    return match.teamA.name === selectedDropdown || match.teamB.name === selectedDropdown;
+    return (
+      match.tim1?.toUpperCase() === selectedDropdown ||
+      match.tim2?.toUpperCase() === selectedDropdown
+    );
   });
 
+  // Tentukan apakah pertandingan mendatang atau selesai
   const now = new Date();
-  const isUpcoming = (date) => new Date(date) > now;
+  const displayedMatches = filteredSchedule.filter((match) => {
+    if (!match.tanggal || !match.waktu) return false;
+    
+    try {
+      const matchDate = new Date(`${match.tanggal}T${match.waktu}`);
+      return selectedTab === "Mendatang" ? matchDate >= now : matchDate < now;
+    } catch (error) {
+      console.error("Error parsing date:", error);
+      return false;
+    }
+  });
 
-  const displayedMatches = filteredSchedule.filter((match) =>
-    selectedTab === "Mendatang" ? isUpcoming(match.date) : !isUpcoming(match.date)
-  );
-
+  // Click outside dropdown
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -119,7 +140,9 @@ const Jadwal = () => {
               </button>
               <div
                 className={`absolute left-0 mt-2 w-full bg-[#FBEBD2] rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out z-10 ${
-                  isDropdownOpen ? "max-h-[350px] opacity-100 translate-y-1" : "max-h-0 opacity-0 -translate-y-2"
+                  isDropdownOpen
+                    ? "max-h-[350px] opacity-100 translate-y-1"
+                    : "max-h-0 opacity-0 -translate-y-2"
                 }`}
               >
                 <ul className="font-sofia text-base font-extrabold flex flex-col px-4 py-3 text-[#1D2225] ">
@@ -146,7 +169,9 @@ const Jadwal = () => {
                   key={tab}
                   onClick={() => setSelectedTab(tab)}
                   className={`w-[150px] py-2.5 font-sofia font-extrabold text-base rounded-full transition-all duration-200 ${
-                    selectedTab === tab ? "bg-[#806037] text-[#FBEBD2]" : "bg-[#1D2225] text-[#FBEBD2] hover:bg-[#2a2f33]"
+                    selectedTab === tab
+                      ? "bg-[#806037] text-[#FBEBD2]"
+                      : "bg-[#1D2225] text-[#FBEBD2] hover:bg-[#2a2f33]"
                   }`}
                 >
                   {tab}
@@ -161,11 +186,13 @@ const Jadwal = () => {
             style={{ maxHeight: "380px" }}
           >
             {displayedMatches.length > 0 ? (
-              displayedMatches.map((match) => <MatchCard key={match.id} match={match} />)
+              displayedMatches.map((match) => (
+                <MatchCard key={match.id || match.idx} match={match} selectedTab={selectedTab} />
+              ))
             ) : (
-              <div className="flex items-center justify-center h-screen">
+              <div className="flex items-center justify-center h-40">
                 <div className="text-center text-[#1D2225] font-sofia font-bold text-lg mt-8">
-                Tidak ada jadwal untuk pertandingan ini.
+                  {nama ? `Tidak ada jadwal ${selectedTab.toLowerCase()} untuk ${nama}.` : "Pilih cabang olahraga terlebih dahulu."}
                 </div>
               </div>
             )}
@@ -176,60 +203,103 @@ const Jadwal = () => {
   );
 };
 
-const MatchCard = ({ match }) => {
+const MatchCard = ({ match, selectedTab }) => {
+  // Parse tanggal dan waktu dengan error handling
+  const getMatchDate = () => {
+    try {
+      if (match.tanggal && match.waktu) {
+        return new Date(`${match.tanggal}T${match.waktu}`);
+      }
+      return new Date();
+    } catch (error) {
+      console.error("Error parsing date:", error);
+      return new Date();
+    }
+  };
+
+  const matchDate = getMatchDate();
+
+  // Format tanggal untuk tampilan
+  const formatDate = () => {
+    try {
+      return matchDate.toLocaleString("id-ID", {
+        weekday: 'long',
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+      });
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return "Tanggal tidak valid";
+    }
+  };
+
   return (
-    <div className="w-full px-3 py-4 sm:px-16 sm:py-6 bg-[#5F56487F] shadow-md rounded-[38px] flex flex-col gap-1 sm:gap-1">
+    <div className="w-full max-h-[300px] rounded-[20px] sm:rounded-[38px] bg-[#5F56487F] shadow-md  px-6 sm:px-14 py-5 flex flex-col ">
       {/* Judul Pertandingan */}
       <div className="text-center">
-        <div className="text-[#1D2225] font-[Snowstorm] self-stretch h-5 text-sm sm:text-base md:text-xl font-bold">
-          SEPAK BOLA - PUTRI
+        <div className="text-[#1D2225] font-[Snowstorm] self-stretch text-sm sm:text-base md:text-xl font-bold">
+          <strong>{match.cabang || "Cabang Olahraga"}</strong> {match.kategori ? `- ${match.kategori}` : ""}
         </div>
         <div className="text-[#1D2225] font-[Snowstorm] text-sm sm:text-base md:text-xl font-bold">
-          BABAK PENYISIHAN
+          {match.babak || "Babak"}
         </div>
+        {/* Tanggal & Waktu */}
+          <div className="flex flex-col items-center text-center gap-1">
+            <p className="text-[#1D2225] font-sofia font-extrabold text-xs sm:text-sm">
+              {formatDate()} WIB
+            </p>
+          </div>
       </div>
-      {/* Baris 2: Logo A | Info Tengah | Logo B */}
+
+      {/* Layout seperti komponen Pertandingan */}
       <div className="flex flex-row justify-between items-center gap-2 sm:gap-4">
         {/* Team A */}
-        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
-          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
-            <img src={match.teamA.logo} alt={match.teamA.name} className="w-full h-full object-contain" />
+        <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 max-w-[100px]">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[100px] lg:h-[100px] mt-2 rounded-full overflow-hidden bg-[#1D2225] flex items-center justify-center">
+            <img
+              src={`/logoKMHM/${match.tim1?.toUpperCase() || "DEFAULT"}.svg`}
+              alt={match.tim1?.toUpperCase() || "TEAM A"}
+              className="w-[100] h-[100] object-contain"
+              onError={(e) => {
+                e.target.src = "/logoKMHM/DEFAULT.svg"; // fallback image
+              }}
+            />
           </div>
-          <span className="text-[#1D2225] font-bold font-snowstorm text-sm sm:text-base md:text-xl text-center">
-            {match.teamA.name}
-          </span>
+          <div className="text-[#1D2225] text-center font-[Snowstorm] text-xs sm:text-sm md:text-base leading-tight">
+            {match.tim1?.toUpperCase() || "TEAM A"}
+          </div>
         </div>
 
-        {/* Info Tengah */}
-        <div className="flex flex-col items-center text-center gap-3 sm:gap-6 mx-auto flex-1 min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
-          <div  className="flex flex-col items-center text-center ">
-          <p className="text-[#1D2225] self-stretch h-5 text-sm sm:text-lg font-sofia font-extrabold">
-            {new Date(match.date).toLocaleString("id-ID", {
-              weekday: "short",
-              day: "numeric",
-              month: "short",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}{" "}
-            WIB
-          </p>
-          <p className="text-[#1D2225] font-sofia font-extrabold text-sm sm:text-lg">{match.venue}</p>
-          </div>
-          <div className="text-[#1D2225] font-extrabold text-lg sm:text-4xl lg:text-5xl font-snowstorm">V/S</div>
-          <div className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:underline">
-            <span className="flex items-center gap-1 text-[#1D2225] font-sofia font-bold text-sm sm:text-lg cursor-pointer hover:underline">Tonton Live</span>
-            <HiArrowRight className="text-[#1D2225] text-xs sm:text-sm" />
-          </div>
-        </div>
+          
+          
+          {/* Skor atau VS */}
+          {selectedTab === "Mendatang" ? (
+            <div className="text-[#1D2225] font-extrabold text-lg sm:text-2xl lg:text-3xl font-snowstorm">V/S</div>
+          ) : (
+            <div className="text-[#1D2225] font-extrabold text-lg sm:text-2xl lg:text-3xl font-snowstorm">
+              {match.skor_tim1 || 0} - {match.skor_tim2 || 0}
+            </div>
+          )}
+     
 
         {/* Team B */}
-        <div className="flex flex-col items-center gap-1 sm:gap-2 min-w-[60px] sm:min-w-[80px]">
-          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
-            <img src={match.teamB.logo} alt={match.teamB.name} className="w-full h-full object-contain" />
+        <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 max-w-[100px]">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[100px] lg:h-[100px] mt-2 rounded-full overflow-hidden bg-[#1D2225] flex items-center justify-center">
+            <img
+              src={`/logoKMHM/${match.tim2?.toUpperCase() || "DEFAULT"}.svg`}
+              alt={match.tim2?.toUpperCase() || "TEAM B"}
+              className="w-[100] h-[100] object-contain"
+              onError={(e) => {
+                e.target.src = "/logoKMHM/DEFAULT.svg"; // fallback image
+              }}
+            />
           </div>
-          <span className="text-[#1D2225] font-bold font-snowstorm text-sm sm:text-base md:text-xl text-center">
-            {match.teamB.name}
-          </span>
+          <div className="text-[#1D2225] text-center font-[Snowstorm] text-xs sm:text-sm md:text-base leading-tight">
+            {match.tim2?.toUpperCase() || "TEAM B"}
+          </div>
         </div>
       </div>
     </div>
