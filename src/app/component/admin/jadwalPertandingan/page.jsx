@@ -98,26 +98,20 @@ const InputJadwalOlahraga = ({
 
 
   return (
-    <div className="flex flex-col items-center p-14 rounded-[20px]">
+    <div className="flex flex-col items-center  rounded-[20px]">
       {/* Header Cabang & Kategori */}
-      <div className="mb-1 flex justify-end">
-        <div className="px-4 py-1 rounded-full shadow-md bg-[#806037]">
-          <h1 className="text-lg font-normal font-['Snowstorm'] text-[#FCFCFC]">
-            {cabang} - {kategori}
-          </h1>
-        </div>
-      </div>
+     
 
       {/* Main Content */}
-      <div className="w-[100%] h-[100vh] -mt-5 px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90 relative">
+      <div className="w-[100%] h-[100vh]  px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90 scale-85 relative">
         <button
-    onClick={handleCancel}
-    className="absolute top-4 right-4 text-white hover:text-red-500 transition-colors text-3xl font-bold"
-    aria-label="Cancel"
-    type="button"
-  >
-    ×
-  </button>
+          onClick={handleCancel}
+          className="absolute top-4 right-4 text-white hover:text-red-500 transition-colors text-3xl font-bold"
+          aria-label="Cancel"
+          type="button"
+        >
+          ×
+        </button>
         
         <div className="flex-1 self-stretch flex flex-col justify-between items-center gap-8">
           {/* Judul */}

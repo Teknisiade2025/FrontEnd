@@ -82,7 +82,7 @@ const MatchCard = ({ match, onEdit, onDelete }) => {
       </div>
 
       {/* Judul Pertandingan */}
-      <div className="text-center mt-4">
+      <div className="text-center mt-4 ">
         <div className="text-[#1D2225] text-base md:text-lg font-['Snowstorm'] flex flex-col items-center font-bold leading-[135%] text-center">
           <span>{match.cabang.toUpperCase()} - {match.kategori.toUpperCase()}</span>
           <span>BABAK {match.babak.toUpperCase()}</span>
@@ -94,7 +94,7 @@ const MatchCard = ({ match, onEdit, onDelete }) => {
         {renderTeam(match.tim1)}
 
         {/* Info Tengah */}
-        <div className="flex flex-col items-center text-center gap-3 sm:gap-6 mx-auto flex-1 min-w-[140px] sm:min-w-[200px] lg:min-w-[240px]">
+        <div className="flex flex-col items-center text-center gap-3 sm:gap-6 mx-1 flex-1 min-w-[140px] sm:min-w-[200px] lg:w-[240px]">
           <div className="flex flex-col items-center text-center">
             <p className="text-[#1D2225] font-['Sofia_Sans_Condensed'] text-sm md:text-base font-normal">
               {formatDate(match.tanggal)}, {match.waktu} WIB
