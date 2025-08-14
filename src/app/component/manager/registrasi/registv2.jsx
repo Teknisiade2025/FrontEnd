@@ -269,15 +269,15 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   // 🔹 Blokir jika kmhmName kosong
   if (!kmhmName) {
     return (
-      <div className="w-full h-full max-w-7xl mx-auto px-14 py-9 rounded-[32px]  shadow-lg"
+      <div className="w-full h-full max-w-7xl font-sofia px-10 rounded-[32px] shadow-lg"
       style={{
-          width: "900px",
-          height: "600px",
-          backgroundColor: "#806037",
-          border: "3px solid #FFFFFF",
-        }}>
+            width: "900px",
+            height: "600px",
+            backgroundColor: "#806037",
+            border: "3px solid #FFFFFF",
+          }}>
         {/* Header Section */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="font-sofia flex justify-between items-center text-sm pt-6 pr-10 mb-3">
           <div className="flex items-center gap-10">
             {/* Status Tabs */}
             <div className="flex items-center gap-2.5">
@@ -299,24 +299,26 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                 </div>
               ))}
             </div>
-            <div className="text-white text-xl font-extrabold">
+            <div className="text-white font-extrabold text-lg capitalize">
               Total {role}: {countByStatus('TOTAL')}
             </div>
           </div>
           {/* Add Athlete Button */}
           <div 
-            className="flex flex-col items-center gap-2 cursor-pointer"
+            className="flex flex-col items-center gap-2 cursor-pointer group"
             onClick={() => setShowForm(true)}
           >
-            <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center">
-              <Plus className="w-8 h-8 text-white" />
+            <div className="w-10 h-10 bg-teal-700 rounded-full flex items-center justify-center group-hover:bg-teal-600">
+              <Plus className="w-5 h-5 text-white" />
             </div>
-            <div className="text-center text-white text-lg font-bold">
-              Daftarkan <br/>{role}
+            <div className="flex flex-col leading-tight text-center text-white text-lg font-bold" >
+              <span>Daftarkan</span>
+              <span>{role === 'coach' ? 'Coach' : 'Atlet'}</span>
             </div>
           </div>
         </div>
-              
+
+        {/* Pesan Tengah */}
         <div className="flex-1 h-[60%] flex items-center justify-center">
           <div className="text-lg font-semibold text-white text-center">
             Nama KMHM tidak ditemukan. Harap login atau pilih KMHM terlebih dahulu.
@@ -329,15 +331,15 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   // 🔹 Tahan render jika kategori & cabang belum dipilih
   if (!selectedSport?.mainCategory || !selectedSport?.subCategory) {
     return (
-      <div className="w-full h-full max-w-7xl mx-auto px-14 py-9  rounded-[32px] shadow-lg flex flex-col"
+      <div className="w-full h-full max-w-7xl font-sofia px-10 rounded-[32px] shadow-lg"
       style={{
-          width: "900px",
-          height: "600px",
-          backgroundColor: "#806037",
-          border: "3px solid #FFFFFF",
-        }}>
+            width: "900px",
+            height: "600px",
+            backgroundColor: "#806037",
+            border: "3px solid #FFFFFF",
+          }}>
         {/* Header Section */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="font-sofia flex justify-between items-center text-sm pt-6 pr-10 mb-3">
           <div className="flex items-center gap-10">
             {/* Status Tabs */}
             <div className="flex items-center gap-2.5">
@@ -359,26 +361,27 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                 </div>
               ))}
             </div>
-            <div className="text-white text-xl font-extrabold">
+            <div className="text-white font-extrabold text-lg capitalize">
               Total {role}: {countByStatus('TOTAL')}
             </div>
           </div>
           {/* Add Athlete Button */}
           <div 
-            className="flex flex-col items-center gap-2 cursor-pointer"
+            className="flex flex-col items-center gap-2 cursor-pointer group"
             onClick={() => setShowForm(true)}
           >
-            <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center">
-              <Plus className="w-8 h-8 text-white" />
+            <div className="w-10 h-10 bg-teal-700 rounded-full flex items-center justify-center group-hover:bg-teal-600">
+              <Plus className="w-5 h-5 text-white" />
             </div>
-            <div className="text-center text-white text-lg font-bold">
-              Daftarkan <br/>{role}
+            <div className="flex flex-col leading-tight text-center text-white text-lg font-bold" >
+              <span>Daftarkan</span>
+              <span>{role === 'coach' ? 'Coach' : 'Atlet'}</span>
             </div>
           </div>
         </div>
 
-        {/* Pesan di tengah */}
-        <div className="flex-1 h-full flex items-center justify-center">
+        {/* Pesan Tengah */}
+        <div className="flex-1 h-full pb-45 flex items-center justify-center">
           <div className="text-lg font-semibold text-white text-center">
             Silakan pilih kategori dan cabang terlebih dahulu.
           </div>
@@ -387,8 +390,9 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
     );
   }
 
+
   return (
-    <div className="w-full h-full max-w-7xl  px-10  rounded-[32px] shadow-lg"
+    <div className="w-full h-full max-w-7xl font-sofia px-10 rounded-[32px] shadow-lg"
     style={{
           width: "900px",
           height: "600px",
@@ -396,7 +400,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
           border: "3px solid #FFFFFF",
         }}>
       {/* Header Section */}
-      <div className="flex justify-between items-center pt-2 mb-8">
+      <div className="font-sofia flex justify-between items-center text-sm pt-6 pr-10 mb-3">
         <div className="flex items-center gap-10">
           {/* Status Tabs */}
           <div className="flex items-center gap-2.5">
@@ -418,20 +422,21 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
               </div>
             ))}
           </div>
-          <div className="text-white text-xl font-extrabold">
+          <div className="text-white font-extrabold text-lg capitalize">
             Total {role}: {countByStatus('TOTAL')}
           </div>
         </div>
         {/* Add Athlete Button */}
         <div 
-          className="flex flex-col items-center gap-2 cursor-pointer"
+          className="flex flex-col items-center gap-2 cursor-pointer group"
           onClick={() => setShowForm(true)}
         >
-          <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center">
-            <Plus className="w-8 h-8 text-white" />
+          <div className="w-10 h-10 bg-teal-700 rounded-full flex items-center justify-center group-hover:bg-teal-600">
+            <Plus className="w-5 h-5 text-white" />
           </div>
-          <div className="text-center text-white text-lg font-bold">
-            Daftarkan <br/>{role === 'coach' ? 'Coach' : 'Atlet'}
+          <div className="flex flex-col leading-tight text-center text-white text-lg font-bold" >
+            <span>Daftarkan</span>
+            <span>{role === 'coach' ? 'Coach' : 'Atlet'}</span>
           </div>
         </div>
       </div>
@@ -444,24 +449,34 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
       )}
 
       {/* Athletes List */}
-      <div className="space-y-4">
+      <div className="space-y-4 custom-scrollbar rounded-xl" 
+        style={{ 
+          maxHeight: '430px',
+          overflowY: 'auto',
+          paddingTop: '12px',
+          paddingRight: '12px'
+        }}>
         {filteredAthletes.map((athlete) => (
           <div key={athlete.id} className="flex gap-4">
-            <div className="flex-1 bg-amber-100 rounded-3xl p-8 flex justify-between items-center">
+            <div className="flex-none bg-amber-100 rounded-3xl p-8 flex justify-between items-center" 
+            style={{
+              width: '600px', // Lebar tetap
+              overflow: 'hidden' // Supaya tidak scroll
+            }}>
               <div className="flex items-center gap-8">
-                <div className="w-24 h-24 bg-teal-600 rounded-xl flex items-center justify-center">
-                  <User className="w-12 h-12 text-amber-100" />
+                <div className="w-24 h-30 bg-teal-600 rounded-xl flex items-center justify-center">
+                  <User className="w-15 h-15 text-amber-100" />
                 </div>
-                <div className="space-y-2">
-                  <div className="flex"><div className="w-44 font-bold">Nama</div>{athlete.nama}</div>
-                  <div className="flex"><div className="w-44 font-bold">Cabang</div>{athlete.cabang} {athlete.kategori}</div>
-                  <div className="flex"><div className="w-44 font-bold">Asal KMHM</div>{athlete.asal_pknin}</div>
-                  <div className="flex"><div className="w-44 font-bold">Jurusan</div>{athlete.jerasam}</div>
-                  <div className="flex"><div className="w-44 font-bold">Angkatan</div>{athlete.angkatan}</div>
-                  <div className="flex"><div className="w-44 font-bold">Email</div>{athlete.email}</div>
-                  <div className="flex"><div className="w-44 font-bold">No. HP</div>{athlete.telp}</div>
-                  <div className="flex"><div className="w-44 font-bold">Tempat, Tanggal Lahir</div>{athlete.tanggal_lahir}</div>
-                  <div className="flex"><div className="w-44 font-bold">Asal Provinsi</div>{athlete.asal_provinsi}</div>
+                <div className="space-y-1">
+                  <div className="flex"><div className="w-44 font-bold truncate">Nama</div><div className="truncate w-44">{athlete.nama}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Cabang</div><div className="truncate w-44">{athlete.cabang} {athlete.kategori}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Asal KMHM</div><div className="truncate w-44">{athlete.asal_pknin}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Jurusan</div><div className="truncate w-44">{athlete.jerasam}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Angkatan</div><div className="truncate w-44">{athlete.angkatan}</div></div>  
+                  <div className="flex"><div className="w-44 font-bold truncate">Email</div><div className="truncate w-44">{athlete.email}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">No. HP</div><div className="truncate w-44">{athlete.telp}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Tempat, Tanggal Lahir</div><div className="truncate w-44">{athlete.tanggal_lahir}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Asal Provinsi</div><div className="truncate w-44">{athlete.asal_provinsi}</div></div>
                 </div>
               </div>
               <div className="flex flex-col items-center gap-4">
@@ -485,20 +500,40 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                 </button>
               </div>
             </div>
-            <div className="w-60 bg-teal-800 rounded-3xl p-6 flex flex-col justify-between items-center">
-              <div className="text-white text-sm font-bold">Status Verifikasi</div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-4">
+            <div className="w-60 bg-teal-800 rounded-3xl p-6 flex flex-col items-center justify-between text-center pb-25">
+              <div className="text-white text-sm font-bold mb-4">Status Verifikasi</div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-2">
                   {athlete.status === 'VERIFIED' ? '✓' : '⚠'}
                 </div>
                 <div className="text-white text-sm font-bold">
                   {athlete.status === 'VERIFIED' ? 'Sudah diverifikasi' : 
-                   athlete.status === 'REVISION' ? 'Perlu revisi' : 'Belum diverifikasi'}
+                  athlete.status === 'REVISION' ? 'Perlu revisi' : 'Belum diverifikasi'}
                 </div>
               </div>
             </div>
           </div>
         ))}
+        
+        {/* Custom Scrollbar */}
+        <style jsx global>{`
+          .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #FBEBD2 #806037;
+          }
+          .custom-scrollbar::-webkit-scrollbar {
+            width: 12px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-track {
+            background: #806037;
+            border-radius: 8px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #FBEBD2;
+            border-radius: 8px;
+
+          }
+        `}</style>
       </div>
 
       {/* Form Overlay */}
@@ -585,7 +620,8 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                         value={formData.asal_provinsi}
                         onChange={handleInputChange}
                         disabled={readMode}
-                        className="w-full px-6 py-3 rounded-full bg-white text-black"
+                        className="w-full px-6 py-3
+                         rounded-full bg-white text-black"
                       >
                         <option value="">Pilih Provinsi</option>
                         <option value="DIY">D.I. Yogyakarta</option>
@@ -690,7 +726,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                   ) : (
                     <button
                       type="submit"
-                      className="bg-teal-600 text-white px-4 py-2 rounded"
+                      className="bg-teal-600 text-white text-xl px-6 py-2 rounded-full hover:bg-teal-700"
                     >
                       Simpan
                     </button>

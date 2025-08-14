@@ -39,7 +39,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-screen">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen font-sofia">
       <div className="w-[446px] flex flex-col gap-6">
         <h1 className="text-[60px] text-[#1D2225] text-center font-[400] drop-shadow-md"
           style={{ fontFamily: 'Snowstorm, sans-serif' }}

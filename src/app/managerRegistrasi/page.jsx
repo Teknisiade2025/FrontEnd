@@ -64,60 +64,63 @@ export default function HomePage() {
   };
 
   const handleLogout = () => {
-    router.push('/login'); 
+    const confirmLogout = window.confirm("Apakah Anda yakin ingin keluar?");
+    if (confirmLogout) {
+      router.push('/login');
+    }
   };
 
   return (
     <div
-      className="flex flex-col h-[110vh] max-w-screen pt-10 gap-1 w-[100vw]  bg-[url('/bglogin.svg')] bg-no-repeat bg-cover"
+      className="flex flex-col h-[100vh] max-w-screen pt-10 gap-1 w-[100vw] bg-[url('/bglogin.svg')] bg-no-repeat bg-cover overflow-hidden"
     >
       {/* HEADER */}
-      <div className="relative z-50 flex items-center  justify-between pl-20 pt-0 w-[95%]">
+      <div className="relative z-50 flex items-center justify-between pl-20 pt-0 w-[95%]">
 
-
-        <div className="flex items-center gap-4 ">
-          {/* Toggle Role */}
-          <div className="flex w-71 h-14 px-8 py-2 justify-center bg-[#8B5E3C] rounded-[44.15px]  gap-[5px] ">
+      {/* Toggle Role */}
+          <div className="font-sofia font-semibold flex w-82 h-14 px-2 py-2 justify-center bg-[#8B5E3C] rounded-[44.15px]  gap-[8px] ">
             <button
               onClick={() => handleRoleChange('Atlet')}
-              className={`flex-1 py-2 px-8 mx-1 w-full rounded-[37.74px] flex justify-center items-center
+              className={`flex-1 py-2 w-full rounded-[37.74px] flex justify-center items-center
                 ${selectedRole === 'Atlet' ? 'bg-[#F8E7C1]' : 'bg-[#BFA78A]'}`}
             >
               <span className="text-neutral-800 text-sm font-extrabold">Atlet</span>
             </button>
             <button
               onClick={() => handleRoleChange('Coach')}
-              className={`flex-1 py-2 px-8 mx-1 w-full rounded-[37.74px] flex justify-center items-center
+              className={`flex-1 py-2 w-full rounded-[37.74px] flex justify-center items-center
                 ${selectedRole === 'Coach' ? 'bg-[#F8E7C1]' : 'bg-[#BFA78A]'}`}
             >
               <span className="text-neutral-800 text-sm font-extrabold">Coach</span>
             </button>
           </div>
 
+        <div className="flex justify-start items-center gap-10 ">
           {/* Judul Registrasi */}
-          <h1 className="text-3xl px-15 font-normal font-snowstorm text-neutral-900">
+          <h1 className="text-3xl font-normal font-snowstorm text-neutral-900">
             Registrasi {selectedRole}
           </h1>
-        </div>
-
-        {/* Logout Button */}
+          
+          <div className="h-8 border-l border-neutral-900"></div>
+          
+          {/* Logout Button */}
             <div
-              className="flex flex-row items-center gap-2 cursor-pointer"
+              className="flex flex-row items-center gap-1 cursor-pointer"
               onClick={handleLogout} // bikin fungsi handleLogout sesuai kebutuhan
             >
-                <IoLogOut className="w-8 h-8 " />
-              <div className="text-center  text-3xl  font-snowstorm font-normal">
+                <IoLogOut className="w-7 h-7 " />
+              <div className="text-center  text-xl  font-snowstorm font-normal">
                 Keluar
               </div>
             </div>
-        
-
+        </div>
+      
         {/* Info Cabang */}
         {selectedData && (
-          <div className="flex items-center gap-2 px-20 text-2xl font-normal font-snowstorm">
-            <span>{selectedData.mainCategory}</span>
+          <div className="flex items-center gap-2 font-normal font-snowstorm">
+            <span className="text-3xl">{selectedData.mainCategory}</span>
             <span>•</span> 
-            <span>{selectedData.subCategory}</span>
+            <span className="text-xl">{selectedData.subCategory}</span>
           </div>
         )}
 

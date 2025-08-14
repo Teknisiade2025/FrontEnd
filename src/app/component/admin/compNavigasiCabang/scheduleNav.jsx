@@ -137,12 +137,12 @@ const CabangNavigasi = ({ onCategorySelect, onClose }) => {
           
           {/* Cabang Olahraga */}
           <div className="w-full">
-            <div className="px-3 pb-4">
+            <div className="px-3 pb-1">
               <div className="text-[#FBEBD2] text-[26px] font-normal font-['Snowstorm']">
                 Cabang Olahraga
               </div>
             </div>
-            <div className="w-full p-2.8 flex flex-col gap-3.5 overflow-y-auto max-h-[300px] custom-scrollbar">
+            <div className="w-full p-2.8 pr-2 flex flex-col gap-3.5 overflow-y-auto max-h-[300px] custom-scrollbar rounded-xl">
               {cabangOlahraga.map((cabang, index) => (
                 <div
                   key={index}
@@ -183,12 +183,12 @@ const CabangNavigasi = ({ onCategorySelect, onClose }) => {
 
           {/* Seni */}
           <div className="w-full mt-6">
-            <div className="px-3 pb-4">
+            <div className="px-3 pb-2">
               <div className="text-[#FBEBD2] text-[26px] font-normal font-['Snowstorm']">
                 Cabang SENI
               </div>
             </div>
-            <div className="w-full p-2.8 flex flex-col gap-3.5 overflow-y-auto max-h-[300px] custom-scrollbar">
+            <div className="w-full p-2.8 pr-2 flex flex-col gap-3.5 overflow-y-auto max-h-[300px] custom-scrollbar rounded-xl">
               {cabangSeni.map((cabang, index) => (
                 <div
                   key={index}
@@ -259,19 +259,19 @@ const CabangNavigasi = ({ onCategorySelect, onClose }) => {
       <style jsx global>{`
         .custom-scrollbar {
           scrollbar-width: thin;
-          scrollbar-color: #262626 #FBEBD2;
+          scrollbar-color: #FBEBD2 #806037;
         }
         .custom-scrollbar::-webkit-scrollbar {
           width: 12px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #FBEBD2;
+          background: #806037;
           border-radius: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #262626;
+          background: #FBEBD2;
           border-radius: 8px;
-          border: 2px solid #FBEBD2;
+
         }
       `}</style>
     </div>

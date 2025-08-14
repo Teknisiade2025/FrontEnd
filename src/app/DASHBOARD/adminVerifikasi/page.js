@@ -28,7 +28,7 @@ const AdminVerifikasi = () => {
   };
 
   return (
-    <div className={`flex flex-col h-[110vh] w-screen pt-1 gap-1 bg-[url('/bgadminverif.svg')] bg-center bg-contain overflow-hidden font-sofia`}>
+    <div className={`flex flex-col h-[100vh] w-screen pt-1 gap-1 bg-[url('/bgadminverif.svg')] bg-center bg-contain overflow-hidden font-sofia`}>
       {!selectedData.mainCategory && (
         <CabangDiversifikasi />
       )}
