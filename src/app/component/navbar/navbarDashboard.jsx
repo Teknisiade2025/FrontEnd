@@ -42,7 +42,7 @@ const Navbar = () => {
       <div className="p-4 sm:p-4 md:p-7">
         <div className="rounded-[40px] shadow-md bg-[radial-gradient(ellipse_75.58%_75.58%_at_45.52%_50%,_#FBEAD1_0%,_#D0B58D_100%)] flex items-center justify-between px-6 py-1 md:py-2 relative z-40">
           {/* Logo */}
-          <Link href="/mainPage">
+          <Link href="/DASHBOARD/adminDashboard">
           <Image
             src="/logoTeksid.png"
             alt="Logo"
@@ -56,9 +56,10 @@ const Navbar = () => {
           <div className="hidden md:flex gap-6 lg:gap-12 items-center text-neutral-800 text-base lg:text-xl font-black font-['Sofia_Sans_Condensed'] flex-wrap max-w-[70%]">
             <a href="/DASHBOARD/adminDashboard" className="hover:underline whitespace-nowrap">Menu Utama</a>
             <a href="/DASHBOARD/adminVerifikasi" className="hover:underline whitespace-nowrap">Verifikasi Peserta</a>
-            <a href="/DASHBOARD/formJadwal" className="hover:underline whitespace-nowrap">Schedule Pertandingan</a>
+            <a href="/DASHBOARD/adminJadwal" className="hover:underline whitespace-nowrap">Schedule Pertandingan</a>
 
             <a href="/DASHBOARD/adminScoreboard" className="hover:underline whitespace-nowrap">Update Skor</a>
+            <Link href="/DASHBOARD/adminMedal" className="hover:underline whitespace-nowrap">Update Klasmen</Link>
           </div>
 
           {/* Login (Desktop) */}

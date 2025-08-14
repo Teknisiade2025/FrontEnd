@@ -137,7 +137,16 @@ const JadwalOlahraga = ({ cabang, kategori }) => {
   const [currentKategori, setKategori] = useState(kategori);
 
   const cabangOptions = ["Basket", "Sepak Bola", "Bulu Tangkis"];
-  const pilihanTim = ["HMTPWK", "KMTETI", "HIMATIKA", "HIMAFAR"];
+  const pilihanTim = ["HMTPWK",
+  "KMTA",
+  "KMTG",
+  "KMTSL",
+  "HMTG",
+  "HMTI",
+  "KMTETI",
+  "KMTNTF",
+  "KMTM",
+  "KMTK"];
   const pilihanBabak = ["Penyisihan", "Perempat Final", "Semi Final", "Final"];
 
   // Fetch data dari Supabase
@@ -340,7 +349,7 @@ const JadwalOlahraga = ({ cabang, kategori }) => {
           <span className="text-white font-bold">Tambah Jadwal</span>
         </button>
       </div>
-          <div className="flex flex-col gap-6 overflow-y-auto max-h-[300px]">
+          <div className="flex flex-col gap-6 overflow-y-auto max-h-[500px]">
             {jadwalList.length > 0 ? (
               jadwalList.map((match) => (
                 <MatchCard

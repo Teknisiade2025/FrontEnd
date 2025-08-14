@@ -39,7 +39,7 @@ const KmhmNavigasi = ({ activeKmhm, setActiveKmhm }) => {
             {daftarKmhm.map((nama, index) => (
               <div
                 key={index}
-                className={`w-full h-13 px-6 rounded-2xl flex items-center cursor-pointer transition-all duration-200
+                className={`w-full h-13 px-6 rounded-2xl flex items-center cursor-pointer transition-all 
                   ${hoveredKmhm === nama ? "bg-[#065D79] text-gray-300" :
                   activeKmhm === nama ? "bg-[#065D79] text-gray-300" :
                   "bg-[#FBEBD2] text-gray-900"

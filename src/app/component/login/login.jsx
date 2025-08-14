@@ -33,13 +33,13 @@ export default function SignIn() {
     } else {
       setError('');
       // kirim kmhm_name via router state
-      const target = role === 'page-a' ? '/DASHBOARD/managerDashboard' : '/DASHBOARD/adminDashboard';
+      const target = role === 'page-a' ? '/managerDashboard' : '/DASHBOARD/adminDashboard';
       router.push(`${target}?kmhm=${encodeURIComponent(kmhm_name ?? '')}`);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-screen">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen font-sofia">
       <div className="w-[446px] flex flex-col gap-6">
         <h1 className="text-[60px] text-[#1D2225] text-center font-[400] drop-shadow-md"
           style={{ fontFamily: 'Snowstorm, sans-serif' }}

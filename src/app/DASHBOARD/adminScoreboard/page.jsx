@@ -1,8 +1,6 @@
 'use client';
 import React, { useState, useEffect }  from 'react';
-import NavigasiCabang from "@/app/component/admin/compNavigasiCabang/cabangNav.jsx"
-
-
+import NavigasiCabang from "@/app/component/admin/compNavigasiCabang/scheduleNav.jsx"
 import { Suspense } from 'react';
 import ScoreboardOlahraga from "@/app/component/admin/scoreboard/scoreboard";
 import ScoreboardSeni from "@/app/component/admin/scoreboard/scoreboardSeni";
@@ -19,10 +17,10 @@ const ScoreboardPage = () => {
       setSelectedData(data);
     }; 
   return (
-    <div className="flex flex-col min-h-screen items-center w-screen  bg-[url('/admin/bg-medal.svg')] overflow-x-hidden">
+    <div className="flex flex-col h-[100vh] items-center w-screen  bg-[url('/admin/bg-medal.svg')] overflow-x-hidden">
 
       {/* HEADER */}
-      <div className="flex items-center justify-end pl-22 mx-15 mt-50 w-[100%]">
+      <div className="flex items-center justify-end pl-22 mx-15  w-[100%]">
         <div className="flex items-center gap-2 px-20 text-2xl font-normal font-snowstorm">
         {/* Info Cabang */}
         {selectedData && (
@@ -36,7 +34,7 @@ const ScoreboardPage = () => {
       </div>
 
   {/* Sidebar Navigasi */}
-  <div className="flex flex-row h-[500px] w-full items-center">
+  <div className="flex flex-row h-[500px] w-full items-center scale-90">
   <div className=" pl-10 h-full">
     <NavigasiCabang onCategorySelect={handleCategorySelect} />
   </div>
