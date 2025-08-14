@@ -52,7 +52,7 @@ const AdminVerifikasi = () => {
               </button>
             </div>
 
-            <div className="flex items-center gap-2 px-20">
+            <div className="flex items-center gap-2 px-5">
               <span className="text-[2vw] font-snowstorm font-normal text-[#3C3022]">
                 {selectedData.mainCategory}
               </span>
@@ -67,15 +67,15 @@ const AdminVerifikasi = () => {
             </div>
           </header>
 
-          <div className="overflow-y-hidden overflow-x-hidden flex flex-row max-h-screen h-[90vh] items-center pl-5 pr-20 gap-1">
-            <div>
+          <div className="flex flex-row pr-15 pl-5 gap-45 h-[600px] w-full items-center justify-center">
+            <div className="w-64 px-2 -mt-40 h-full">
               <KmhmNavigasi
                 activeKmhm={activeKmhm}
                 setActiveKmhm={setActiveKmhm}
               />
             </div>
             
-            <div className="ml-2 h-[90vh] w-full ">
+            <div className="flex-1 px-3 h-full w-[100vh] pt-3">
               {activeKmhm ? (
                 <Verifikasi
                   kmhmName={activeKmhm}
