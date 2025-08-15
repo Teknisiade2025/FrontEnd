@@ -209,7 +209,7 @@ useEffect(() => {
 
   // Cek semua field wajib
   const requiredFields = [
-    'nama','kategori','cabang','asal_pknin','jerasam','angkatan','email','telp',
+    'nama','jerasam','angkatan','email','telp',
     'alamat','tanggal_lahir','id_line','asal_provinsi','no_institusi'
   ];
 
@@ -888,14 +888,14 @@ const handleDelete = async (athlete) => {
                     <button
                       type="button"
                       onClick={() => { setShowForm(false); setReadMode(false); }}
-                      className="bg-teal-600 text-white px-4 py-2 rounded"
+                      className="bg-teal-600 text-white px-4 py-2 rounded-full border-4 border-white"
                     >
                       Tutup
                     </button>
                   ) : (
                     <button
                       type="submit"
-                      className="bg-teal-600 text-white text-xl px-6 py-2 rounded-full hover:bg-teal-700"
+                      className="bg-teal-600 text-white text-xl px-6 py-2 border-4 border-white rounded-full hover:bg-teal-700"
                     >
                       Simpan
                     </button>

@@ -36,19 +36,10 @@ export default function HomePage() {
   };
 
   return (
-<<<<<<< HEAD
     <div className="flex flex-row min-h-screen pt-10 gap-1 w-screen bg-[url('/bgdashboard.svg')] bg-cover bg-no-repeat bg-center">
       <div className="flex-1 pt-8">
         <Dashboard kmhmName={kmhmName} goToAthletes={goToAthletes} />
       </div>
-=======
-    <div
-      className="h-[100vh] w-screen bg-[url('/bgdashboard2.svg')] bg-cover bg-no-repeat bg-center overflow-hidden">
-    <div className="flex-1 pt-8">
-        
-      <Dashboard />
-    </div>
->>>>>>> c323364f1eaf2c95d854b3a69b423aea68cc5a83
     </div>
   );
 }

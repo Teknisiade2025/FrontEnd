@@ -19,6 +19,51 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
   const [readMode, setReadMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
+const loadUsers = useCallback(async () => {
+  try {
+    setLoading(true);
+
+    const [athletesRes, coachesRes] = await Promise.all([
+      supabase.from('athletes').select('*').order('created_at', { ascending: false }),
+      supabase.from('coaches').select('*').order('created_at', { ascending: false })
+    ]);
+
+    if (athletesRes.error) throw athletesRes.error;
+    if (coachesRes.error) throw coachesRes.error;
+
+    const combined = [
+      ...(athletesRes.data || []).map(a => ({ ...a, role: 'Athlete' })),
+      ...(coachesRes.data || []).map(c => ({ ...c, role: 'Coach' }))
+    ];
+
+    setAllUsers(combined);
+
+    // Filter otomatis
+    let filtered = combined;
+    if (kmhmName) filtered = filtered.filter(u => u.asal_pknin === kmhmName);
+    if (selectedSport?.mainCategory) filtered = filtered.filter(u => u.cabang === selectedSport.mainCategory);
+    if (selectedSport?.subCategory) filtered = filtered.filter(u => u.kategori === selectedSport.subCategory);
+
+    setFilteredAthletes(filtered);
+
+  } catch (err) {
+    console.error("Error loading users:", err);
+    setAllUsers([]);
+    setFilteredAthletes([]);
+  } finally {
+    setLoading(false);
+  }
+}, [selectedSport, kmhmName]);
+
+useEffect(() => {
+  if (selectedSport && kmhmName) {
+    loadUsers();
+  }
+}, [selectedSport, kmhmName, loadUsers]);
+
+
 
 const loadAllUsers = useCallback(async () => {
   try {
@@ -45,15 +90,21 @@ const loadAllUsers = useCallback(async () => {
     setLoading(false);
   }
 }, []);
-useEffect(() => {
-  loadAllUsers();
-}, [loadAllUsers]);
+
+
+
 
 
 
 
   // Load data athletes dari Supabase dengan useCallback untuk stabilitas
 const loadAthletes = useCallback(async () => {
+  console.log('Props saat loadAthletes:', {
+    mainCategory: selectedSport?.mainCategory,
+    subCategory: selectedSport?.subCategory,
+    kmhmName
+  });
+
   if (!selectedSport?.mainCategory || !selectedSport?.subCategory || !kmhmName) {
     console.log('Missing required data:', { 
       mainCategory: selectedSport?.mainCategory, 
@@ -78,7 +129,7 @@ const loadAthletes = useCallback(async () => {
       .select('*')
       .eq('cabang', selectedSport.mainCategory)
       .eq('kategori', selectedSport.subCategory)
-      .eq('asal_pknin', kmhmName) // filter sesuai asal_pknin
+      .eq('asal_pknin', kmhmName)
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -95,6 +146,7 @@ const loadAthletes = useCallback(async () => {
     setLoading(false);
   }
 }, [selectedSport?.mainCategory, selectedSport?.subCategory, kmhmName, tableName, role]);
+
 
 // Load athletes saat pertama kali mount dan tiap ada perubahan
 useEffect(() => {
@@ -165,41 +217,41 @@ const handleRead = (athlete) => {
     kartu_institusi: null
   });
 
-  // Update formData ketika kategori / cabang / kmhmName berubah
   useEffect(() => {
-  let filtered = allUsers;
+  console.log('All users loaded:', allUsers);
+}, [allUsers]);
 
-  // Filter berdasarkan kmhmName
+
+  // Update formData ketika kategori / cabang / kmhmName berubah
+useEffect(() => {
+  let filtered = [...allUsers];
+
+  // Filter kmhmName
   if (kmhmName) {
-    filtered = filtered.filter(user => user.asal_pknin === kmhmName);
+    filtered = filtered.filter(u => u.asal_pknin?.trim() === kmhmName.trim());
   }
 
-  // Filter berdasarkan cabang dan kategori
+  // Filter cabang & kategori
   if (selectedSport?.mainCategory) {
-    filtered = filtered.filter(user => user.cabang === selectedSport.mainCategory);
+    filtered = filtered.filter(u => u.cabang?.trim() === selectedSport.mainCategory.trim());
   }
   if (selectedSport?.subCategory) {
-    filtered = filtered.filter(user => user.kategori === selectedSport.subCategory);
+    filtered = filtered.filter(u => u.kategori?.trim() === selectedSport.subCategory.trim());
   }
 
-  if (searchTerm) {
-    const lowerTerm = searchTerm.toLowerCase();
-    filtered = filtered.filter(
-      user =>
-        user.nama?.toLowerCase().includes(lowerTerm) ||
-        user.cabang?.toLowerCase().includes(lowerTerm) ||
-        user.kategori?.toLowerCase().includes(lowerTerm)
-    );
-  }
-
+  // Filter status (activeTab misal 'UNVERIFIED', 'VERIFIED', 'TOTAL')
   if (activeTab && activeTab !== 'TOTAL') {
-    filtered = filtered.filter(
-      user => user.status?.toUpperCase() === activeTab?.toUpperCase()
-    );
+    filtered = filtered.filter(u => u.status?.toUpperCase() === activeTab.toUpperCase());
   }
 
-  setFilteredAthletes(filtered);
-}, [allUsers, searchTerm, activeTab, kmhmName, selectedSport]);
+  setFilteredUsers(filtered);
+
+}, [allUsers, selectedSport, kmhmName, activeTab]);
+
+
+
+
+
 
 
 
@@ -312,14 +364,8 @@ const handleRead = (athlete) => {
             <div className="w-15 h-15 bg-teal-700 rounded-full flex items-center justify-center group-hover:bg-teal-600">
               <Download className="w-6 h-6 text-white" />
             </div>
-<<<<<<< HEAD
             <div className="text-center text-white text-lg font-bold">
               Export Excel
-=======
-            <div className="flex flex-col leading-tight text-center text-white text-lg font-bold">
-              <span>Export</span>
-              <span>Excel</span>
->>>>>>> c323364f1eaf2c95d854b3a69b423aea68cc5a83
             </div>
           </div>
         </div>
@@ -384,14 +430,14 @@ const handleRead = (athlete) => {
         </div>
       )}
 
-      {/* No Data Message */}
-      {!loading && athletes.length === 0 && (
-        <div className="flex items-center justify-center py-8">
-          <div className="font-sofia text-white text-lg">
-            No {role} data found for {selectedSport?.mainCategory} - {selectedSport?.subCategory} in {kmhmName}
-          </div>
-        </div>
-      )}
+    {/* No Data Message */}
+{!loading && filteredUsers.length === 0 && (
+  <div className="flex items-center justify-center py-8">
+    <div className="font-sofia text-white text-lg">
+      No users found for {selectedSport?.mainCategory} - {selectedSport?.subCategory} in {kmhmName}
+    </div>
+  </div>
+)}
 
       {/* Empty Filtered Results */}
       {!loading && athletes.length > 0 && filteredAthletes.length === 0 && (
@@ -410,7 +456,7 @@ const handleRead = (athlete) => {
           paddingTop: '12px',
           paddingRight: '12px'
         }}>
-        {filteredAthletes.map((athlete) => (
+        {filteredUsers.map((athlete) => (
           <div key={athlete.id} className="flex gap-4">
             <div className="flex-none bg-amber-100 rounded-3xl p-8 flex justify-between items-center" 
             style={{
@@ -418,7 +464,6 @@ const handleRead = (athlete) => {
               overflow: 'hidden' // Supaya tidak scroll
             }}>
               <div className="flex items-center gap-8">
-<<<<<<< HEAD
                 <div className="flex flex-col items-center font-bold font-snowstorm text-lg gap-8 ">
                 <h3>{athlete.role}</h3>
                 <div className="w-24 h-24 bg-teal-600 rounded-xl flex flex-col items-center justify-center">
@@ -435,21 +480,6 @@ const handleRead = (athlete) => {
                   <div className="flex"><div className="w-44 font-bold">No. HP</div>{athlete.telp}</div>
                   <div className="flex"><div className="w-44 font-bold">Tempat, Tanggal Lahir</div>{athlete.tanggal_lahir}</div>
                   <div className="flex"><div className="w-44 font-bold">Asal Provinsi</div>{athlete.asal_provinsi}</div>
-=======
-                <div className="w-24 h-30 bg-teal-600 rounded-xl flex items-center justify-center">
-                  <User className="w-15 h-15 text-amber-100" />
-                </div>
-                <div className="space-y-1">
-                  <div className="flex"><div className="w-44 font-bold truncate">Nama</div><div className="truncate w-44">{athlete.nama}</div></div>
-                  <div className="flex"><div className="w-44 font-bold truncate">Cabang</div><div className="truncate w-44">{athlete.cabang} {athlete.kategori}</div></div>
-                  <div className="flex"><div className="w-44 font-bold truncate">Asal KMHM</div><div className="truncate w-44">{athlete.asal_pknin}</div></div>
-                  <div className="flex"><div className="w-44 font-bold truncate">Jurusan</div><div className="truncate w-44">{athlete.jerasam}</div></div>
-                  <div className="flex"><div className="w-44 font-bold truncate">Angkatan</div><div className="truncate w-44">{athlete.angkatan}</div></div>  
-                  <div className="flex"><div className="w-44 font-bold truncate">Email</div><div className="truncate w-44">{athlete.email}</div></div>
-                  <div className="flex"><div className="w-44 font-bold truncate">No. HP</div><div className="truncate w-44">{athlete.telp}</div></div>
-                  <div className="flex"><div className="w-44 font-bold truncate">Tempat, Tanggal Lahir</div><div className="truncate w-44">{athlete.tanggal_lahir}</div></div>
-                  <div className="flex"><div className="w-44 font-bold truncate">Asal Provinsi</div><div className="truncate w-44">{athlete.asal_provinsi}</div></div>
->>>>>>> c323364f1eaf2c95d854b3a69b423aea68cc5a83
                 </div>
               </div>
               <div className="flex flex-col items-center gap-4">
@@ -476,7 +506,6 @@ const handleRead = (athlete) => {
                 {athlete.status === 'UNVERIFIED' && (
                   <div className="flex flex-col gap-2 w-full pt-8">
                     <button 
-<<<<<<< HEAD
   type="button"
   onClick={() => updateStatus(athlete.id, 'VERIFIED')}
   className="w-full bg-green-600 text-white py-1 rounded hover:bg-green-700"
@@ -491,19 +520,6 @@ const handleRead = (athlete) => {
   Revisi
 </button>
 
-=======
-                      onClick={() => updateStatus(athlete.id, 'VERIFIED')}
-                      className="w-30 bg-green-600 text-white py-1 rounded-full hover:bg-green-700"
-                    >
-                      Verifikasi
-                    </button>
-                    <button 
-                      onClick={() => updateStatus(athlete.id, 'REVISION')}
-                      className="w-30 bg-yellow-600 text-white py-1 rounded-full hover:bg-yellow-700"
-                    >
-                      Revisi
-                    </button>
->>>>>>> c323364f1eaf2c95d854b3a69b423aea68cc5a83
                   </div>
                 )}
               </div>

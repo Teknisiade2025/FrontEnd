@@ -10,7 +10,7 @@ const CabangDiversifikasi = () => {
     { name: "Sepak Bola", icon: "⚽", kategori: ["Putra"] },
     { name: "Voli", icon: "🏐", kategori: ["Putra", "Putri"] },
     { name: "Basket", icon: "🏀", kategori: ["Putra", "Putri"] },
-    { name: "Bulu Tangkis", icon: "🏸", kategori: [
+    { name: "Badminton", icon: "🏸", kategori: [
       "Tunggal Putra",
       "Tunggal Putri",
       "Ganda Putra",
@@ -41,21 +41,21 @@ const CabangDiversifikasi = () => {
     { name: "Catur", icon: "♟️", kategori: ["Campuran"] },
     { name: "FIFA", icon: "🎮", kategori: ["Putra"] },
     { name: "PUBG", icon: "🎮", kategori: ["Putra"] },
-    { name: "Mobile Legends", icon: "📱", kategori: ["Putra"] },
+    { name: "Mobile Legend", icon: "📱", kategori: ["Putra"] },
     { name: "Valorant", icon: "🎯", kategori: ["Putra"] }
   ];
 
   const cabangSeni = [
     { name: "Band", icon: "🎵", kategori: [] },
     { name: "Vokal Grup", icon: "🎤", kategori: [] },
-    { name: "Vokal Solo", icon: "🎤", kategori: ["Putra", "Putri"] },
-    { name: "Dance", icon: "💃", kategori: [] },
+    { name: "Solo Vokal", icon: "🎤", kategori: ["Putra", "Putri"] },
+    { name: "Modern Dance", icon: "💃", kategori: [] },
     { name: "Tari Tradisional", icon: "🩰", kategori: [] },
     { name: "Fotografi", icon: "📸", kategori: [] },
     { name: "Seni Lukis", icon: "🎨", kategori: [] },
     { name: "Cipta Puisi", icon: "📝", kategori: [] },
     { name: "Monolog", icon: "🎭", kategori: [] },
-    { name: "Poster", icon: "📋", kategori: [] }
+    { name: "Desain oster", icon: "📋", kategori: [] }
   ];
 
   const [selectedCabang, setSelectedCabang] = useState(null);

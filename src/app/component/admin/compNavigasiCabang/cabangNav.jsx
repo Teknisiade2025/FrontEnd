@@ -56,7 +56,7 @@ const CabangNavigasi = ({ onCategorySelect, onClose }) => {
       "Tunggal Putra",
       "Tunggal Putri",
       "Ganda Putra",
-      "Ganda Putri",
+      "Ganda Putri", 
       "Ganda Campuran",
     ],
     "Atletik": [
