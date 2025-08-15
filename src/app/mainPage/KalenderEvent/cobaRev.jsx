@@ -237,8 +237,7 @@ const isNextDisabled = startIndex >= maxIndex;
                 <div className="w-full max-w-xl overflow-hidden">
                   <div
                     className="flex gap-4 transition-transform duration-500 ease-in-out"
-                    style={{ transform: `translateX(-${startIndex * (100 / visibleItems)}%)` }}
-
+                    style={{ transform: `translateX(-${startIndex * 40.333}%)` }}
                   >
                     {events.map((event, i) => (
                       <div
