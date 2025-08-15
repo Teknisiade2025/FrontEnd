@@ -50,6 +50,8 @@ useEffect(() => {
 }, [loadAllUsers]);
 
 
+
+
   // Load data athletes dari Supabase dengan useCallback untuk stabilitas
 const loadAthletes = useCallback(async () => {
   if (!selectedSport?.mainCategory || !selectedSport?.subCategory || !kmhmName) {
@@ -123,6 +125,11 @@ const updateStatus = async (id, newStatus) => {
   }
 };
 
+useEffect(() => {
+  if (selectedSport?.mainCategory && selectedSport?.subCategory && kmhmName && role) {
+    loadAthletes();
+  }
+}, [selectedSport, kmhmName, role, loadAthletes]);
 
 
 
@@ -160,27 +167,19 @@ const handleRead = (athlete) => {
 
   // Update formData ketika kategori / cabang / kmhmName berubah
   useEffect(() => {
-    if (selectedSport?.subCategory && selectedSport?.mainCategory) {
-      setFormData((prev) => ({
-        ...prev,
-        kategori: selectedSport.subCategory,
-        cabang: selectedSport.mainCategory,
-        asal_pknin: kmhmName
-      }));
-    }
-  }, [selectedSport, kmhmName]);
-
-  // Load data athletes dari Supabase dengan useCallback untuk stabilitas
-
-
-
-  // Load athletes when dependencies change
-  useEffect(() => {
   let filtered = allUsers;
 
   // Filter berdasarkan kmhmName
   if (kmhmName) {
     filtered = filtered.filter(user => user.asal_pknin === kmhmName);
+  }
+
+  // Filter berdasarkan cabang dan kategori
+  if (selectedSport?.mainCategory) {
+    filtered = filtered.filter(user => user.cabang === selectedSport.mainCategory);
+  }
+  if (selectedSport?.subCategory) {
+    filtered = filtered.filter(user => user.kategori === selectedSport.subCategory);
   }
 
   if (searchTerm) {
@@ -200,7 +199,8 @@ const handleRead = (athlete) => {
   }
 
   setFilteredAthletes(filtered);
-}, [allUsers, searchTerm, activeTab, kmhmName]);
+}, [allUsers, searchTerm, activeTab, kmhmName, selectedSport]);
+
 
 
 
@@ -238,15 +238,37 @@ const handleRead = (athlete) => {
 
   // Helper function to count athletes by status
   function countByStatus(status) {
-  // Filter semua user dulu berdasarkan kmhmName
-  const filteredList = kmhmName
-    ? allUsers.filter(user => user.asal_pknin === kmhmName)
-    : allUsers;
+  let filteredList = allUsers;
+
+  // Filter sesuai kmhmName
+  if (kmhmName) {
+    filteredList = filteredList.filter(user => user.asal_pknin === kmhmName);
+  }
+
+  // Filter sesuai cabang dan kategori
+  if (selectedSport?.mainCategory) {
+    filteredList = filteredList.filter(user => user.cabang === selectedSport.mainCategory);
+  }
+  if (selectedSport?.subCategory) {
+    filteredList = filteredList.filter(user => user.kategori === selectedSport.subCategory);
+  }
+
+  // Filter sesuai searchTerm (opsional, kalau mau ikut search juga)
+  if (searchTerm) {
+    const lowerTerm = searchTerm.toLowerCase();
+    filteredList = filteredList.filter(
+      user =>
+        user.nama?.toLowerCase().includes(lowerTerm) ||
+        user.cabang?.toLowerCase().includes(lowerTerm) ||
+        user.kategori?.toLowerCase().includes(lowerTerm)
+    );
+  }
 
   if (status === 'TOTAL') return filteredList.length;
 
-  return filteredList.filter(user => user.status === status).length;
+  return filteredList.filter(user => user.status?.toUpperCase() === status?.toUpperCase()).length;
 }
+
 
 
 

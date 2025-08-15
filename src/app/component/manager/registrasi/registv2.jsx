@@ -20,6 +20,46 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   const [user, setUser] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
 
+  const loadAthletes = useCallback(async () => {
+  if (!selectedSport?.mainCategory || !selectedSport?.subCategory) {
+    setAthletes([]);
+    return;
+  }
+
+  try {
+    setLoading(true);
+    let { data, error } = await supabase
+      .from(tableName)
+      .select('*')
+      .eq('cabang', selectedSport.mainCategory)
+      .eq('kategori', selectedSport.subCategory)
+      .eq('asal_pknin', kmhmName)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    // Filter untuk role 'user'
+    if (role === 'user') {
+      data = data.filter(a => a.owner === user.id);
+    }
+
+    setAthletes(data || []);
+  } catch (error) {
+    console.error(`Error loading ${role}:`, error.message);
+    setAthletes([]);
+  } finally {
+    setLoading(false);
+  }
+}, [selectedSport?.mainCategory, selectedSport?.subCategory, tableName, role, user]);
+
+useEffect(() => {
+  if (user && selectedSport?.mainCategory && selectedSport?.subCategory) {
+    loadAthletes();
+  }
+}, [user, selectedSport, kmhmName]);
+
+
+
 
   useEffect(() => {
   if (!user) return;
@@ -37,7 +77,6 @@ useEffect(() => {
   const getUser = async () => {
     const { data: { user }, error } = await supabase.auth.getUser();
     if (error || !user) {
-      // Kalau belum login, redirect ke login page
       router.push('/login');
     } else {
       setUser(user);
@@ -45,6 +84,13 @@ useEffect(() => {
   };
   getUser();
 }, []);
+
+useEffect(() => {
+  if (user) {
+    loadAthletes();
+  }
+}, [user]);
+
 
   const [formData, setFormData] = useState({
     nama: '',
@@ -77,31 +123,7 @@ useEffect(() => {
   }, [selectedSport, kmhmName]);
 
   // Load data athletes
-  const loadAthletes = useCallback(async () => {
-    if (!selectedSport?.mainCategory || !selectedSport?.subCategory) {
-      setAthletes([]);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from(tableName)
-        .select('*')
-        .eq('cabang', selectedSport.mainCategory)
-        .eq('kategori', selectedSport.subCategory)
-        .eq('asal_pknin', kmhmName)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setAthletes(data || []);
-    } catch (error) {
-      console.error(`Error loading ${role}:`, error.message);
-      setAthletes([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [selectedSport?.mainCategory, selectedSport?.subCategory, tableName, role]);
+  
 
   // Filter otomatis
   useEffect(() => {
@@ -338,15 +360,7 @@ if (formData.kartu_institusi instanceof File) {
 };
 
 
-  const handleDelete = async (id) => {
-    if (window.confirm(`Yakin ingin menghapus data ${role} ini?`)) {
-      try {
-        await deleteAthlete(id);
-      } catch {
-        alert(`Gagal menghapus data ${role}`);
-      }
-    }
-  };
+ 
 
   const countByStatus = (status) => {
     if (status === 'TOTAL') {
@@ -377,6 +391,28 @@ if (formData.kartu_institusi instanceof File) {
   setShowForm(false);
   setReadMode(false);
 };
+
+const handleDelete = async (athlete) => {
+  if (!athlete || !athlete.id) {
+    console.error("Athlete atau ID tidak valid", athlete);
+    return;
+  }
+
+  if (athlete.status?.toUpperCase() === 'VERIFIED') {
+    alert('Data sudah terverifikasi dan tidak dapat dihapus.');
+    return;
+  }
+
+  if (window.confirm(`Yakin ingin menghapus data ${role} ini?`)) {
+    try {
+      await deleteAthlete(athlete.id);
+    } catch (error) {
+      console.error(`Error deleting ${role}:`, error.message);
+    }
+  }
+};
+
+
 
 
   // 🔹 Blokir jika kmhmName kosong
@@ -601,7 +637,7 @@ if (formData.kartu_institusi instanceof File) {
                 </button>
                 <button 
                   className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"
-                  onClick={() => handleDelete(athlete.id)}
+                  onClick={() => handleDelete(athlete)}
                 >
                   <Trash2 className="w-5 h-5 text-white" />
                 </button>
