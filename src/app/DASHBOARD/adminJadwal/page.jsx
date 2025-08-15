@@ -18,10 +18,11 @@ const AdminSchedulePage = () => {
   }; 
 
   return (
-    <div className="flex flex-col h-[100vh] gap-10  w-[100vw] bg-[url('/admin/bg-medal.svg')] overflow-x-hidden">
+    <div className="flex flex-col h-[115vh] gap-1 pl-9.5 pr-13 w-screen bg-[url('/admin/bg-medal.svg')] bg-center bg-contain overflow-hidden">
 
     <div className="scale-88 pt-30">
      {/* HEADER */}
+
       <div className="flex items-center justify-end pl-22 mx-15 w-[97%]">
         <div className="flex items-center gap-2 mr-10 px-20  font-normal font-snowstorm relative -top-15">
         {/* Info Cabang */}
@@ -32,6 +33,7 @@ const AdminSchedulePage = () => {
             <span className="text-2.3xl">      •      </span> 
             
             <span className="text-2xl">{selectedData.subCategory}</span>
+
           </div>
         )}
       </div>
@@ -59,12 +61,12 @@ const AdminSchedulePage = () => {
           )
         ) : (
           <div className="w-full h-full  max-w-7xl mx-auto  rounded-[32px] shadow-lg"
-                  style={{
-          width: "900px",
-          height: "605px",
-          backgroundColor: "#806037",
-          border: "5px solid #FFFFFF",
-        }}>
+            style={{
+              width: "900px",
+              height: "605px",
+              backgroundColor: "#806037",
+              border: "3px solid #FFFFFF",
+            }}>
                     <div className="flex-1 h-full flex items-center justify-center">
                       <div className="text-lg font-semibold text-white text-center">
                          Silakan pilih cabang dan kategori dari menu sebelah

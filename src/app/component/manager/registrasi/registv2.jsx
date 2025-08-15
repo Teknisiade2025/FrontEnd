@@ -849,7 +849,7 @@ const handleDelete = async (athlete) => {
       href={formData.kartu_institusi} // URL file dari Supabase Storage
       target="_blank"
       rel="noopener noreferrer"
-      className="text-white-400 underline"
+      className="text-white text-bold underline"
     >
       Lihat/Klik untuk unduh KTM
     </a>

@@ -291,7 +291,7 @@ const handleRead = (athlete) => {
                   onClick={() => setActiveTab(status)}
                 >
                   <div className="flex items-center justify-between gap-4">
-                    <span className="font-sofia font-bold">{status}</span>
+                    <span className="font-bold">{status}</span>
                     <div className="flex items-center gap-2">
                       <div className="w-px h-4 bg-current opacity-50" />
                       <span className="text-sm">{countByStatus(status)}</span>
@@ -306,14 +306,20 @@ const handleRead = (athlete) => {
           </div>
           {/* Export Button */}
           <div 
-            className="flex flex-col items-center gap-2 cursor-pointer"
+            className="flex flex-col items-center gap-2 cursor-pointer group"
             onClick={exportToExcel}
           >
-            <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center">
-              <Download className="w-8 h-8 text-white" />
+            <div className="w-15 h-15 bg-teal-700 rounded-full flex items-center justify-center group-hover:bg-teal-600">
+              <Download className="w-6 h-6 text-white" />
             </div>
+<<<<<<< HEAD
             <div className="text-center text-white text-lg font-bold">
               Export Excel
+=======
+            <div className="flex flex-col leading-tight text-center text-white text-lg font-bold">
+              <span>Export</span>
+              <span>Excel</span>
+>>>>>>> c323364f1eaf2c95d854b3a69b423aea68cc5a83
             </div>
           </div>
         </div>
@@ -330,45 +336,46 @@ const handleRead = (athlete) => {
   return (
     <div className="w-full h-full max-w-7xl mx-auto px-12 py-9 bg-[#806037] border-4 border-white rounded-[32px] shadow-lg">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-8">
-        <div className="flex items-center gap-10">
-          {/* Status Tabs */}
-          <div className="flex items-center gap-2.5">
-            {['UNVERIFIED', 'REVISION', 'VERIFIED'].map((status) => (
-              <div
-                key={status}
-                className={`px-8 py-3 rounded-full shadow-md cursor-pointer transition-colors ${
-                  activeTab === status ? 'bg-teal-600 text-white' : 'bg-amber-200 text-gray-800'
-                }`}
-                onClick={() => setActiveTab(status)}
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-sofia font-bold">{status}</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-px h-4 bg-current opacity-50" />
-                    <span className="font-sofia text-sm">{countByStatus(status)}</span>
+        <div className="flex justify-between items-center mb-1 pr-10">
+          <div className="flex items-center gap-10">
+            {/* Status Tabs */}
+            <div className="flex items-center gap-2.5">
+              {['UNVERIFIED', 'REVISION', 'VERIFIED'].map((status) => (
+                <div
+                  key={status}
+                  className={`px-8 py-3 rounded-full shadow-md cursor-pointer transition-colors ${
+                    activeTab === status ? 'bg-teal-600 text-white' : 'bg-amber-200 text-gray-800'
+                  }`}
+                  onClick={() => setActiveTab(status)}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-bold">{status}</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-px h-4 bg-current opacity-50" />
+                      <span className="text-sm">{countByStatus(status)}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="text-white text-xl font-bold">
+              Total {role}: {countByStatus('TOTAL')}
+            </div>
           </div>
-          <div className="font-sofia text-white text-xl font-extrabold">
-            Total {role}: {countByStatus('TOTAL')}
+          {/* Export Button */}
+          <div 
+            className="flex flex-col items-center gap-2 cursor-pointer group"
+            onClick={exportToExcel}
+          >
+            <div className="w-15 h-15 bg-teal-700 rounded-full flex items-center justify-center group-hover:bg-teal-600">
+              <Download className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex flex-col leading-tight text-center text-white text-lg font-bold">
+              <span>Export</span>
+              <span>Excel</span>
+            </div>
           </div>
         </div>
-        {/* Export Button */}
-        <div 
-          className="flex flex-col items-center gap-2 cursor-pointer"
-          onClick={exportToExcel}
-        >
-          <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center">
-            <Download className="w-8 h-8 text-white" />
-          </div>
-          <div className="font-sofia text-center text-white text-lg font-bold">
-            Export <br/>Excel
-          </div>
-        </div>
-      </div>
 
       {/* Loading State */}
       {loading && (
@@ -396,19 +403,22 @@ const handleRead = (athlete) => {
       )}
 
       {/* Athletes List */}
-      <div 
-        className="space-y-4 "
+      <div className="space-y-4 custom-scrollbar rounded-xl" 
         style={{ 
           maxHeight: '400px',
           overflowY: 'auto',
           paddingTop: '12px',
-          paddingRight: '12px' 
-        }}
-      >
+          paddingRight: '12px'
+        }}>
         {filteredAthletes.map((athlete) => (
           <div key={athlete.id} className="flex gap-4">
-            <div className="flex-1 bg-amber-100 rounded-3xl p-8 flex justify-between items-center" >
+            <div className="flex-none bg-amber-100 rounded-3xl p-8 flex justify-between items-center" 
+            style={{
+              width: '600px', // Lebar tetap
+              overflow: 'hidden' // Supaya tidak scroll
+            }}>
               <div className="flex items-center gap-8">
+<<<<<<< HEAD
                 <div className="flex flex-col items-center font-bold font-snowstorm text-lg gap-8 ">
                 <h3>{athlete.role}</h3>
                 <div className="w-24 h-24 bg-teal-600 rounded-xl flex flex-col items-center justify-center">
@@ -425,6 +435,21 @@ const handleRead = (athlete) => {
                   <div className="flex"><div className="w-44 font-bold">No. HP</div>{athlete.telp}</div>
                   <div className="flex"><div className="w-44 font-bold">Tempat, Tanggal Lahir</div>{athlete.tanggal_lahir}</div>
                   <div className="flex"><div className="w-44 font-bold">Asal Provinsi</div>{athlete.asal_provinsi}</div>
+=======
+                <div className="w-24 h-30 bg-teal-600 rounded-xl flex items-center justify-center">
+                  <User className="w-15 h-15 text-amber-100" />
+                </div>
+                <div className="space-y-1">
+                  <div className="flex"><div className="w-44 font-bold truncate">Nama</div><div className="truncate w-44">{athlete.nama}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Cabang</div><div className="truncate w-44">{athlete.cabang} {athlete.kategori}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Asal KMHM</div><div className="truncate w-44">{athlete.asal_pknin}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Jurusan</div><div className="truncate w-44">{athlete.jerasam}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Angkatan</div><div className="truncate w-44">{athlete.angkatan}</div></div>  
+                  <div className="flex"><div className="w-44 font-bold truncate">Email</div><div className="truncate w-44">{athlete.email}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">No. HP</div><div className="truncate w-44">{athlete.telp}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Tempat, Tanggal Lahir</div><div className="truncate w-44">{athlete.tanggal_lahir}</div></div>
+                  <div className="flex"><div className="w-44 font-bold truncate">Asal Provinsi</div><div className="truncate w-44">{athlete.asal_provinsi}</div></div>
+>>>>>>> c323364f1eaf2c95d854b3a69b423aea68cc5a83
                 </div>
               </div>
               <div className="flex flex-col items-center gap-4">
@@ -436,22 +461,22 @@ const handleRead = (athlete) => {
                 </button>
               </div>
             </div>
-            <div className="w-60 bg-teal-800 rounded-3xl p-6 flex flex-col justify-between  items-center">
-              <div className="text-white font-snowstorm text-xl font-bold">Status Verifikasi</div>
-              <div className="text-center items-start ">
-                <div className="w-20 h-20 text-[3vw] bg-amber-100 -pt-3 rounded-full flex items-center justify-center mb-4">
-                 
+            <div className="w-60 bg-teal-800 rounded-3xl pt-6 pb-6 flex flex-col items-center justify-between text-center ">
+              <div className="text-white text-sm font-bold mb-8">Status Verifikasi</div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-2">
                   {athlete.status === 'VERIFIED' ? '✓' : '⚠'}
                 </div>
-                <div className="text-white text-lg font-sofia font-bold mb-4">
+                <div className="text-white text-sm font-bold">
                   {athlete.status === 'VERIFIED' ? 'Sudah diverifikasi' : 
-                   athlete.status === 'REVISION' ? 'Perlu revisi' : 'Belum diverifikasi'}
+                  athlete.status === 'REVISION' ? 'Perlu revisi' : 'Belum diverifikasi'}
                 </div>
                 
                 {/* Action buttons for unverified entries */}
                 {athlete.status === 'UNVERIFIED' && (
-                  <div className="flex flex-col gap-2 w-full">
+                  <div className="flex flex-col gap-2 w-full pt-8">
                     <button 
+<<<<<<< HEAD
   type="button"
   onClick={() => updateStatus(athlete.id, 'VERIFIED')}
   className="w-full bg-green-600 text-white py-1 rounded hover:bg-green-700"
@@ -466,12 +491,44 @@ const handleRead = (athlete) => {
   Revisi
 </button>
 
+=======
+                      onClick={() => updateStatus(athlete.id, 'VERIFIED')}
+                      className="w-30 bg-green-600 text-white py-1 rounded-full hover:bg-green-700"
+                    >
+                      Verifikasi
+                    </button>
+                    <button 
+                      onClick={() => updateStatus(athlete.id, 'REVISION')}
+                      className="w-30 bg-yellow-600 text-white py-1 rounded-full hover:bg-yellow-700"
+                    >
+                      Revisi
+                    </button>
+>>>>>>> c323364f1eaf2c95d854b3a69b423aea68cc5a83
                   </div>
                 )}
               </div>
             </div>
           </div>
         ))}
+        {/* Custom Scrollbar */}
+        <style jsx global>{`
+          .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #FBEBD2 #806037;
+          }
+          .custom-scrollbar::-webkit-scrollbar {
+            width: 12px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-track {
+            background: #806037;
+            border-radius: 8px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #FBEBD2;
+            border-radius: 8px;
+
+          }
+        `}</style>
       </div>
 
       {/* Form Overlay (View Only) */}

@@ -72,8 +72,6 @@ export default function HomePage() {
     >
       {/* HEADER */}
       <div className="relative z-50 flex items-center justify-between pl-22 pt-0 w-[100%]">
-
-
         <div className="flex items-center gap-4 pr-5">
           {/* Toggle Role */}
           <div className="w-87 h-14 px-8 py-2 bg-[#8B5E3C] rounded-[44.15px] inline-flex gap-[5px] overflow-hidden">
@@ -100,18 +98,17 @@ export default function HomePage() {
         </div>
 
         {/* Logout Button */}
-    <div
-      className="flex flex-col items-center gap-2 cursor-pointer"
-      onClick={handleLogout} // bikin fungsi handleLogout sesuai kebutuhan
-    >
-      <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
-        <IoLogOut className="w-8 h-8 text-white" />
-      </div>
-      <div className="text-center text-white text-lg text-snowstorm font-bold">
-        Keluar
-      </div>
-    </div>
-
+        <div
+          className="flex flex-col items-center gap-2 cursor-pointer"
+          onClick={handleLogout} // bikin fungsi handleLogout sesuai kebutuhan
+        >
+          <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+            <IoLogOut className="w-8 h-8 text-white" />
+          </div>
+          <div className="text-center text-white text-lg text-snowstorm font-bold">
+            Keluar
+          </div>
+        </div>
         {/* Info Cabang */}
         {selectedData && (
           <div className="flex items-center gap-2 px-20 text-2xl font-normal font-snowstorm">
@@ -120,9 +117,6 @@ export default function HomePage() {
             <span>{selectedData.subCategory}</span>
           </div>
         )}
-
-
-
       </div>
 
       {/* SIDEBAR + FORM */}
