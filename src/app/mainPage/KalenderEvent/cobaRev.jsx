@@ -30,7 +30,7 @@ const CalendarCarousel = () => {
     const pertandinganEvents = (pertandingan || []).map((row) => {
       const rawDate = new Date(`${row.tanggal}T${row.waktu}`);
       return {
-        title: `${row.cabang} - ${row.kategori} )`,
+        title: `${row.cabang} ( ${row.kategori}) `,
         date: formatDate(row.tanggal),
         rawDate,
       };
@@ -39,7 +39,7 @@ const CalendarCarousel = () => {
     const seniEvents = (seni || []).map((row) => {
       const rawDate = new Date(`${row.tanggal}T${row.waktu}`);
       return {
-        title: `${row.cabang} - ${row.kategori} (${row.tim})`,
+        title: `${row.cabang}`,
         date: formatDate(row.tanggal),
         rawDate,
       };
@@ -67,14 +67,14 @@ const CalendarCarousel = () => {
   };
 
   // Hitung jumlah slide
-  const totalSlides = isMobile
-    ? Math.max(1, events.length - mobileItemsToShow + 1)
-    : Math.max(1, events.length - 3);
+  const visibleItems = isMobile ? mobileItemsToShow : 3;
+const maxIndex = Math.max(events.length - visibleItems, 0);
 
-  const isPrevDisabled = startIndex === 0;
-  const isNextDisabled = isMobile
-    ? startIndex >= events.length - mobileItemsToShow
-    : startIndex >= events.length - 3;
+const totalSlides = maxIndex + 2;
+
+const isPrevDisabled = startIndex === 0;
+const isNextDisabled = startIndex >= maxIndex;
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -175,7 +175,7 @@ const CalendarCarousel = () => {
 
               {/* Viewport Carousel */}
               <div 
-                className="w-full overflow-hidden flex justify-center"
+                className="w-full  flex justify-center"
                 style={{ height: `${mobileItemsToShow * 100}px` }}
               >
                 <div
@@ -225,7 +225,7 @@ const CalendarCarousel = () => {
           ) : (
             // Desktop Version - Horizontal
             <div className="w-full md:w-[70%] flex flex-col items-center">
-              <div className="w-full flex items-center justify-center gap-2">
+              <div className="w-full flex items-center justify-center gap-1">
                 <button 
                   onClick={handlePrev} 
                   className={`z-30 ${isPrevDisabled ? 'text-gray-400' : 'text-black'}`}
@@ -237,7 +237,8 @@ const CalendarCarousel = () => {
                 <div className="w-full max-w-xl overflow-hidden">
                   <div
                     className="flex gap-4 transition-transform duration-500 ease-in-out"
-                    style={{ transform: `translateX(-${startIndex * 33.333}%)` }}
+                    style={{ transform: `translateX(-${startIndex * (100 / visibleItems)}%)` }}
+
                   >
                     {events.map((event, i) => (
                       <div

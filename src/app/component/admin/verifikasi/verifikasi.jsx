@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Edit, Trash2, Plus, User, X, Download } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase'; 
 import ReactDOM from 'react-dom';
+import * as XLSX from 'xlsx';
 
 export default function Verifikasi({ selectedSport, kmhmName, role }) {
   console.log('Component props:', { selectedSport, kmhmName, role });
@@ -17,16 +18,127 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
   const [activeTab, setActiveTab] = useState('UNVERIFIED');
   const [readMode, setReadMode] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [allUsers, setAllUsers] = useState([]);
 
-  const handleRead = (athlete) => {
-    setFormData({
-      ...formData,
-      ...athlete
+const loadAllUsers = useCallback(async () => {
+  try {
+    setLoading(true);
+
+    const [athletesRes, coachesRes] = await Promise.all([
+      supabase.from('athletes').select('*').order('created_at', { ascending: false }),
+      supabase.from('coaches').select('*').order('created_at', { ascending: false })
+    ]);
+
+    if (athletesRes.error) throw athletesRes.error;
+    if (coachesRes.error) throw coachesRes.error;
+
+    const combined = [
+      ...(athletesRes.data || []).map(a => ({ ...a, role: 'Athlete' })),
+      ...(coachesRes.data || []).map(c => ({ ...c, role: 'Coach' }))
+    ];
+
+    setAllUsers(combined);
+  } catch (err) {
+    console.error(err);
+    setAllUsers([]);
+  } finally {
+    setLoading(false);
+  }
+}, []);
+useEffect(() => {
+  loadAllUsers();
+}, [loadAllUsers]);
+
+
+  // Load data athletes dari Supabase dengan useCallback untuk stabilitas
+const loadAthletes = useCallback(async () => {
+  if (!selectedSport?.mainCategory || !selectedSport?.subCategory || !kmhmName) {
+    console.log('Missing required data:', { 
+      mainCategory: selectedSport?.mainCategory, 
+      subCategory: selectedSport?.subCategory, 
+      kmhmName 
     });
-    setEditingAthlete(athlete); 
-    setReadMode(true);
-    setShowForm(true);
-  };
+    setAthletes([]);
+    return;
+  }
+
+  try {
+    setLoading(true);
+    console.log(`Loading ${role} data for:`, {
+      cabang: selectedSport.mainCategory,
+      kategori: selectedSport.subCategory,
+      asal_pknin: kmhmName,
+      tableName
+    });
+
+    const { data, error } = await supabase
+      .from(tableName)
+      .select('*')
+      .eq('cabang', selectedSport.mainCategory)
+      .eq('kategori', selectedSport.subCategory)
+      .eq('asal_pknin', kmhmName) // filter sesuai asal_pknin
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error(`Error loading ${role}:`, error);
+      throw error;
+    }
+
+    console.log(`Loaded ${role} data:`, data);
+    setAthletes(data || []);
+  } catch (error) {
+    console.error(`Error loading ${role}:`, error);
+    setAthletes([]);
+  } finally {
+    setLoading(false);
+  }
+}, [selectedSport?.mainCategory, selectedSport?.subCategory, kmhmName, tableName, role]);
+
+// Load athletes saat pertama kali mount dan tiap ada perubahan
+useEffect(() => {
+  loadAthletes();
+}, [loadAthletes]);
+
+// Refresh data otomatis setelah tambah, edit, hapus
+const refreshData = () => {
+  loadAthletes();
+};
+
+// Update status athlete/coach
+const updateStatus = async (id, newStatus) => {
+  try {
+    const { data, error } = await supabase
+      .from(tableName)
+      .update({ status: newStatus })
+      .eq('id', id);
+
+    if (error) throw error;
+
+    // Update state lokal supaya filter otomatis jalan
+    setAllUsers(prev =>
+      prev.map(user => (user.id === id ? { ...user, status: newStatus } : user))
+    );
+  } catch (error) {
+    console.error(`Error updating ${role} status:`, error);
+  }
+};
+
+
+
+
+// Handle view detail (readMode)
+const handleRead = (athlete) => {
+  setFormData({
+    ...formData,
+    ...athlete
+  });
+  setEditingAthlete(athlete); 
+  setReadMode(true);
+  setShowForm(true);
+};
+
+
+  
 
   const [formData, setFormData] = useState({
     nama: '',
@@ -59,128 +171,85 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
   }, [selectedSport, kmhmName]);
 
   // Load data athletes dari Supabase dengan useCallback untuk stabilitas
-  const loadAthletes = useCallback(async () => {
-    if (!selectedSport?.mainCategory || !selectedSport?.subCategory || !kmhmName) {
-      console.log('Missing required data:', { 
-        mainCategory: selectedSport?.mainCategory, 
-        subCategory: selectedSport?.subCategory, 
-        kmhmName 
-      });
-      setAthletes([]);
-      return;
-    }
 
-    try {
-      setLoading(true);
-      console.log(`Loading ${role} data for:`, {
-        cabang: selectedSport.mainCategory,
-        kategori: selectedSport.subCategory,
-        asal_pknin: kmhmName,
-        tableName
-      });
 
-      const { data, error } = await supabase
-        .from(tableName)
-        .select('*')
-        .eq('cabang', selectedSport.mainCategory)
-        .eq('kategori', selectedSport.subCategory)
-        .eq('asal_pknin', kmhmName) // Added this filter
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error(`Error loading ${role}:`, error);
-        throw error;
-      }
-
-      console.log(`Loaded ${role} data:`, data);
-      setAthletes(data || []);
-    } catch (error) {
-      console.error(`Error loading ${role}:`, error);
-      setAthletes([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [selectedSport?.mainCategory, selectedSport?.subCategory, kmhmName, tableName, role]);
 
   // Load athletes when dependencies change
   useEffect(() => {
-    loadAthletes();
-  }, [loadAthletes]);
+  let filtered = allUsers;
 
-  // Filter otomatis ketika athletes, searchTerm, atau activeTab berubah
-  useEffect(() => {
-    if (!athletes || athletes.length === 0) {
-      setFilteredAthletes([]);
-      return;
-    }
+  // Filter berdasarkan kmhmName
+  if (kmhmName) {
+    filtered = filtered.filter(user => user.asal_pknin === kmhmName);
+  }
 
-    let filtered = athletes.filter((athlete) => {
-      const statusMatch = athlete.status?.trim().toUpperCase() === activeTab?.trim().toUpperCase();
-      return statusMatch;
-    });
+  if (searchTerm) {
+    const lowerTerm = searchTerm.toLowerCase();
+    filtered = filtered.filter(
+      user =>
+        user.nama?.toLowerCase().includes(lowerTerm) ||
+        user.cabang?.toLowerCase().includes(lowerTerm) ||
+        user.kategori?.toLowerCase().includes(lowerTerm)
+    );
+  }
 
-    if (searchTerm) {
-      const lowerTerm = searchTerm.toLowerCase();
-      filtered = filtered.filter(
-        (athlete) =>
-          athlete.nama?.toLowerCase().includes(lowerTerm) ||
-          athlete.cabang?.toLowerCase().includes(lowerTerm) ||
-          athlete.kategori?.toLowerCase().includes(lowerTerm)
-      );
-    }
+  if (activeTab && activeTab !== 'TOTAL') {
+    filtered = filtered.filter(
+      user => user.status?.toUpperCase() === activeTab?.toUpperCase()
+    );
+  }
 
-    setFilteredAthletes(filtered);
-  }, [athletes, searchTerm, activeTab]);
+  setFilteredAthletes(filtered);
+}, [allUsers, searchTerm, activeTab, kmhmName]);
 
-  const updateStatus = async (id, newStatus) => {
-    try {
-      const { error } = await supabase
-        .from(tableName)
-        .update({ status: newStatus })
-        .eq('id', id);
 
-      if (error) throw error;
-      loadAthletes();
-    } catch (error) {
-      console.error(`Error updating ${role} status:`, error);
-    }
-  };
+
+
 
   // Export to Excel function
   const exportToExcel = () => {
-    if (!athletes || athletes.length === 0) {
-      alert('No data to export');
-      return;
-    }
+  if (!allUsers || allUsers.length === 0) {
+    alert('No data to export');
+    return;
+  }
 
-    // Create CSV content
-    const headers = Object.keys(athletes[0] || {}).join(',');
-    const rows = athletes.map(athlete => 
-      Object.values(athlete).map(value => 
-        typeof value === 'string' ? `"${value.replace(/"/g, '""')}"` : value
-      ).join(',')
-    ).join('\n');
-    
-    const csvContent = `${headers}\n${rows}`;
-    
-    // Create download link
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `${role}_data_${new Date().toISOString().slice(0,10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  const workbook = XLSX.utils.book_new();
+
+  // Pisahkan per role
+  const roles = [...new Set(allUsers.map(u => u.role))]; // semua role unik
+  roles.forEach(role => {
+    const dataByRole = allUsers.filter(u => u.role === role);
+    if (dataByRole.length > 0) {
+      const ws = XLSX.utils.json_to_sheet(dataByRole);
+      XLSX.utils.book_append_sheet(workbook, ws, role.charAt(0).toUpperCase() + role.slice(1));
+    }
+  });
+
+  // Pastikan workbook ada sheet
+  if (workbook.SheetNames.length === 0) {
+    alert('No data to export');
+    return;
+  }
+
+  const fileName = `all_data_${new Date().toISOString().slice(0,10)}.xlsx`;
+  XLSX.writeFile(workbook, fileName);
+};
+
 
   // Helper function to count athletes by status
   function countByStatus(status) {
-    if (status === 'TOTAL') {
-      return athletes.length;
-    }
-    return athletes.filter(a => a.status === status).length;
-  }
+  // Filter semua user dulu berdasarkan kmhmName
+  const filteredList = kmhmName
+    ? allUsers.filter(user => user.asal_pknin === kmhmName)
+    : allUsers;
+
+  if (status === 'TOTAL') return filteredList.length;
+
+  return filteredList.filter(user => user.status === status).length;
+}
+
+
+
 
   // 🔹 Blokir jika kmhmName kosong
   if (!kmhmName) {
@@ -222,7 +291,7 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
               <Download className="w-8 h-8 text-white" />
             </div>
             <div className="text-center text-white text-lg font-bold">
-              Export <br/>Excel
+              Export Excel
             </div>
           </div>
         </div>
@@ -318,8 +387,11 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
           <div key={athlete.id} className="flex gap-4">
             <div className="flex-1 bg-amber-100 rounded-3xl p-8 flex justify-between items-center" >
               <div className="flex items-center gap-8">
-                <div className="w-24 h-24 bg-teal-600 rounded-xl flex items-center justify-center">
+                <div className="flex flex-col items-center font-bold font-snowstorm text-lg gap-8 ">
+                <h3>{athlete.role}</h3>
+                <div className="w-24 h-24 bg-teal-600 rounded-xl flex flex-col items-center justify-center">
                   <User className="w-12 h-12 text-amber-100" />
+                </div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex"><div className="w-44 font-bold">Nama</div>{athlete.nama}</div>
@@ -358,17 +430,20 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
                 {athlete.status === 'UNVERIFIED' && (
                   <div className="flex flex-col gap-2 w-full">
                     <button 
-                      onClick={() => updateStatus(athlete.id, 'VERIFIED')}
-                      className="w-full bg-green-600 text-white py-1 rounded hover:bg-green-700"
-                    >
-                      Verifikasi
-                    </button>
-                    <button 
-                      onClick={() => updateStatus(athlete.id, 'REVISION')}
-                      className="w-full bg-yellow-600 text-white py-1 rounded hover:bg-yellow-700"
-                    >
-                      Revisi
-                    </button>
+  type="button"
+  onClick={() => updateStatus(athlete.id, 'VERIFIED')}
+  className="w-full bg-green-600 text-white py-1 rounded hover:bg-green-700"
+>
+  Verifikasi
+</button>
+<button 
+  type="button"
+  onClick={() => updateStatus(athlete.id, 'REVISION')}
+  className="w-full bg-yellow-600 text-white py-1 rounded hover:bg-yellow-700"
+>
+  Revisi
+</button>
+
                   </div>
                 )}
               </div>
@@ -510,6 +585,16 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
                         className="w-full px-6 py-3 rounded-full bg-white text-black placeholder-gray-400"
                       />
                     </div>
+                    <div>
+                       <a
+    href={formData.kartu_institusi}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center gap-1 text-white font-bold text-lg hover:underline"
+  >
+    <Download size={16} /> Lihat File
+  </a>
+                    </div>
                   </div>
                 </div>
 
@@ -518,7 +603,7 @@ export default function Verifikasi({ selectedSport, kmhmName, role }) {
                   <button
                     type="button"
                     onClick={() => { setShowForm(false); setReadMode(false); }}
-                    className="bg-teal-600 text-white px-8 py-3 rounded-full"
+                    className="bg-teal-600 text-white px-8 py-3 rounded-full border-4 border-white "
                   >
                     Tutup
                   </button>
