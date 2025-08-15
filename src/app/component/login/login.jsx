@@ -14,29 +14,41 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
+ 
   const handleLogin = async () => {
-    const found = dummyUsers.find((u) => u.username === username);
-    if (!found) {
-      setError('Wrong Email or password!');
-      return;
-    }
+  // Cari user di dummyUsers
+  const found = dummyUsers.find((u) => u.username === username);
+  if (!found) {
+    setError('Wrong Email or password!');
+    return;
+  }
 
-    const { email, role, kmhm_name } = found;
+  const { email, password: dummyPassword, role, kmhm_name } = found;
 
-    const { error: loginError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+  // Validasi password
+  if (password !== dummyPassword) {
+    setError('Wrong Email or password!');
+    return;
+  }
 
-    if (loginError) {
-      setError('Wrong Email or password!');
-    } else {
-      setError('');
-      // kirim kmhm_name via router state
-      const target = role === 'page-a' ? '/managerDashboard' : '/DASHBOARD/adminDashboard';
-      router.push(`${target}?kmhm=${encodeURIComponent(kmhm_name ?? '')}`);
-    }
-  };
+  // Login ke Supabase
+  const { error: loginError } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (loginError) {
+    setError('Wrong Email or password!');
+    return;
+  }
+
+  setError('');
+
+  // Redirect sesuai role (tetap pakai target lama)
+  const target = role === 'page-a' ? '/managerDashboard' : '/DASHBOARD/adminDashboard';
+  router.push(`${target}?kmhm=${encodeURIComponent(kmhm_name ?? '')}`);
+};
+
 
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen font-sofia">

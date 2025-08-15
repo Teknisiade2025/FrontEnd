@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Hero from '@/app/mainPage/Hero/DeskMob'
-import KalerderEvent from '@/app/mainPage/KalenderEvent/cobaRev'
+import KalerderEvent from '@/app/mainPage/KalenderEvent/kalender'
 import TentangTeksid from '@/app/mainPage/TentangTeksid/DeskMob'
 import TemuTeki from '@/app/mainPage/TemuTeki/DeskMob'
 import Chant from '@/app/mainPage/Chant/DeskMob'

@@ -11,42 +11,44 @@ import { Suspense } from 'react';
 export default function HomePage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
-  // Inisialisasi selectedRole sekali saja
-  const [selectedRole, setSelectedRole] = useState(() => {
-    return searchParams.get('role') || 'Atlet';
-  });
-  
+
+  const [selectedRole, setSelectedRole] = useState('Atlet');
   const [selectedData, setSelectedData] = useState(null);
-  const kmhmName = searchParams.get('kmhm') || '';
+  const [kmhmName, setKmhmName] = useState('');
 
-  // Update URL ketika selectedRole berubah, tapi jangan reset selectedRole dari URL
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('role', selectedRole);
-    
-    // Hanya update URL jika role di URL berbeda dengan selectedRole
-    if (searchParams.get('role') !== selectedRole) {
-      router.push(`?${params.toString()}`);
-    }
-  }, [selectedRole, searchParams, router]);
 
-  // Sinkronisasi selectedData dengan URL parameters
+
+useEffect(() => {
+  const value = searchParams.get('kmhm') || '';
+  setKmhmName(value);
+}, [searchParams]);
+
+
+  // Ambil semua query param setiap searchParams berubah
   useEffect(() => {
+    const roleParam = searchParams.get('role');
+    const kmhmParam = searchParams.get('kmhm');
     const category = searchParams.get('category');
     const subcategory = searchParams.get('subcategory');
-    
+
+    if (roleParam) {
+      setSelectedRole(roleParam);
+    }
+
+    setKmhmName(kmhmParam || '');
+
     if (category) {
       const newData = {
         mainCategory: category,
         subCategory: subcategory || null
       };
-      
-      // Hanya update jika data benar-benar berubah
+
       setSelectedData(prevData => {
-        if (!prevData || 
-            prevData.mainCategory !== newData.mainCategory || 
-            prevData.subCategory !== newData.subCategory) {
+        if (
+          !prevData ||
+          prevData.mainCategory !== newData.mainCategory ||
+          prevData.subCategory !== newData.subCategory
+        ) {
           console.log('Updating selectedData:', newData);
           return newData;
         }
@@ -130,7 +132,7 @@ export default function HomePage() {
 
       {/* SIDEBAR + FORM */}
 
-      <div className="flex flex-row pr-15 pl-5 gap-45 h-[600px] w-full items-center justify-center">
+      <div className="flex flex-row pr-5 pl-5 gap-45 h-[600px] w-full items-center justify-between">
         
         <div className="w-64 px-2 -mt-40 h-full">
       
@@ -138,7 +140,7 @@ export default function HomePage() {
    
         </div>
 
-        <div className="flex-1 px-3 h-full pt-3">
+        <div className="flex-1 px-3 w-full h-full pt-3">
         
                 <AthleteRegistration 
                     selectedSport={selectedData} 

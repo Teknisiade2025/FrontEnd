@@ -10,7 +10,7 @@ const MedalPage = () => {
 
   return (
     <div className="flex flex-row max-h-screen items-center pt-10 pl-10 gap-1 w-[100vw] bg-[url('/admin/bg-medal.svg')] bg-center bg-contain overflow-hidden">
-      <div className="flex items-center mt-15 scale-83">
+      <div className="flex items-center mt-15 scale-88">
         {/* Navigasi KMHM */}
         <div>
           <KmhmNavigasi

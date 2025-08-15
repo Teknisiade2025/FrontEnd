@@ -12,32 +12,32 @@ const CabangDiversifikasi = () => {
     "Sepak Bola": "/dashboard-verifikasi/sepakbola.png",
     "Voli": "/dashboard-verifikasi/voli2.png",
     "Basket": "/dashboard-verifikasi/basket.png",
-    "Bulu Tangkis": "/dashboard-verifikasi/badminton.png",
+    "Badminton": "/dashboard-verifikasi/badminton.png",
     "Futsal": "/dashboard-verifikasi/futsal.png",
     "Tenis Meja": "/dashboard-verifikasi/tenismeja.png",
     "Atletik": "/dashboard-verifikasi/atletik2.png",
     "Catur": "/dashboard-verifikasi/catur2.png",
     "FIFA": "/dashboard-verifikasi/fifa2.png",
     "PUBG": "/dashboard-verifikasi/pubg2.png",
-    "Mobile Legends": "/dashboard-verifikasi/ml2.png",
+    "Mobile Legend": "/dashboard-verifikasi/ml2.png",
     "Valorant": "/dashboard-verifikasi/valo.png",
     "Band": "/dashboard-verifikasi/band2.png",
     "Vokal Grup": "/dashboard-verifikasi/vokalgrup.png",
-    "Vokal Solo": "/dashboard-verifikasi/vokalsolo.png",
-    "Dance": "/dashboard-verifikasi/dance2.png",
+    "Solo Vokal": "/dashboard-verifikasi/vokalsolo.png",
+    "Modern Dance": "/dashboard-verifikasi/dance2.png",
     "Tari Tradisional": "/dashboard-verifikasi/tariTrad2.png",
     "Fotografi": "/dashboard-verifikasi/fotografi2.png",
     "Seni Lukis": "/dashboard-verifikasi/lukis.png",
     "Cipta Puisi": "/dashboard-verifikasi/puisi2.png",
     "Monolog": "/dashboard-verifikasi/monolog.png",
-    "Poster": "/dashboard-verifikasi/poster.svg"
+    "Desain Poster": "/dashboard-verifikasi/poster.svg"
   };
 
   const cabangOlahraga1 = [
     { name: "Sepak Bola", kategori: ["Putra"] },
     { name: "Voli", kategori: ["Putra", "Putri"] },
     { name: "Basket", kategori: ["Putra", "Putri"] },
-    { name: "Bulu Tangkis", kategori: ["Tunggal Putra", "Tunggal Putri", "Ganda Putra", "Ganda Putri", "Ganda Campuran"] },
+    { name: "Badminton", kategori: ["Tunggal Putra", "Tunggal Putri", "Ganda Putra", "Ganda Putri", "Ganda Campuran"] },
     { name: "Futsal", kategori: ["Putra", "Putri"] },
     { name: "Tenis Meja", kategori: ["Tunggal Putra", "Tunggal Putri", "Ganda Putra", "Ganda Putri", "Ganda Campuran"] },
   ];
@@ -47,15 +47,15 @@ const CabangDiversifikasi = () => {
     { name: "Catur", kategori: ["Campuran"] },
     { name: "FIFA", kategori: ["Putra"] },
     { name: "PUBG", kategori: ["Putra"] },
-    { name: "Mobile Legends", kategori: ["Putra"] },
+    { name: "Mobile Legend", kategori: ["Putra"] },
     { name: "Valorant", kategori: ["Putra"] }
   ];
 
   const cabangSeni1 = [
     { name: "Band", kategori: [] },
     { name: "Vokal Grup", kategori: [] },
-    { name: "Vokal Solo", kategori: ["Putra", "Putri"] },
-    { name: "Dance", kategori: [] },
+    { name: "Solo Vokal", kategori: ["Putra", "Putri"] },
+    { name: "Modern Dance", kategori: [] },
     { name: "Tari Tradisional", kategori: [] },
   ];
 
@@ -64,7 +64,7 @@ const CabangDiversifikasi = () => {
     { name: "Seni Lukis", kategori: [] },
     { name: "Cipta Puisi", kategori: [] },
     { name: "Monolog", kategori: [] },
-    { name: "Poster", kategori: [] }
+    { name: "Desain Poster", kategori: [] }
   ];
 
   const [selectedCabang, setSelectedCabang] = useState(null);

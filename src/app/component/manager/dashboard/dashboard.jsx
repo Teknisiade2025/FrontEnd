@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { UserCheck, Calendar, Trophy, Award, ChevronRight } from 'lucide-react';
 
-export default function Dashboard({ kmhmName }) {
+export default function Dashboard({ kmhmName, goToAthletes  }) {
   const router = useRouter();
   
   const goToReports = () => {

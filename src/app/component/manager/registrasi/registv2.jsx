@@ -1,9 +1,11 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
-import { Search, Edit, Trash2, Plus, User, X } from 'lucide-react';
+import { Search, Edit, Trash2, Plus, LogOut , User, X } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase'; 
+import { useRouter } from 'next/navigation';
 
 export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
+  const router = useRouter();
   // Tentukan tabel berdasarkan role
   const tableName = role === 'coach' ? 'coaches' : 'athletes';
 
@@ -15,6 +17,80 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   const [activeTab, setActiveTab] = useState('UNVERIFIED');
   const [readMode, setReadMode] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
+
+  const loadAthletes = useCallback(async () => {
+  if (!selectedSport?.mainCategory || !selectedSport?.subCategory) {
+    setAthletes([]);
+    return;
+  }
+
+  try {
+    setLoading(true);
+    let { data, error } = await supabase
+      .from(tableName)
+      .select('*')
+      .eq('cabang', selectedSport.mainCategory)
+      .eq('kategori', selectedSport.subCategory)
+      .eq('asal_pknin', kmhmName)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    // Filter untuk role 'user'
+    if (role === 'user') {
+      data = data.filter(a => a.owner === user.id);
+    }
+
+    setAthletes(data || []);
+  } catch (error) {
+    console.error(`Error loading ${role}:`, error.message);
+    setAthletes([]);
+  } finally {
+    setLoading(false);
+  }
+}, [selectedSport?.mainCategory, selectedSport?.subCategory, tableName, role, user]);
+
+useEffect(() => {
+  if (user && selectedSport?.mainCategory && selectedSport?.subCategory) {
+    loadAthletes();
+  }
+}, [user, selectedSport, kmhmName]);
+
+
+
+
+  useEffect(() => {
+  if (!user) return;
+  loadAthletes();
+  if (role === 'user') {
+    // user biasa hanya bisa daftar atau lihat atlet sendiri
+    // redirect atau set filtered data sesuai owner
+    setAthletes(prev => prev.filter(a => a.owner === user.id));
+     loadAthletes();
+  }
+}, [user, role]);
+
+
+useEffect(() => {
+  const getUser = async () => {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      router.push('/login');
+    } else {
+      setUser(user);
+    }
+  };
+  getUser();
+}, []);
+
+useEffect(() => {
+  if (user) {
+    loadAthletes();
+  }
+}, [user]);
+
 
   const [formData, setFormData] = useState({
     nama: '',
@@ -47,31 +123,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   }, [selectedSport, kmhmName]);
 
   // Load data athletes
-  const loadAthletes = useCallback(async () => {
-    if (!selectedSport?.mainCategory || !selectedSport?.subCategory) {
-      setAthletes([]);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from(tableName)
-        .select('*')
-        .eq('cabang', selectedSport.mainCategory)
-        .eq('kategori', selectedSport.subCategory)
-        .eq('asal_pknin', kmhmName)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setAthletes(data || []);
-    } catch (error) {
-      console.error(`Error loading ${role}:`, error.message);
-      setAthletes([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [selectedSport?.mainCategory, selectedSport?.subCategory, tableName, role]);
+  
 
   // Filter otomatis
   useEffect(() => {
@@ -117,111 +169,160 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
   };
 
   const handleFileChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      kartu_institusi: e.target.files[0],
-      ...(editingAthlete && prev.status !== 'UNVERIFIED' ? { status: 'UNVERIFIED' } : {})
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!selectedSport?.subCategory || !selectedSport?.mainCategory) {
-      alert('Pilih kategori & cabang terlebih dahulu sebelum mengisi form.');
+  const file = e.target.files[0];
+  
+  if (file) {
+    // Validasi ukuran file (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File terlalu besar! Maksimal 5MB');
       return;
     }
-
-    try {
-      const dataToSend = {
-        ...formData,
-        kategori: selectedSport.subCategory,
-        cabang: selectedSport.mainCategory
-      };
-
-      // Upload file ke Supabase Storage
-      if (formData.kartu_institusi instanceof File) {
-        const fileName = `${Date.now()}_${formData.kartu_institusi.name}`;
-        const { data: fileData, error: fileError } = await supabase.storage
-          .from('kartu_institusi') // pastikan bucket ini ada
-          .upload(fileName, formData.kartu_institusi);
-
-        if (fileError) throw fileError;
-
-        // Ambil URL file
-        const { data: publicUrlData } = supabase
-          .storage
-          .from('kartu_institusi')
-          .getPublicUrl(fileName);
-
-        dataToSend.kartu_institusi = publicUrlData.publicUrl;
-      }
-
-      if (editingAthlete) {
-        const { error } = await supabase
-          .from(tableName)
-          .update(dataToSend)
-          .eq('id', editingAthlete.id);
-
-        if (error) throw error;
-      } else {
-        const { error } = await supabase
-          .from(tableName)
-          .insert([dataToSend]);
-
-        if (error) throw error;
-      }
-
-      await loadAthletes();
-      resetForm();
-    } catch (error) {
-      console.error('Save error:', error.message, error);
-      alert(`Terjadi kesalahan saat menyimpan data: ${error.message}`);
+    
+    // Validasi tipe file
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Format file tidak didukung! Gunakan JPG atau PNG');
+      return;
     }
-  };
+    
+    setFormData((prev) => ({
+      ...prev,
+      kartu_institusi: file,
+      ...(editingAthlete && prev.status !== 'UNVERIFIED' ? { status: 'UNVERIFIED' } : {})
+    }));
+  }
+};
 
-  useEffect(() => {
-    loadAthletes();
-  }, [loadAthletes]);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  useEffect(() => {
-    const subscription = supabase
-      .channel(`${tableName}_channel`)
-      .on('postgres_changes',
-        { event: '*', schema: 'public', table: tableName },
-        () => {
-          loadAthletes();
-        }
-      )
-      .subscribe();
+  // **PENTING: Cek user authentication lebih detail**
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  
+  if (authError || !user) {
+    alert("Anda belum login! Silakan login terlebih dahulu.");
+    router.push('/login');
+    return;
+  }
 
-    return () => {
-      subscription.unsubscribe();
+  console.log("Current user:", user.id); // Debug: cek user ID
+
+  // Cek semua field wajib
+  const requiredFields = [
+    'nama','jerasam','angkatan','email','telp',
+    'alamat','tanggal_lahir','id_line','asal_provinsi','no_institusi'
+  ];
+
+  for (const field of requiredFields) {
+    if (!formData[field] || formData[field].trim() === '') {
+      alert('Harap isi semua form dulu!');
+      return;
+    }
+  }
+
+  // File wajib untuk tambah data
+  if (!editingAthlete && !(formData.kartu_institusi instanceof File)) {
+    alert('Harap unggah kartu institusi!');
+    return;
+  }
+
+  try {
+    let fileUrl = formData.kartu_institusi;
+
+    // Upload file ke storage jika ada file baru
+    // Upload file ke storage jika ada file baru
+if (formData.kartu_institusi instanceof File) {
+  try {
+    const fileName = `${user.id}_${Date.now()}_${formData.kartu_institusi.name}`;
+    
+    console.log("Uploading file:", fileName); // Debug
+    
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('kartu_institusi')
+      .upload(fileName, formData.kartu_institusi, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (uploadError) {
+      console.error("Upload error:", uploadError);
+      throw uploadError;
+    }
+
+    console.log("Upload success:", uploadData); // Debug
+
+    const { data } = supabase.storage
+      .from('kartu_institusi')
+      .getPublicUrl(fileName);
+
+    fileUrl = data.publicUrl;
+    console.log("File URL:", fileUrl); // Debug
+    
+  } catch (uploadError) {
+    console.error("File upload failed:", uploadError);
+    alert(`Gagal upload file: ${uploadError.message}`);
+    return;
+  }
+}
+
+    // **Data yang akan dikirim - PASTIKAN owner di-set explicitly**
+    const dataToSend = {
+      nama: formData.nama,
+      kategori: selectedSport.subCategory,
+      cabang: selectedSport.mainCategory,
+      asal_pknin: kmhmName,
+      jerasam: formData.jerasam,
+      angkatan: formData.angkatan,
+      email: formData.email,
+      telp: formData.telp,
+      alamat: formData.alamat,
+      tanggal_lahir: formData.tanggal_lahir,
+      status: formData.status,
+      id_line: formData.id_line,
+      asal_provinsi: formData.asal_provinsi,
+      no_institusi: formData.no_institusi,
+      kartu_institusi: fileUrl,
+      owner: user.id  // **EXPLICIT SET OWNER**
     };
-  }, [tableName, loadAthletes]);
 
-  const resetForm = () => {
-    setFormData({
-      nama: '',
-      kategori: selectedSport?.subCategory || '',
-      cabang: selectedSport?.mainCategory || '',
-      asal_pknin: kmhmName || '',
-      jerasam: '',
-      angkatan: '',
-      email: '',
-      telp: '',
-      alamat: '',
-      tanggal_lahir: '',
-      status: 'UNVERIFIED',
-      id_line: '',
-      asal_provinsi: '',
-      no_institusi: '',
-      kartu_institusi: null
-    });
-    setShowForm(false);
-    setEditingAthlete(null);
-    setReadMode(false);
-  };
+    console.log("Data to send:", dataToSend); // Debug: cek data
+
+    if (editingAthlete) {
+      const { error } = await supabase
+        .from(tableName)
+        .update(dataToSend)
+        .eq('id', editingAthlete.id);
+        await loadAthletes();
+
+      if (error) {
+        console.error("Update error:", error);
+        throw error;
+      }
+    } else {
+      const { data: insertResult, error } = await supabase
+        .from(tableName)
+        .insert([dataToSend]);
+        await loadAthletes();
+
+      if (error) {
+        console.error("Insert error:", error);
+        throw error;
+      }
+      
+      console.log("Insert result:", insertResult); // Debug
+    }
+
+    alert('Data berhasil disimpan!');
+    await loadAthletes();
+    resetForm();
+  } catch (error) {
+    console.error("Full error object:", error);
+    alert(`Terjadi kesalahan: ${error.message}`);
+  }
+};
+
+
+
 
   const handleEdit = (athlete) => {
     if (athlete.status?.toUpperCase() === 'VERIFIED') {
@@ -235,28 +336,31 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
     });
     setEditingAthlete(athlete);
     setReadMode(false);
-    setShowForm(true);
+    setShowForm(true); 
   };
 
   const handleRead = (athlete) => {
-    setFormData({
-      ...formData,
-      ...athlete
-    });
-    setEditingAthlete(athlete);
-    setReadMode(true);
-    setShowForm(true);
-  };
+  setFormData({
+    ...formData,
+    ...athlete
+  });
+  setEditingAthlete(athlete);
+  setReadMode(true);
+  setShowForm(true);
 
-  const handleDelete = async (id) => {
-    if (window.confirm(`Yakin ingin menghapus data ${role} ini?`)) {
-      try {
-        await deleteAthlete(id);
-      } catch {
-        alert(`Gagal menghapus data ${role}`);
-      }
-    }
-  };
+  if (athlete.kartu_institusi) {
+  // Misal athlete.kartu_institusi adalah path di storage
+  const { data } = supabase
+    .storage
+    .from('kartu_institusi')
+    .getPublicUrl(athlete.kartu_institusi); // generate public URL
+    console.log(athlete.kartu_institusi);
+  setFilePreview(data.publicUrl);
+}
+};
+
+
+ 
 
   const countByStatus = (status) => {
     if (status === 'TOTAL') {
@@ -264,6 +368,51 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
     }
     return athletes.filter(a => a.status === status).length;
   };
+
+  const resetForm = () => {
+  setFormData({
+    nama: '',
+    kategori: selectedSport?.subCategory || '',
+    cabang: selectedSport?.mainCategory || '',
+    asal_pknin: kmhmName || '',
+    jerasam: '',
+    angkatan: '',
+    email: '',
+    telp: '',
+    alamat: '',
+    tanggal_lahir: '',
+    status: 'UNVERIFIED',
+    id_line: '',
+    asal_provinsi: '',
+    no_institusi: '',
+    kartu_institusi: null
+  });
+  setEditingAthlete(null);
+  setShowForm(false);
+  setReadMode(false);
+};
+
+const handleDelete = async (athlete) => {
+  if (!athlete || !athlete.id) {
+    console.error("Athlete atau ID tidak valid", athlete);
+    return;
+  }
+
+  if (athlete.status?.toUpperCase() === 'VERIFIED') {
+    alert('Data sudah terverifikasi dan tidak dapat dihapus.');
+    return;
+  }
+
+  if (window.confirm(`Yakin ingin menghapus data ${role} ini?`)) {
+    try {
+      await deleteAthlete(athlete.id);
+    } catch (error) {
+      console.error(`Error deleting ${role}:`, error.message);
+    }
+  }
+};
+
+
 
 
   // 🔹 Blokir jika kmhmName kosong
@@ -392,7 +541,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
 
 
   return (
-    <div className="w-full h-full max-w-7xl font-sofia px-10 rounded-[32px] shadow-lg"
+    <div className="w-full h-full  font-sofia px-10 rounded-[32px] shadow-lg"
     style={{
           width: "900px",
           height: "600px",
@@ -488,7 +637,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                 </button>
                 <button 
                   className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"
-                  onClick={() => handleDelete(athlete.id)}
+                  onClick={() => handleDelete(athlete)}
                 >
                   <Trash2 className="w-5 h-5 text-white" />
                 </button>
@@ -568,7 +717,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                         name="nama"
                         value={formData.nama}
                         onChange={handleInputChange}
-                        placeholder="John Doe"
+                        placeholder="Teknisiade"
                         disabled={readMode}
                         className="w-full px-6 py-3 rounded-full bg-white text-black placeholder-gray-400"
                         required
@@ -604,7 +753,7 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                         name="id_line"
                         value={formData.id_line}
                         onChange={handleInputChange}
-                        placeholder="Grok_"
+                        placeholder="Teknisiade1"
                         disabled={readMode}
                         className="w-full px-6 py-3 rounded-full bg-white text-black placeholder-gray-400"
                       />
@@ -615,18 +764,16 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                   <div className="flex flex-col gap-6">
                     <div>
                       <label className="block text-white mb-2 font-semibold">Asal Provinsi</label>
-                      <select
+                      <input
                         name="asal_provinsi"
                         value={formData.asal_provinsi}
                         onChange={handleInputChange}
+                        placeholder="D.I.Yogyakarta"
                         disabled={readMode}
                         className="w-full px-6 py-3
                          rounded-full bg-white text-black"
                       >
-                        <option value="">Pilih Provinsi</option>
-                        <option value="DIY">D.I. Yogyakarta</option>
-                        <option value="Jateng">Jawa Tengah</option>
-                      </select>
+                      </input>
                     </div>
                     <div>
                       <label className="block text-white mb-2 font-semibold">Alamat Lengkap</label>
@@ -691,24 +838,46 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                         className="w-full px-6 py-3 rounded-full bg-white text-black placeholder-gray-400"
                       />
                     </div>
-                    <div>
-                      <label className="block text-white mb-1 font-semibold">KTM</label>
-                      <p className="text-white text-sm mb-2">Max 5 Mb</p>
-                      <input
-                        type="file"
-                        name="kartu_institusi"
-                        onChange={handleFileChange}
-                        className="hidden"
-                        disabled={readMode}
-                        id="uploadFile"
-                      />
-                      <label
-                        htmlFor="uploadFile"
-                        className="inline-block px-6 py-2 border border-white text-white rounded-full cursor-pointer hover:bg-white hover:text-[#0F6E87]"
-                      >
-                        Unggah
-                      </label>
-                    </div>
+                    <div> 
+  <label className="block text-white mb-1 font-semibold">KTM</label>
+  
+
+  {/* Preview file saat readMode */}
+  {readMode && filePreview && (
+    <div className="mb-2">
+    <a
+      href={formData.kartu_institusi} // URL file dari Supabase Storage
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-white text-bold underline"
+    >
+      Lihat/Klik untuk unduh KTM
+    </a>
+  </div>
+  )}
+
+  {/* Input file untuk edit/tambah */}
+  {!readMode && (
+    <>
+    <p className="text-white text-sm mb-2">Max 5 Mb. Gunakan JPG atau PNG</p>
+      <input
+        type="file"
+        name="kartu_institusi"
+        onChange={handleFileChange}
+        className="hidden"
+        id="uploadFile"
+      />
+      <label
+        htmlFor="uploadFile"
+        className="inline-block px-6 py-2 border border-white text-white rounded-full cursor-pointer hover:bg-white hover:text-[#0F6E87]"
+      >
+        Unggah
+      </label>
+    </>
+  )}
+</div>
+
+
                   </div>
 
                 </div>
@@ -719,14 +888,14 @@ export default function AthleteRegistration({ selectedSport, kmhmName, role }) {
                     <button
                       type="button"
                       onClick={() => { setShowForm(false); setReadMode(false); }}
-                      className="bg-teal-600 text-white px-4 py-2 rounded"
+                      className="bg-teal-600 text-white px-4 py-2 rounded-full border-4 border-white"
                     >
                       Tutup
                     </button>
                   ) : (
                     <button
                       type="submit"
-                      className="bg-teal-600 text-white text-xl px-6 py-2 rounded-full hover:bg-teal-700"
+                      className="bg-teal-600 text-white text-xl px-6 py-2 border-4 border-white rounded-full hover:bg-teal-700"
                     >
                       Simpan
                     </button>
