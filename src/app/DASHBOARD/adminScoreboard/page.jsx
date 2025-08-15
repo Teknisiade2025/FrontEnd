@@ -36,7 +36,7 @@ const ScoreboardPage = () => {
 
       <div className="flex flex-row h-[500px] w-full items-center">
       {/* Sidebar */}
-      <div className="pt-5">
+      <div className="pt-5 relative z-10">
         <NavigasiCabang onCategorySelect={handleCategorySelect} />
       </div>
 
