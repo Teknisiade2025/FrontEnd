@@ -120,7 +120,6 @@ const JadwalSeni = ({ cabang, kategori }) => {
                 </thead>
                 <tbody className ="w-[100%]"
                  style={{ 
-                    display: 'block',
                     maxHeight: '370px',
                     overflowY: 'auto', 
                   }}

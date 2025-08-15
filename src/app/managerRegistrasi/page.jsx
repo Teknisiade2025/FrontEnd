@@ -72,7 +72,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="flex flex-col h-[100vh] max-w-screen pt-10 gap-1 w-[100vw] bg-[url('/bglogin.svg')] bg-no-repeat bg-cover overflow-hidden"
+      className="flex flex-col h-[110vh] max-w-screen pt-10 gap-1 w-[100vw] bg-[url('/bglogin.svg')] bg-no-repeat bg-cover overflow-hidden"
     >
       {/* HEADER */}
       <div className="relative z-50 flex items-center justify-between pl-20 pt-0 w-[95%]">
