@@ -103,7 +103,7 @@ const InputJadwalOlahraga = ({
      
 
       {/* Main Content */}
-      <div className="w-[100%] h-[100vh]  px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90 scale-85 relative">
+      <div className="w-[100%] h-[105vh]  px-16 py-8 bg-[#B1844D] rounded-[32px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-[3px] outline-offset-[-3px] outline-white flex items-center scale-y-90 scale-85 relative">
         
         <div className="flex-1 self-stretch flex flex-col justify-between items-center gap-8">
           {/* Judul */}
@@ -319,7 +319,7 @@ const InputJadwalOlahraga = ({
           </div>
           
           {/* Tombol Aksi */}
-          <div className="self-stretch h-14 inline-flex mx-auto justify-center items-center gap-6 mt-4 w-[60%]">
+          <div className="self-stretch h-14 inline-flex mx-auto justify-center items-center gap-6 -mt-4 w-[60%]">
             {/* Tombol Simpan */}
             <button 
               className="flex-1 self-stretch px-8 py-2 bg-[#065D79] rounded-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center gap-2 overflow-hidden hover:bg-[#0a7a9a] transition-colors"
