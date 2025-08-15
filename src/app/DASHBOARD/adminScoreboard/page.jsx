@@ -19,7 +19,7 @@ const ScoreboardPage = () => {
   return (
     <div className="flex flex-col h-[100vh] gap-1 pl-9.5 pr-13 w-screen bg-[url('/admin/bg-medal.svg')] bg-center bg-contain overflow-hidden">
 
-    <div className="scale-88 pt-30">
+    <div className="scale-80 pt-18">
      {/* HEADER */}
       <div className="flex items-center justify-end pl-22 mx-15 w-[100%] h-[50px]">
         <div className="flex items-center gap-2 mr-10 px-20 text-2xl font-normal font-snowstorm relative -top-10">
