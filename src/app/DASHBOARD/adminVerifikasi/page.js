@@ -8,19 +8,25 @@ import KmhmNavigasi from '@/app/component/admin/compNavigasiCabang/kmhmNav';
 const AdminVerifikasi = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const [activeKmhm, setActiveKmhm] = useState(null);
+
   const [selectedData, setSelectedData] = useState({
     mainCategory: searchParams.get('category') || null,
     subCategory: searchParams.get('subcategory') || null,
   });
 
+  // Cache data supaya tidak hilang ketika balik ke Cabang
+  const [cachedData, setCachedData] = useState({});
+
+  // Update selectedData dari query param tapi jangan overwrite state kosong
   useEffect(() => {
     const category = searchParams.get('category');
     const subcategory = searchParams.get('subcategory');
-    setSelectedData({
-      mainCategory: category,
-      subCategory: subcategory,
-    });
+    setSelectedData(prev => ({
+      mainCategory: category ?? prev.mainCategory,
+      subCategory: subcategory ?? prev.subCategory,
+    }));
   }, [searchParams]);
 
   const handleExport = () => {
@@ -28,21 +34,27 @@ const AdminVerifikasi = () => {
   };
 
   return (
-    <div className={`flex flex-col h-[110vh] w-screen pt-1 gap-1 bg-[url('/bgadminverif.svg')] bg-center bg-contain overflow-hidden font-sofia`}>
-      {!selectedData.mainCategory && (
-        <CabangDiversifikasi />
-      )}
+    <div className="flex flex-col h-[110vh] w-screen pt-1 gap-1 bg-[url('/bgadminverif.svg')] bg-center bg-contain overflow-hidden font-sofia">
+      
+      {/* Daftar Cabang */}
+      {!selectedData.mainCategory && <CabangDiversifikasi />}
 
+      {/* Detail Cabang */}
       {selectedData.mainCategory && (
-        <>
-        <div className="scale-85 ">
+        <div className="scale-85">
           <header className="relative z-30 flex items-center justify-between mx-auto px-6 pt-14 w-[95%]">
+            
+            {/* Tombol Kembali ke Cabang */}
             <div className="flex items-center gap-4 pr-5">
               <button 
-                onClick={() => {
-                  setSelectedData({ mainCategory: null, subCategory: null });
-                  setActiveKmhm(null);
-                }}
+  onClick={() => {
+    // reset state lokal
+    setSelectedData({ mainCategory: null, subCategory: null });
+    setActiveKmhm(null);
+
+    // hapus query param dari URL supaya useSearchParams tidak menimpa state
+    router.push('/DASHBOARD/adminVerifikasi');
+  }}
                 className="flex items-center gap-2 text-[2vw] text-[#3C3022] font-snowstorm font-normal"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,6 +64,7 @@ const AdminVerifikasi = () => {
               </button>
             </div>
 
+            {/* Header Cabang/Subkategori */}
             <div className="flex items-center gap-2 px-5">
               <span className="text-[2vw] font-snowstorm font-normal text-[#3C3022]">
                 {selectedData.mainCategory}
@@ -67,19 +80,25 @@ const AdminVerifikasi = () => {
             </div>
           </header>
 
+          {/* Konten Utama */}
           <div className="flex flex-row pr-15 pl-5 gap-45 h-[600px] w-full items-center justify-center">
+            
+            {/* Navigasi KMHM */}
             <div className="w-64 px-2 -mt-40 h-full">
               <KmhmNavigasi
                 activeKmhm={activeKmhm}
                 setActiveKmhm={setActiveKmhm}
               />
             </div>
-            
+
+            {/* Detail Verifikasi */}
             <div className="flex-1 px-3 h-full w-[100vh] pt-3">
               {activeKmhm ? (
                 <Verifikasi
                   kmhmName={activeKmhm}
                   selectedSport={selectedData}
+                  cachedData={cachedData}
+                  setCachedData={setCachedData}
                   onExport={handleExport}
                 />
               ) : (
@@ -92,10 +111,9 @@ const AdminVerifikasi = () => {
                 </div>
               )}
             </div>
-          </div>
 
           </div>
-        </>
+        </div>
       )}
     </div>
   );
