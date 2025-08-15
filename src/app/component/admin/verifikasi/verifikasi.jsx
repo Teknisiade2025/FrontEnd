@@ -494,7 +494,7 @@ const handleCloseForm = () => {
           <div key={athlete.id} className="flex gap-4">
             <div className="flex-none bg-amber-100 rounded-3xl p-8 flex justify-between items-center" 
             style={{
-              width: '650px', // Lebar tetap
+              width: '600px', // Lebar tetap
               overflow: 'hidden' // Supaya tidak scroll
             }}>
               <div className="flex items-center gap-8 ">
