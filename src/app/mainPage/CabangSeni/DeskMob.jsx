@@ -37,7 +37,7 @@ export default function CabangSeniSection() {
   }
 
   return (
-    <section className="w-full lg:h-[70vh] flex justify-center  lg:mt-10 mt-40">
+    <section className="w-full lg:h-[70vh] flex justify-center  lg:mt-10 mt-30">
       {/* Desktop Layout (horizontal) */}
       <div className="hidden lg:flex w-[90%] flex-row-reverse items-center justify-between gap-10 lg:gap-[10%]">
         {/* Left: Title + Carousel */}
