@@ -186,36 +186,12 @@ useEffect(() => {
 
 
 // Handle view detail (readMode)
-const handleRead = (athlete) => {
-  setFormData({
-    ...formData,
-    ...athlete
-  });
-  setEditingAthlete(athlete); 
-  setReadMode(true);
-  setShowForm(true);
-};
+
 
 
   
 
-  const [formData, setFormData] = useState({
-    nama: '',
-    kategori: selectedSport?.subCategory || '',
-    cabang: selectedSport?.mainCategory || '',
-    asal_pknin: kmhmName || '',
-    jerasam: '',
-    angkatan: '',
-    email: '',
-    telp: '',
-    alamat: '',
-    tanggal_lahir: '',
-    status: 'UNVERIFIED',
-    id_line: '',
-    asal_provinsi: '',
-    no_institusi: '',
-    kartu_institusi: null
-  });
+  
 
   useEffect(() => {
   console.log('All users loaded:', allUsers);
@@ -277,6 +253,8 @@ useEffect(() => {
     }
   });
 
+  
+
   // Pastikan workbook ada sheet
   if (workbook.SheetNames.length === 0) {
     alert('No data to export');
@@ -285,6 +263,62 @@ useEffect(() => {
 
   const fileName = `all_data_${new Date().toISOString().slice(0,10)}.xlsx`;
   XLSX.writeFile(workbook, fileName);
+};
+
+const [formData, setFormData] = useState({
+  nama: '',
+  kategori: selectedSport?.subCategory || '',
+  cabang: selectedSport?.mainCategory || '',
+  asal_pknin: kmhmName || '',
+  jerasam: '',
+  angkatan: '',
+  email: '',
+  telp: '',
+  alamat: '',
+  tanggal_lahir: '',
+  status: 'UNVERIFIED',
+  id_line: '',
+  asal_provinsi: '',
+  no_institusi: '',
+  kartu_institusi: null
+});
+
+
+// Handle klik view (read-only)
+const handleRead = (athlete) => {
+  console.log('View clicked for athlete:', athlete);
+  setFormData({
+    ...formData,
+    ...athlete
+  });
+  setEditingAthlete(athlete); 
+  setReadMode(true);
+  setShowForm(true);
+};
+
+
+// Handle close form
+const handleCloseForm = () => {
+  setShowForm(false);  // sembunyikan form
+  setReadMode(false);  // reset read-only mode
+  setEditingAthlete(null);
+  setFormData({
+    nama: '',
+    kategori: selectedSport?.subCategory || '',
+    cabang: selectedSport?.mainCategory || '',
+    asal_pknin: kmhmName || '',
+    jerasam: '',
+    angkatan: '',
+    email: '',
+    telp: '',
+    alamat: '',
+    tanggal_lahir: '',
+    status: 'UNVERIFIED',
+    id_line: '',
+    asal_provinsi: '',
+    no_institusi: '',
+    kartu_institusi: null
+  });
 };
 
 
@@ -460,26 +494,33 @@ useEffect(() => {
           <div key={athlete.id} className="flex gap-4">
             <div className="flex-none bg-amber-100 rounded-3xl p-8 flex justify-between items-center" 
             style={{
-              width: '500px', // Lebar tetap
+              width: '650px', // Lebar tetap
               overflow: 'hidden' // Supaya tidak scroll
             }}>
-              <div className="flex items-center gap-8">
+              <div className="flex items-center gap-8 ">
                 <div className="flex flex-col items-center font-bold font-snowstorm text-lg gap-8 ">
                 <h3>{athlete.role}</h3>
                 <div className="w-24 h-24 bg-teal-600 rounded-xl flex flex-col items-center justify-center">
                   <User className="w-12 h-12 text-amber-100" />
                 </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex"><div className="w-44 font-bold">Nama</div>{athlete.nama}</div>
-                  <div className="flex"><div className="w-44 font-bold">Cabang</div>{athlete.cabang} {athlete.kategori}</div>
-                  <div className="flex"><div className="w-44 font-bold">Asal KMHM</div>{athlete.asal_pknin}</div>
-                  <div className="flex"><div className="w-44 font-bold">Jurusan</div>{athlete.jerasam}</div>
-                  <div className="flex"><div className="w-44 font-bold">Angkatan</div>{athlete.angkatan}</div>
-                  <div className="flex"><div className="w-44 font-bold">Email</div>{athlete.email}</div>
-                  <div className="flex"><div className="w-44 font-bold">No. HP</div>{athlete.telp}</div>
-                  <div className="flex"><div className="w-44 font-bold">Tempat, Tanggal Lahir</div>{athlete.tanggal_lahir}</div>
-                  <div className="flex"><div className="w-44 font-bold">Asal Provinsi</div>{athlete.asal_provinsi}</div>
+                <div className="space-y-2  w-[380px] overflow-x-hidden">
+                  <div className="flex">
+                    <div className="w-44 font-bold ">
+                      Nama
+                    </div >
+                    <div className="flex-1 truncate">
+                      {athlete.nama}
+                  </div></div>
+
+                  <div className="flex"><div className="w-44 font-bold ">Cabang</div><div className="flex-1 truncate">{athlete.cabang} {athlete.kategori}</div></div>
+                  <div className="flex"><div className="w-44 font-bold">Asal KMHM</div><div className="flex-1 truncate">{athlete.asal_pknin}</div></div>
+                  <div className="flex"><div className="w-44 font-bold">Jurusan</div><div className="flex-1 truncate">{athlete.jerasam}</div></div>
+                  <div className="flex"><div className="w-44 font-bold">Angkatan</div><div className="flex-1 truncate">{athlete.angkatan}</div></div>
+                  <div className="flex"><div className="w-44 font-bold  ">Email</div><div className="flex-1 truncate">{athlete.email}</div></div>
+                  <div className="flex"><div className="w-44 font-bold">No. HP</div><div className="flex-1 truncate">{athlete.telp}</div></div>
+                  <div className="flex"><div className="w-44 font-bold">Tempat, Tanggal Lahir</div><div className="flex-1 truncate">{athlete.tanggal_lahir}</div></div>
+                  <div className="flex"><div className="w-44 font-bold">Asal Provinsi</div><div className="flex-1 truncate">{athlete.asal_provinsi}</div></div>
                 </div>
               </div>
               <div className="flex flex-col items-center gap-4">
@@ -548,8 +589,8 @@ useEffect(() => {
       </div>
 
       {/* Form Overlay (View Only) */}
-      {showForm && selectedSport?.mainCategory && selectedSport?.subCategory && (
-        ReactDOM.createPortal(
+      {showForm && selectedSport?.mainCategory  &&
+  ReactDOM.createPortal(
         <div className="fixed inset-0 z-[9999]  top-20 flex items-center justify-center p-4 ">
           <div className="w-full max-w-6xl bg-neutral-100 rounded-3xl  p-4 relative z-50 scale-75">
             <div className="bg-[#0F6E87] rounded-3xl px-12 py-8 ">
@@ -572,7 +613,7 @@ useEffect(() => {
                 <div className="grid grid-cols-3 gap-8">
 
                   {/* Kolom 1 */}
-                  <div className="flex flex-col gap-6">
+                  <div className="flex flex-col gap-6 ">
                     <div>
                       <label className="block text-white mb-2 font-semibold">Nama Lengkap</label>
                       <input
@@ -709,7 +750,7 @@ useEffect(() => {
         </div>,
         document.body
   )
-      )}
+      }
     </div>
   );
 }
